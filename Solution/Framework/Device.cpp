@@ -1,6 +1,6 @@
 #include "Device.h"
 #include "mathmatics.h"
-#include "Framework.h"
+#include "Application.h"
 #include "DxLib.h"
 
 const int MAX_JOYPAD_USE_NUM = 16;
@@ -24,7 +24,7 @@ const int JOYPADKEY[ MAX_JOYPAD_USE_NUM ] = {
 };
 
 DevicePtr Device::getTask( ) {
-	FrameworkPtr fw = Framework::getInstance( );
+	ApplicationPtr fw = Application::getInstance( );
 	return std::dynamic_pointer_cast< Device >( fw->getTask( Device::getTag( ) ) );
 }
 

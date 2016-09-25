@@ -5,8 +5,6 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Drawer.h" />
-    <ClInclude Include="Framework.h" />
-    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="mathmatics.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Mouse.h" />
@@ -15,19 +13,21 @@
     <ClInclude Include="smart_ptr.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Task.h" />
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Application.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Binary.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Drawer.cpp" />
-    <ClCompile Include="Framework.cpp" />
-    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Application.cpp" />
   </ItemGroup>
 </Project>

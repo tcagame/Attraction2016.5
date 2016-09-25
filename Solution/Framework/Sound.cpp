@@ -1,5 +1,5 @@
 #include "Sound.h"
-#include "Framework.h"
+#include "Application.h"
 #include "Dxlib.h"
 #include <string>
 
@@ -186,7 +186,7 @@ const char* VOICE_FILE_PATH[ Sound::VOICE_MAX ] {
 };
 
 SoundPtr Sound::getTask( ) {
-	FrameworkPtr fw = Framework::getInstance( );
+	ApplicationPtr fw = Application::getInstance( );
 	return std::dynamic_pointer_cast< Sound >( fw->getTask( Sound::getTag( ) ) );
 }
 

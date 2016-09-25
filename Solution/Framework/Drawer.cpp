@@ -1,8 +1,7 @@
 #include "Drawer.h"
-#include "Framework.h"
+#include "Application.h"
 #include "Model.h"
 #include "DxLib.h"
-#include "EffekseerForDXLib.h"
 #include <assert.h>
 
 static const int REFRESH_COUNT = 60;	//平均を取るサンプル数
@@ -102,7 +101,7 @@ ratio( ratio_ ) {
 }
 
 DrawerPtr Drawer::getTask( ) {
-	FrameworkPtr fw = Framework::getInstance( );
+	ApplicationPtr fw = Application::getInstance( );
 	return std::dynamic_pointer_cast< Drawer >( fw->getTask( getTag( ) ) );
 }
 
@@ -139,13 +138,8 @@ void Drawer::update( ) {
 	drawModelMV1( );
 	drawModelMDL( );
 	drawBillboard( );
-	drawEffect( );
 	drawSprite( );
 	
-}
-
-void Drawer::deleteEffect( int effect_handle ) {
-	int cheak = DeleteEffekseerEffect( effect_handle );
 }
 
 void Drawer::drawModelMDL( ) {
@@ -201,7 +195,7 @@ void Drawer::drawModelMV1( ) {
 
 void Drawer::drawSprite( ) {
 	if ( _back ) {
-		FrameworkPtr fw = Framework::getInstance( );
+		ApplicationPtr fw = Application::getInstance( );
 		DrawBox( 0, 0,
 			fw->getWindowWidth( ),
 			fw->getWindowHeight( ),
@@ -261,44 +255,6 @@ void Drawer::drawBillboard( ) {
 	_billboard_idx = 0;
 }
 
-void Drawer::drawEffect( ) {
-	for ( int i = 0; i < _effect_idx; i++ ) {
-		const PlayingEffect& effect = _effect[ i ];
-		//回転
-		Vector dir = effect.dir;
-		if ( ( float )dir.x == 0 ) {
-			dir.x = 0.001;
-		}
-
-		//回転
-		double lenght_dir = dir.getLength( );
-		double lenght_x = Vector( 1, 0, 0 ).getLength( );
-		double angle_x = acos( dir.dot( Vector( 1, 0, 0 ) ) / ( lenght_dir * lenght_x ) );
-		double angle_y = PI / 2;
-		double angle_z = PI / 2;
-		if ( dir.y > 0 ) {
-			angle_x *= -1;
-		}
-		
-		SetRotationPlayingEffekseer3DEffect( effect.playing_handle, ( float )angle_x, ( float )angle_y, ( float )angle_z );//回転角の指定
-		SetScalePlayingEffekseer3DEffect( effect.playing_handle, ( float )effect.scale.x, ( float )effect.scale.y, ( float )effect.scale.z );
-		int check = SetPosPlayingEffekseer3DEffect( effect.playing_handle, ( float )effect.pos.x, ( float )effect.pos.y, ( float )effect.pos.z);
-	}
-	_effect_idx = 0;
-	
-	// ※
-	/*
-	Effekseerに処理を渡すためには何らかのDxlibの初期化が必要とおもわれる
-	その初期化がDrawStringを実行することで行われているので、対処療法として実行
-	*/
-	drawString( 0, -100, false, "ABCDEF" );
-
-	// Effekseerにより再生中のエフェクトを更新する。
-	UpdateEffekseer3D( );
-	// Effekseerにより再生中のエフェクトを描画する。
-	DrawEffekseer3D( );
-}
-
 void Drawer::loadMV1Model( int motion, const char* filename, double scale ) {
 	std::string path = _directory;
 	path += "/";
@@ -343,19 +299,6 @@ void Drawer::loadGraph( int res, const char * filename ) {
 	}
 }
 
-void Drawer::loadEffect( int res, const char * filename ) {
-	std::string path = _directory;
-	path += "/";
-	path +=  filename;
-	assert( res < EFFECT_ID_NUM );
-	_effect_id[ res ] = LoadEffekseerEffect( path.c_str( ) );
-	if ( _effect_id[ res ] < 0 ) {
-		path = "../" + path;
-		_effect_id[ res ] = LoadEffekseerEffect( path.c_str( ) );
-		assert( _effect_id[ res ] >= 0 );
-	}
-}
-
 void Drawer::setSprite( const Sprite& sprite ) {
 	assert( _sprite_idx < SPRITE_NUM );
 	_sprite[ _sprite_idx ] = sprite;
@@ -397,16 +340,6 @@ void Drawer::setBillboard( const Billboard& billboard ) {
 	assert( _billboard_idx < GRAPHIC_ID_NUM );
 	_billboard[ _billboard_idx ] = billboard;
 	_billboard_idx++;
-}
-
-int Drawer::setEffect( int res ) {
-	return PlayEffekseer3DEffect( _effect_id[ res ] );
-}
-
-void Drawer::setPlayingEffectStatus( int playing_handle, Vector scale, Vector pos, Vector dir ) {
-	assert( _effect_idx < EFFECT_ID_NUM );
-	_effect[_effect_idx] = PlayingEffect( playing_handle, scale, pos, dir );
-	_effect_idx++;
 }
 
 void Drawer::flip( ) {

@@ -1,11 +1,11 @@
 #include "Server.h"
-#include "Framework.h"
+#include "Application.h"
 #include "Network.h"
 
 const int SETTING_NUM = 10;
 
 ServerPtr Server::getTask( ) {
-	FrameworkPtr fw = Framework::getInstance( );
+	ApplicationPtr fw = Application::getInstance( );
 	return std::dynamic_pointer_cast< Server >( fw->getTask( Server::getTag( ) ) );
 }
 

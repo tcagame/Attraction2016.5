@@ -1,13 +1,13 @@
 #include "DxLib.h"
-#include "Framework.h"
+#include "Application.h"
 #include "Mouse.h"
 
 void main( );
 
 int WINAPI WinMain( HINSTANCE hInstaece, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow ) {
-	Framework::initialize( );
+	Application::initialize( );
 	main( );
-	Framework::getInstance( )->run( );
-	Framework::finalize( );
+	Application::getInstance( )->run( );
+	Application::finalize( );
 	return 0;
 }

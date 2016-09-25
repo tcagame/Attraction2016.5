@@ -1,14 +1,14 @@
 #include "Client.h"
-#include "Framework.h"
+#include "Application.h"
 #include "DxLib.h"
 
 ClientPtr Client::getTask( ) {
-	FrameworkPtr fw = Framework::getInstance( );
+	ApplicationPtr fw = Application::getInstance( );
 	return std::dynamic_pointer_cast< Client >( fw->getTask( Client::getTag( ) ) );
 }
 
 Client::Client( ) {
-	FrameworkPtr fw = Framework::getInstance( );
+	ApplicationPtr fw = Application::getInstance( );
 
 	_phase = PHASE_READY;
 

@@ -1,9 +1,9 @@
 #include "Mouse.h"
-#include "Framework.h"
+#include "Application.h"
 #include "DxLib.h"
 
 MousePtr Mouse::getTask( ) {
-	FrameworkPtr fw = Framework::getInstance( );
+	ApplicationPtr fw = Application::getInstance( );
 	return std::dynamic_pointer_cast< Mouse >( fw->getTask( getTag( ) ) );
 }
 

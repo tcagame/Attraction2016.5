@@ -1,9 +1,9 @@
 #include "Keyboard.h"
-#include "Framework.h"
+#include "Application.h"
 #include "DxLib.h"
 
 KeyboardPtr Keyboard::getTask( ) {
-	FrameworkPtr fw = Framework::getInstance( );
+	ApplicationPtr fw = Application::getInstance( );
 	return std::dynamic_pointer_cast< Keyboard >( fw->getTask( Keyboard::getTag( ) ) );
 }
 

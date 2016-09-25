@@ -9,3 +9,6 @@ Solution/Controller/Log.txt
 Solution/Framework/Debug/
 *.user
 Solution/Framework/Test/Debug/
+Solution/World/Debug/World.tlog/
+Solution/World/Log.txt
+Solution/World/Debug/

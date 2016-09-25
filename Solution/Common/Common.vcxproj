@@ -16,9 +16,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Status.cpp" />
     <ClCompile Include="TableDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Status.h" />
     <ClInclude Include="TableDrawer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

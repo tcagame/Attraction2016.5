@@ -4,6 +4,7 @@
 
 PTR( TableDrawerTest );
 PTR( TableDrawer );
+PTR( Status );
 
 class TableDrawerTest : public Task {
 public:
@@ -15,6 +16,7 @@ public:
 public:
 	void update( );
 private:
+	StatusPtr _status;
 	TableDrawerPtr _td_test;
 };
 

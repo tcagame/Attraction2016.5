@@ -376,17 +376,12 @@ void Drawer::drawLine( int x1, int y1, int x2, int y2 ) {
 	DrawLine( x1, y1, x2, y2, 0xFFFFFF ) ;
 }
 
-void Drawer::drawString( int x, int y, bool is_server, const char* string, ... ) {
+void Drawer::drawString( int x, int y, const char* string, ... ) {
 	char buf[ 1024 ];
-	const int oridin_font_size = GetFontSize( );
 	va_list ap;
 	unsigned int color = 0xFFFFFF;
-	if ( !is_server ) {
-		SetFontSize( 28 );//フォントサイズの更新
-	}
 	va_start( ap, string );
 	vsprintf_s( buf, 1024, string, ap );
 	DrawString( x, y, buf, color );
 	va_end( ap );
-	SetFontSize( oridin_font_size );
 }

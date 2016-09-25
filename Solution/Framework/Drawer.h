@@ -91,7 +91,7 @@ public:
 	void setModelMDL( const ModelMDL& model_mdl );
 	void setShadow( const Vector& pos );
 	void setBillboard( const Billboard& billboard );
-	void drawString( int x, int y, bool is_server, const char* string, ... );
+	void drawString( int x, int y, const char* string, ... );
 	void drawLine( int x1, int y1, int x2, int y2 );
 
 	bool _back;

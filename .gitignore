@@ -1,1 +1,11 @@
 *.suo
+*.sdf
+*.filters
+Solution/Common/Debug/
+Solution/Common/Test/Debug/
+Solution/Common/Test/Log.txt
+Solution/Controller/Debug/
+Solution/Controller/Log.txt
+Solution/Framework/Debug/
+*.user
+Solution/Framework/Test/Debug/

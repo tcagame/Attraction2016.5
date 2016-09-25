@@ -3,6 +3,7 @@
 #include <string>
 
 PTR( Viewer );
+PTR( TableDrawer );
 
 class Viewer : public Task {
 public:
@@ -12,10 +13,18 @@ public:
 	Viewer( );
 	virtual ~Viewer( );
 public:
+	void initialize( );
 	void update( );
 private:
+	void makeTableLog( );
+	void makeTableCommand( );
+	void makeTableConnect( );
+
 	void drawLog( );
 	void drawCommand( );
 	void drawConnect( );
-	void drawBox( int x1, int y1, int x2, int y2 );
+private:
+	TableDrawerPtr _log;
+	TableDrawerPtr _command;
+	TableDrawerPtr _connect;
 };

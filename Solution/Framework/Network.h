@@ -33,7 +33,7 @@ const unsigned char BUTTON_B = 0x02; // INPUT_B ( 0b00000010 )
 const unsigned char BUTTON_C = 0x04; // INPUT_C ( 0b00000100 )
 const unsigned char BUTTON_D = 0x08; // INPUT_D ( 0b00001000 )
 
-const int MAX_MACHINE = 13;
+const int MAX_MACHINE = 4;
 
 #pragma pack( 1 )
 	struct SERVERDATA {

@@ -4,15 +4,14 @@
 #include "Drawer.h"
 #include "Log.h"
 #include "Command.h"
-
-const int PITCH = 20;
-const int COLOR = 0xffffff;
+#include "Network.h"
 
 const int MAX_PLAYER = 4;//プレイヤーの数
 
 const int WINDOW_WIDTH = 640;
 const int WINDOW_HEIGHT = 480;
 
+const int PITCH = 20;
 const int FRAME_STATUS_R = 7;
 const int FRAME_STATUS_X = PITCH;
 const int FRAME_STATUS_Y = PITCH;
@@ -32,14 +31,14 @@ const int FRAME_STATUS_LIFE_X = FRAME_STATUS_WEAPON_X + FRAME_STATUS_WEAPON_W;
 const int FRAME_STATUS_LIFE_W = 100;
 const int FRAME_STATUS_AREA_X = FRAME_STATUS_LIFE_X + FRAME_STATUS_LIFE_W;
 
-const int FRAME_CONNECT_R = MAX_PLAYER + 1;
+const int FRAME_CONNECT_R = MAX_MACHINE;
 const int FRAME_CONNECT_Y = FRAME_STATUS_Y + FRAME_STATUS_H + PITCH;
 const int FRAME_CONNECT_W = 200;
 const int FRAME_CONNECT_H = WINDOW_HEIGHT - FRAME_CONNECT_Y - PITCH;
 const int FRAME_CONNECT_X = WINDOW_WIDTH - FRAME_CONNECT_W - PITCH;
 
 const int FRAME_COMMAND_X = PITCH;
-const int FRAME_COMMAND_W = 400;
+const int FRAME_COMMAND_W = 350;
 const int FRAME_COMMAND_H = 30; // 固定値
 const int FRAME_COMMAND_Y = WINDOW_HEIGHT - PITCH - FRAME_COMMAND_H;
 const int FRAME_COMMAND_TITLE_W = 80;
@@ -60,8 +59,48 @@ Viewer::~Viewer( ) {
 }
 
 void Viewer::update( ) {
+	drawConnect( );
 	drawLog( );
 	drawCommand( );
+}
+
+void Viewer::drawConnect( ) {
+	ServerPtr server = Server::getTask( );
+	DrawerPtr drawer = Drawer::getTask( );
+	// 外の枠組み
+	{
+		int x1 = FRAME_CONNECT_X;
+		int y1 = FRAME_CONNECT_Y;
+		int x2 = x1 + FRAME_CONNECT_W;
+		int y2 = y1 + FRAME_CONNECT_H;
+		drawBox( x1, y1, x2, y2 );
+	}
+
+	// 中の枠組み
+	for ( int i = 0; i < FRAME_CONNECT_R - 1; i++ ) {
+		int x1 = FRAME_CONNECT_X;
+		int y1 = FRAME_CONNECT_Y + FRAME_CONNECT_H / FRAME_CONNECT_R * ( i + 1 );
+		int x2 = x1 + FRAME_CONNECT_W;
+		int y2 = y1;
+		drawer->drawLine( x1, y1, x2, y2 );
+	}
+
+	// タイトル
+	{
+		int x = FRAME_CONNECT_X + 2;
+		int y = FRAME_CONNECT_Y - 15;
+		drawer->drawString( x, y, "Connect" );
+	}
+
+	// IP
+	{
+		for ( int i = 0; i < MAX_MACHINE; i++ ) {
+			std::string str = server->getMachineIPStr( i );
+			int x = FRAME_CONNECT_X + 2;
+			int y = FRAME_CONNECT_Y + FRAME_CONNECT_H / FRAME_CONNECT_R * ( i + 1 ) + 2;
+			drawer->drawString( x, y, "%s", str.c_str( ) );
+		}
+	}
 }
 
 void Viewer::drawLog( ) {

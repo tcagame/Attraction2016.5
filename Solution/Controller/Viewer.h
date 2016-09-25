@@ -16,5 +16,6 @@ public:
 private:
 	void drawLog( );
 	void drawCommand( );
+	void drawConnect( );
 	void drawBox( int x1, int y1, int x2, int y2 );
 };

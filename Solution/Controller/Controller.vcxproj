@@ -87,6 +87,7 @@
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Processor.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +101,7 @@
   <ItemGroup>
     <ClInclude Include="Command.h" />
     <ClInclude Include="Log.h" />
+    <ClInclude Include="Processor.h" />
     <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

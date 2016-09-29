@@ -22,7 +22,7 @@ Client::Client( ) {
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		_status.player[ i ].x = 0;
 		_status.player[ i ].y = 0;
-		_status.player[ i ].action = ACTION_NONE;
+		_status.player[ i ].button = 0;
 	}
 }
 

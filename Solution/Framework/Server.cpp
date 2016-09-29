@@ -22,7 +22,7 @@ Server::Server( ) {
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		_data.player[ i ].x = 0;
 		_data.player[ i ].y = 0;
-		_data.player[ i ].action = ACTION_NONE;
+		_data.player[ i ].button = 0;
 	}
 }
 
@@ -38,11 +38,11 @@ void Server::update( ) {
 	sendStatus( _data );
 }
 
-std::string Server::getMachineIPStr( int index ) {
+std::string Server::getMachineIPStr( int i ) {
 	std::string str;
-	if ( _machine[ index ] >= 0 ) {
+	if ( _machine[ i ] >= 0 ) {
 		IPDATA ip;
-		GetNetWorkIP( _machine[ index ], &ip );
+		GetNetWorkIP( _machine[ i ], &ip );
 		str += std::to_string( ( _ULonglong  )ip.d1 );
 		str += ".";
 		str += std::to_string( ( _ULonglong )ip.d2 );
@@ -105,7 +105,7 @@ void Server::executeNetData( const SERVERDATA& data ) {
 		_data.player[ data.value[ 0 ] ].y = data.value[ 2 ];
 		break;
 	case COMMAND_STATUS_ACTION:
-		_data.player[ data.value[ 0 ] ].action = data.value[ 1 ];
+		_data.player[ data.value[ 0 ] ].button = data.value[ 1 ];
 		break;
 	}
 }
@@ -156,4 +156,8 @@ void Server::sendCondition( ) {
 
 CLIENTDATA Server::getData( ) {
 	return _data;
+}
+
+void Server::setData( CLIENTDATA data ) {
+	_data = data;
 }

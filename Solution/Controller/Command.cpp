@@ -1,7 +1,6 @@
 #include "Command.h"
 #include "Application.h"
-#include "Viewer.h"
-#include "Device.h"
+#include "Keyboard.h"
 #include "Server.h"
 #include "log.h"
 
@@ -19,7 +18,8 @@ Command::~Command( ) {
 }
 
 void Command::update( ) {
-	char single_ch = GetInputChar( TRUE );
+	KeyboardPtr keyboard = Keyboard::getTask( );
+	char single_ch = keyboard->getInputChar( );
 
 	if ( single_ch == 0 ) {
 		return;

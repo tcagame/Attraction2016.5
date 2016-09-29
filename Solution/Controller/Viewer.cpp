@@ -4,6 +4,7 @@
 #include "Drawer.h"
 #include "Log.h"
 #include "Command.h"
+#include "Status.h"
 #include "Network.h"
 #include "TableDrawer.h"
 
@@ -67,6 +68,7 @@ void Viewer::update( ) {
 	drawConnect( );
 	drawLog( );
 	drawCommand( );
+	drawStatus( );
 }
 
 void Viewer::makeTableLog( ) {
@@ -133,4 +135,9 @@ void Viewer::drawCommand( ) {
 	_command->setCell( 0, 0, command->get( ) );
 
 	_command->draw( );
+}
+
+void Viewer::drawStatus( ) {
+	StatusPtr status = Status::getTask( );
+	status->draw( );
 }

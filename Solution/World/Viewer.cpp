@@ -1,4 +1,9 @@
 #include "Viewer.h"
+<<<<<<< HEAD
+=======
+#include "Status.h"
+#include "Client.h"
+>>>>>>> f8b8d30751081dca23fa85a8ae9c563109d6bf09
 #include "Application.h"
 #include "Status.h"
 #include "App.h"
@@ -29,6 +34,8 @@ void Viewer::update( ) {
 
 void Viewer::drawStatus( ) {
 	StatusPtr status = Status::getTask( );
+	ClientPtr client = Client::getTask( );
+	status->setInput( client->getClientData( ) );
 	status->draw( );
 }
 

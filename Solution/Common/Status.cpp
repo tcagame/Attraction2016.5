@@ -19,6 +19,10 @@ Status::Status( ) {
 	_td->setCell( 0, 1 , "PLAYER(HUNTER)" );
 	_td->setCell( 0, 2 , "PLAYER(MONK)" );
 	_td->setCell( 0, 3 , "PLAYER(WIDTH)" );
+	for ( int i = 0; i < 4; i++ ) {
+		_data.player[ i ].x = 0;
+		_data.player[ i ].y = 0;
+	}
 }
 
 StatusPtr Status::getTask( ) {
@@ -35,5 +39,15 @@ void Status::draw( ) {
 }
 
 void Status::update( ) {
-
+	for ( int i = 0; i < 4; i++ ) {
+		_td->setCell( 1, i, "x:" + std::to_string( _data.player[ i ].x ) );
+		_td->setCell( 2, i, "y:" + std::to_string( _data.player[ i ].y ) );
+	}
+	for ( int i = 0; i < 4; i++ ) {
+		_data.player[ i ].x = 0;
+		_data.player[ i ].y = 0;
+	}
+}
+void Status::setInput( CLIENTDATA data ) {
+	_data = data;
 }

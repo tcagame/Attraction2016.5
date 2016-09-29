@@ -56,7 +56,7 @@ void App::updateReset( ) {
 	if ( !device ) {
 		return;
 	}
-	if ( device->getButton( ) == BUTTON_A + BUTTON_B + BUTTON_C + BUTTON_D ) {
+	if ( device->getButton( 0 ) == BUTTON_A + BUTTON_B + BUTTON_C + BUTTON_D ) {
 		_push_reset_count += 1;
 	} else  {
 		_push_reset_count = 0;
@@ -69,7 +69,7 @@ void App::updateReset( ) {
 
 void App::updateStateReady( ) {
 	DevicePtr device = Device::getTask( );
-	if ( device->getButton( ) > 0 ) {
+	if ( device->getButton( 0 ) > 0 ) {
 		_push_start_count += 1;
 	} else {
 		_push_start_count = 0;

@@ -1,5 +1,6 @@
 #pragma once
 #include "Task.h"
+#include "Network.h"
 #include "smart_ptr.h"
 #include <string>
 
@@ -16,7 +17,9 @@ public:
 public:
 	void update( );
 	void draw( );
+	void setInput( CLIENTDATA data );
 private:
 	TableDrawerPtr _td;
+	CLIENTDATA _data;
 };
 

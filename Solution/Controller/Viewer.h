@@ -23,6 +23,7 @@ private:
 	void drawLog( );
 	void drawCommand( );
 	void drawConnect( );
+	void drawStatus( );
 private:
 	TableDrawerPtr _log;
 	TableDrawerPtr _command;

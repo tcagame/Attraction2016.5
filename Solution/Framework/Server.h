@@ -18,10 +18,11 @@ public:
 public:
 	virtual void update( );
 	void saveIP( );
-	std::string getMachineIPStr( int index );
+	std::string getMachineIPStr( int i );
 	void sendStatus( const CLIENTDATA& data );
-	void setConecting( int index, int device );
+	void setConecting( int i, int device );
 	CLIENTDATA getData( );
+	void setData( CLIENTDATA data );
 private:
 	void listenForAcceptNewClient( );
 	void listenForPackets( );

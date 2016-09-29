@@ -19,7 +19,7 @@ public:
 	static const int MESSAGE_COUNT = 10;
 public:
 	void send( const char * format, ... );
-	std::string get( int index );
+	std::string get( int i );
 private:
 	std::array< std::string, MESSAGE_COUNT > _message;
 };

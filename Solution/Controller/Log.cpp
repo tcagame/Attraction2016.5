@@ -17,8 +17,8 @@ void Log::update( ) {
 	// ‚È‚É‚à‚µ‚È‚¢
 }
 
-std::string Log::get( int index ) {
-	return _message[ index ];
+std::string Log::get( int i ) {
+	return _message[ i ];
 }
 
 void Log::send( const char * format, ... ) {

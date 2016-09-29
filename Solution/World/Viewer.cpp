@@ -1,5 +1,6 @@
 #include "Viewer.h"
 #include "Status.h"
+#include "Client.h"
 #include "Application.h"
 
 ViewerPtr Viewer::getTask( ) {
@@ -20,5 +21,7 @@ void Viewer::update( ) {
 
 void Viewer::drawStatus( ) {
 	StatusPtr status = Status::getTask( );
+	ClientPtr client = Client::getTask( );
+	status->setInput( client->getClientData( ) );
 	status->draw( );
 }

@@ -16,17 +16,13 @@ public:
 public:
 	virtual void update( );
 public:
-	char getDirX( ) const;
-	char getDirY( ) const;
-	unsigned char getButton( ) const;
+	int getDirX( int i ) const;
+	int getDirY( int i ) const;
+	unsigned int getButton( int i ) const;
+	int getDeviceNum( );//デバイスの個数を渡す
 public:
 	void resetup( );
 private:
-	struct DATA {
-		char x;
-		char y;
-		unsigned char button;
-	};
-private:
-	DATA _data;
+	CLIENTDATA _data;
+	int _device_num;
 };

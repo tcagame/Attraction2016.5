@@ -107,6 +107,7 @@ DrawerPtr Drawer::getTask( ) {
 
 Drawer::Drawer( const char * directory ) :
 _directory( directory ){
+
 }
 
 Drawer::~Drawer( ) {
@@ -146,8 +147,11 @@ void Drawer::drawModelMDL( ) {
 	for ( int i = 0; i < _model_mdl_idx; i++ ) {
 		int type = _model_mdl[ i ].type;
 		Vector pos = _model_mdl[ i ].pos;
-		_model[ type ]->setPos( pos );
-		_model[ type ]->draw( );
+		ModelPtr model = _model[ type ];
+		if ( model ) {
+			model->setPos( pos );
+			model->draw( );
+		}
 	}
 	_model_mdl_idx = 0;
 }

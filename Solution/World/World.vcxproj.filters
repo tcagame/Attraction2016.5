@@ -3,8 +3,19 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Viewer.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="GroundModel.cpp" />
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="Ground.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Viewer.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="GroundModel.h" />
+    <ClInclude Include="App.h" />
+    <ClInclude Include="Ground.h" />
+    <ClInclude Include="MapType.h" />
   </ItemGroup>
 </Project>

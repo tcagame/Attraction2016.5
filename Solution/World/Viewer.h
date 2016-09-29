@@ -12,8 +12,10 @@ public:
 public:
 	Viewer( );
 	virtual ~Viewer( );
+	void initialize( );
 public:
 	void update( );
 	void drawStatus( );
+	void drawMap( );
 };
 

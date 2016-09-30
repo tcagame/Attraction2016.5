@@ -3,7 +3,7 @@
 #include "Ground.h"
 #include "Application.h"
 
-const Vector START_CAMERA_POS = Vector( 50, 50, 20 );
+const Vector START_CAMERA_POS = Vector( 0, 20, 20 );
 const Vector START_TARGET_POS = Vector( 0, 0, 0 );
 
 const double SCREEN_LENGTH = 800.0;

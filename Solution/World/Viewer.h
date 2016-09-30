@@ -15,7 +15,10 @@ public:
 	void initialize( );
 public:
 	void update( );
+	void drawGroundModel( );
 	void drawStatus( );
-	void drawMap( );
+	void drawBackGround( );
+
+	void updateCamera( );
 };
 

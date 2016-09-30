@@ -1,14 +1,19 @@
 #include "App.h"
 #include "Player.h"
-#include "GroundModel.h"
 #include "Ground.h"
+#include "GroundModel.h"
 #include "Device.h"
 #include "Application.h"
 #include "Client.h"
 
 const std::string DIRECTORY = "../Resource/";
+const std::string MODEL_NAME_LIST [] {
+	"none",
+	"floor01"
+};
 const int RESET_COUNT = 30;
 const int START_COUNT = 60;
+const int STRING_BUF = 256;
 
 AppPtr App::getTask( ) {
 	ApplicationPtr fw = Application::getInstance( );
@@ -25,6 +30,30 @@ App::App( ) {
 App::~App( ) {
 
 }
+
+void App::initialize( ) {
+	std::string filepath = DIRECTORY + "CSV/";
+	_ground = GroundPtr( new Ground( filepath + "map.csv" ) );//マップデータ
+	_ground_model = GroundModelPtr( new GroundModel( ) );
+	/*_field = FieldPtr( new Field( ) );
+	_weapon = WeaponPtr( new Weapon( ) );
+	if ( _player_id == PLAYER_KNIGHT ||
+		 _player_id == PLAYER_MONK ||
+		 _player_id == PLAYER_WITCH ||
+		 _player_id == PLAYER_HUNTER||
+		 _player_id == PLAYER_NONE ) {
+		_cohort = CohortPtr( new Cohort( ) );
+		_crystals = CrystalsPtr( new Crystals( ) );
+		_adv_mgr = AdvMgrPtr( new AdvMgr( _player_id ) );
+		_adventure = AdventurePtr( new Adventure( ) );
+	}*/
+	
+	loadToGround( ) ;//GroundModelとCohortのデータ読み込み
+	/*if ( _cohort ) {
+		_cohort->init( );
+	}*/
+}
+
 
 void App::reset( ) {
 	//_state = STATE_READY;
@@ -97,6 +126,63 @@ GroundPtr App::getGround( ) const {
 
 GroundModelPtr App::getGroundModel( ) const {
 	return _ground_model;
+}
+
+void App::loadToGround( ) {
+	int width = _ground->getWidth( );
+	int height = _ground->getHeight( );
+
+	for ( int i = 0; i < height; i++ ) {
+		for ( int j = 0; j < width; j++ ) {
+			int idx = _ground->getIdx( j, i );
+			int type = _ground->getGroundData( idx );
+			
+			char idx_string[ STRING_BUF ] = "";
+			sprintf_s( idx_string, STRING_BUF,"%d", type );
+			
+			std::string md_file_path = DIRECTORY + "MapData/";
+			md_file_path += idx_string;
+			md_file_path += ".md";
+
+			//ファイルの読み込み
+			FILE* fp;
+			errno_t err = fopen_s( &fp, md_file_path.c_str( ), "r" );
+			if ( err != 0 ) {
+				continue;
+			}
+			
+			char buf[ 1024 ];
+			std::string name[ 2 ];
+			for( int k = 0; k < 2; k++ ) {
+				fscanf_s( fp,"%s", buf, 1024 );
+				name[ k ] = buf;
+			}
+			fclose( fp );
+			int model_type = 0;
+			for ( int k = 0; k < 5; k++ ) {
+				if( name[ 0 ] == MODEL_NAME_LIST[ k ] ) {
+					model_type = k;
+				}
+			}
+			_map_convert[ type ] = model_type;
+
+			/*if ( _cohort ) {
+				std::string enemy_file_path = DIRECTORY + "EnemyData/" + name[ 1 ] + ".ene";
+				_cohort->loadBlockEnemyData( idx, enemy_file_path );
+			}*/
+			if ( model_type == 0 ) {
+				continue;
+			}
+
+			std::string model_file_path = DIRECTORY + "MapModel/" + MODEL_NAME_LIST[ model_type ] + ".mdl";
+			_ground_model->loadModelData( j, i, model_file_path );
+
+		}
+	}
+}
+
+int App::convertCSVtoMap( int type ) {
+	return _map_convert[ type ];
 }
 
 App::STATE App::getState( ) const {

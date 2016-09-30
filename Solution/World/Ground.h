@@ -17,6 +17,10 @@ public:
 public:
 	const static int CHIP_WIDTH;
 	const static int CHIP_HEIGHT;
+	const static int BOSS_CHIP_WIDTH;
+	const static int BOSS_CHIP_HEIGHT;
+	const static int BOSS_X;
+	const static int BOSS_Y;
 private:
 	bool loadMapCSV( const char* file_name );
 private:

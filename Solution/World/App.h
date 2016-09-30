@@ -1,6 +1,7 @@
 #pragma once
 #include "Task.h"
 #include <string>
+#include <array>
 
 PTR( App );
 PTR( Ground );
@@ -22,6 +23,7 @@ public:
 		STATE_MAX
 	};
 public:
+	void initialize( );
 	void update( );
 	GroundPtr getGround( ) const;
 	GroundModelPtr getGroundModel( ) const;
@@ -29,6 +31,10 @@ public:
 	STATE getState( ) const;
 	int getStartCount( ) const;
 	int getStartCountMax( ) const;
+	int convertCSVtoMap( int type );
+	void loadToGround( );
+private:
+	static const int MAX_MAP_DATA_NUM = 12;
 private:
 	void reset( );
 	void updateReset( );
@@ -42,4 +48,5 @@ private:
 	STATE _state;
 	int _push_reset_count;
 	int _push_start_count;
+	std::array< int, MAX_MAP_DATA_NUM > _map_convert;
 };

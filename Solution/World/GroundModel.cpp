@@ -1,19 +1,23 @@
 #include "GroundModel.h"
+#include "App.h"
 #include "Ground.h"
 #include "Model.h"
-#include "App.h"
 #include "MapType.h"
+
+const char * BOSS_GROUND_NAME = "../Resource/MapModel/floor02.mdl";
 
 GroundModel::ModelData::ModelData( ) :
 polygon_num( 0 ) {
 	
 }
 
-GroundModel::GroundModel( ) {
+GroundModel::GroundModel() {
 	_model_max_idx  = 0;
+	loadBossModel( );
 }
 
-GroundModel::~GroundModel( ) {
+GroundModel::~GroundModel()
+{
 }
 
 void GroundModel::loadModelData( int x, int y, std::string filename ) {
@@ -61,6 +65,16 @@ bool GroundModel::isCollisionGround( Vector pos ) {
 	GroundPtr ground = app->getGround( );
 
 	bool ret = false;
+	int x = ( ( int ) pos.x + Ground::BOSS_CHIP_WIDTH ) / Ground::CHIP_WIDTH;
+	int y = ( ( int ) pos.y + Ground::BOSS_CHIP_HEIGHT ) / Ground::CHIP_HEIGHT;
+	if ( x >= Ground::BOSS_X && y >= Ground::BOSS_Y ) {
+		Vector pos_a = pos;
+		Vector pos_b = pos;
+		pos_a.z = 100;
+		pos_b.z = -100;
+		ret = isCollisionModel( _model_data_boss, pos_a, pos_b );
+		return ret;
+	}
 	for ( int i = 0; i < _model_max_idx; i++ ) {
 		if ( _model_data_ground[ i ].max_x < pos.x ) {
 			continue;
@@ -137,4 +151,39 @@ bool GroundModel::isCollisionModel( ModelData model, Vector pos_a, Vector pos_b 
 		return true;
 	}
 	return false;
+}
+
+
+void GroundModel::loadBossModel( ) {
+	ModelPtr model = ModelPtr( new Model( ) );
+	model->load( BOSS_GROUND_NAME );
+	int polygon_num = model->getPolygonNum( );
+	_model_data_boss.polygon_num = polygon_num;
+	model->translate( Vector( Ground::BOSS_X * Ground::CHIP_WIDTH, Ground::BOSS_Y * Ground::CHIP_HEIGHT ) );
+	int num = 0;
+	double max_x = 0;
+	double max_y = 0;
+	double min_x = 10000;
+	double min_y = 10000;
+	for ( int i = 0; i < polygon_num * 3; i++ ) {
+		Vector pos = model->getPoint( i );
+		_model_data_boss.pos[ num ] = pos;
+		if ( pos.x > max_x ) {
+			max_x = pos.x;
+		}
+		if ( pos.y > max_y ) {
+			max_y = pos.y;
+		}
+		if ( pos.x < min_x ) {
+			min_x = pos.x;
+		}
+		if ( pos.y < min_y ) {
+			min_y = pos.y;
+		}
+		num++;
+	}
+	_model_data_boss.max_x = max_x;
+	_model_data_boss.max_y = max_y;
+	_model_data_boss.min_x = min_x;
+	_model_data_boss.min_y = min_y;
 }

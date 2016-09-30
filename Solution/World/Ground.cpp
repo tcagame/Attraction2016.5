@@ -3,6 +3,10 @@
 
 const int Ground::CHIP_WIDTH = 7;
 const int Ground::CHIP_HEIGHT = 4;
+const int Ground::BOSS_CHIP_WIDTH = 10;
+const int Ground::BOSS_CHIP_HEIGHT = 10;
+const int Ground::BOSS_X = 40;
+const int Ground::BOSS_Y = 40;
 
 Ground::Ground(std::string file_name) {
 	for ( unsigned int i = 0; i < _ground_data.size( ); i++ ) {

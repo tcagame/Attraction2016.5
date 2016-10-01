@@ -109,7 +109,7 @@ void Enemy::animationUpdate( ) {
 	}
 	if ( _state == ENEMY_STATE_WAIT ) {
 		if ( animation->getMotion( ) != Animation::MOTION_GOBLIN_WAIT ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_WAIT, MOTION_SPEED ) ) );
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_WAIT ) ) );
 		} else {
 			if ( animation->isEndAnimation( ) ) {
 				animation->setAnimationTime( 0 );
@@ -118,7 +118,7 @@ void Enemy::animationUpdate( ) {
 	}
 	if ( _state == ENEMY_STATE_WALK ) {
 		if ( animation->getMotion( ) != Animation::MOTION_GOBLIN_WALK ) {
-			animation = AnimationPtr( new Animation( Animation::MOTION_GOBLIN_WALK, MOTION_SPEED ) );
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_WALK ) ) );
 		} else {
 			if ( animation->isEndAnimation( ) ) {
 				animation->setAnimationTime( 0 );
@@ -127,7 +127,7 @@ void Enemy::animationUpdate( ) {
 	}
 	if ( _state == ENEMY_STATE_ATTACK ) {
 		if ( animation->getMotion( ) != Animation::MOTION_GOBLIN_ATTACK ) {
-			animation = AnimationPtr( new Animation( Animation::MOTION_GOBLIN_ATTACK, MOTION_SPEED ) );
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_ATTACK ) ) );
 		} else {
 			if ( animation->isEndAnimation( ) ) {
 				animation->setAnimationTime( 0 );
@@ -139,12 +139,12 @@ void Enemy::animationUpdate( ) {
 	}
 	if ( _on_damage ) {
 		if ( animation->getMotion( ) != Animation::MOTION_GOBLIN_DAMAGE ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_DAMAGE, MOTION_SPEED ) ) );
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_DAMAGE ) ) );
 		}
 	}
 	if ( _state == ENEMY_STATE_DEAD ) {
 		if ( animation->getMotion( ) != Animation::MOTION_GOBLIN_DEAD ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_DEAD, MOTION_SPEED ) ) );
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_DEAD ) ) );
 		}
 	}
 }

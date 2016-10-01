@@ -51,7 +51,6 @@ void Cohort::update( ) {
 		}
 		enemy->update( );
 	}
-	_boss->update( );
 }
 
 void Cohort::add( EnemyPtr enemy, const Vector& pos ) {

@@ -116,6 +116,7 @@ void App::updateStatePlay( ) {
 	for ( int i = 0; i < PLAYER_NUM; i++ ){
 		_player[ i ]->update( );
 	}
+	_cohort->update( );
 }
 
 void App::updateStateClear( ) {

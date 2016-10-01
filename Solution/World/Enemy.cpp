@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Animation.h"
 
-const double ATTACK_RANGE = 1.0;
+const double ATTACK_RANGE = 2.0;
 const double MOVE_RANGE = 7.5;
 const double MOTION_SPEED = 1.0;
 const double ATTACK_TIME = 10;

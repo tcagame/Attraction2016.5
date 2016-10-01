@@ -123,7 +123,7 @@ void Cohort::putBlockEnemy( int idx ) {
 }
 
 void Cohort::putEnemy( const Vector& pos, std::string enemy_name ) {
-	Character::STATUS status = Character::STATUS( 100, 10, 1 );
+	Character::STATUS status = Character::STATUS( 100, 10, 0.01 );
 	EnemyPtr enemy = EnemyPtr( new Enemy( status ) );
 	add( enemy, pos );
 

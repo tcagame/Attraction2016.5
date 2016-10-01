@@ -53,7 +53,7 @@ void Player::attack( const CONTROLL& controll ) {
 	int power = getStatus(  ).power;
 
 	//UŒ‚‚É“ü‚éuŠÔ
-	bool in_attack = controll.action == CONTROLL::ATTACK && _before_state != PLAYER_STATE_ATTACK;
+	bool in_attack = controll.action == CONTROLL::ATTACK && animation->getMotion( ) != Animation::MOTION_PLAYER_ATTACK_FIRE;
 	if ( in_attack ) {
 		_player_state = PLAYER_STATE_ATTACK;
 	}
@@ -63,8 +63,8 @@ void Player::attack( const CONTROLL& controll ) {
 			if ( animation->getAnimTime( ) == 30.0 ) {
 				bullet = BulletFirePtr( new BulletFire( getPos( ), getDir( ), power ) );
 				weapon->add( bullet );
-				_player_state = PLAYER_STATE_ATTACK;
 			}
+			_player_state = PLAYER_STATE_ATTACK;
 		}
 	}
 }
@@ -120,7 +120,7 @@ void Player::animationUpdate( ) {
 	}
 	if ( _player_state == PLAYER_STATE_ATTACK ) {
 		if ( animation->getMotion( ) != Animation::MOTION_PLAYER_ATTACK_FIRE ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_ATTACK_FIRE ) ) );
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_ATTACK_FIRE, 1.5 ) ) );
 			animation->setAnimationTime( 20 );
 		}
 	}

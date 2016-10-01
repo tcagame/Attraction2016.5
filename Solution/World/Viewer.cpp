@@ -1,6 +1,8 @@
 #include "Viewer.h"
 #include "Status.h"
 #include "Client.h"
+#include "Cohort.h"
+#include "Enemy.h"
 #include "Ground.h"
 #include "Camera.h"
 #include "App.h"
@@ -39,12 +41,18 @@ void Viewer::initialize( ) {
 	drawer->loadMV1Model( Animation::MOTION_PLAYER_WALK,		"CaracterModel/hunter/player_hunter_walk.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
 	drawer->loadMV1Model( Animation::MOTION_PLAYER_ATTACK_FIRE,	"CaracterModel/hunter/player_hunter_attack_fire.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
 	drawer->loadMV1Model( Animation::MOTION_PLAYER_DEAD,		"CaracterModel/hunter/player_hunter_dead.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WAIT,		"EnemyModel/goblin/enemy_goblin_wait.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WALK,		"EnemyModel/goblin/enemy_goblin_walk.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_ATTACK,	    "EnemyModel/goblin/enemy_goblin_attack.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_DAMAGE,		"EnemyModel/goblin/enemy_goblin_damage.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_DEAD,		"EnemyModel/goblin/enemy_goblin_dead.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
 }
 
 void Viewer::update( ) {
 	drawGroundModel( );
 	drawStatus( );
 	drawBackGround( );
+	drawEnemy( );
 	updateCamera( );
 }
 
@@ -114,6 +122,31 @@ void drawPlayer( ) {
 		double time = animation->getAnimTime( );
 		Vector pos = player->getPos( );
 		Vector dir = player->getDir( );
+
+		DrawerPtr drawer = Drawer::getTask( );
+		Drawer::ModelMV1 model = Drawer::ModelMV1( pos, dir, motion, time );
+		drawer->setModelMV1( model );
+	}
+}
+
+void Viewer::drawEnemy ( ) {
+	AppPtr app = App::getTask( );
+	CohortPtr cohort = app->getCohort( );
+	int num = cohort->getMaxNum( );
+	for ( int i = 0; i < num; i++ ) {
+		EnemyPtr enemy = cohort->getEnemy( i );
+		if ( !enemy ) {
+			continue;
+		}
+		if ( !enemy->isExpired( ) ) {
+			continue;
+		}
+
+		AnimationPtr animation = enemy->getAnimation( );
+		int motion = animation->getMotion( );
+		double time = animation->getAnimTime( );
+		Vector pos = enemy->getPos( );
+		Vector dir = enemy->getDir( );
 
 		DrawerPtr drawer = Drawer::getTask( );
 		Drawer::ModelMV1 model = Drawer::ModelMV1( pos, dir, motion, time );

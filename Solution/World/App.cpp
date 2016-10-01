@@ -1,5 +1,6 @@
 #include "App.h"
 #include "Player.h"
+#include "Cohort.h"
 #include "Ground.h"
 #include "GroundModel.h"
 #include "Field.h"
@@ -43,14 +44,14 @@ void App::initialize( ) {
 		Character::STATUS status = Character::STATUS( 100000, 100, 1 );
 		_player[ i ] = PlayerPtr( new Player( i, status ) );
 	}
-	/*
+	
 	_cohort = CohortPtr( new Cohort( ) );
-	*/
+	
 	
 	loadToGround( ) ;//GroundModel‚ÆCohort‚Ìƒf[ƒ^“Ç‚Ýž‚Ý
-	/*if ( _cohort ) {
+	if ( _cohort ) {
 		_cohort->init( );
-	}*/
+	}
 }
 
 
@@ -127,6 +128,25 @@ GroundModelPtr App::getGroundModel( ) const {
 	return _ground_model;
 }
 
+PlayerPtr App::getPlayerTarget( const Vector& pos ){
+	PlayerPtr target;
+
+	double min = 1000;
+	for ( int i = 0; i < 4; i++ ) {
+		if ( !_player[ i ]->isExpired( ) ) {
+			continue;
+		}
+		Vector vec = _player[ i ]->getPos( ) - pos;
+		double length = vec.getLength( );
+		if ( length < min ) {
+			target = _player[ i ];
+			min = length;
+		}
+	}
+	return target;	
+}
+
+
 void App::loadToGround( ) {
 	int width = _ground->getWidth( );
 	int height = _ground->getHeight( );
@@ -165,10 +185,10 @@ void App::loadToGround( ) {
 			}
 			_map_convert[ type ] = model_type;
 
-			/*if ( _cohort ) {
+			if ( _cohort ) {
 				std::string enemy_file_path = DIRECTORY + "EnemyData/" + name[ 1 ] + ".ene";
 				_cohort->loadBlockEnemyData( idx, enemy_file_path );
-			}*/
+			}
 			if ( model_type == 0 ) {
 				continue;
 			}
@@ -198,6 +218,9 @@ FieldPtr App::getField( ) const {
 
 WeaponPtr App::getWeapon( ) const {
 	return _weapon;
+}
+CohortPtr App::getCohort( ) const{
+	return _cohort;
 }
 
 int App::getStartCount( ) const {

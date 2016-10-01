@@ -2,6 +2,7 @@
 #include "Task.h"
 #include <string>
 #include <array>
+#include "mathmatics.h"
 #include "Network.h"
 
 PTR( App );
@@ -9,6 +10,7 @@ PTR( Ground );
 PTR( Field );
 PTR( Weapon );
 PTR( Player );
+PTR( Cohort );
 PTR( GroundModel );
 
 class App : public Task {
@@ -33,8 +35,11 @@ public:
 	GroundModelPtr getGroundModel( ) const;
 	FieldPtr getField( ) const;
 	WeaponPtr getWeapon( ) const;
+	CohortPtr getCohort( ) const;
+
 	PlayerPtr getPlayer( unsigned char player_id ) const;
 	void setState( STATE state );
+	PlayerPtr getPlayerTarget( const Vector& pos );
 	STATE getState( ) const;
 	int getStartCount( ) const;
 	int getStartCountMax( ) const;
@@ -53,6 +58,7 @@ private:
 	GroundPtr _ground;
 	GroundModelPtr _ground_model;
 	FieldPtr _field;
+	CohortPtr _cohort;
 	WeaponPtr _weapon;
 	std::array< PlayerPtr, PLAYER_NUM > _player;
 	STATE _state;

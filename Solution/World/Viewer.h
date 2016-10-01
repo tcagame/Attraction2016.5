@@ -18,6 +18,7 @@ public:
 	void drawGroundModel( );
 	void drawStatus( );
 	void drawBackGround( );
+	void drawPlayer( );
 
 	void updateCamera( );
 };

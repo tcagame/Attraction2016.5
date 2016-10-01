@@ -8,6 +8,8 @@
 #include "Application.h"
 #include "Animation.h"
 #include "Player.h"
+#include "Weapon.h"
+#include "Bullet.h"
 
 const double MODEL_SCALE_2015 = 0.008;
 const double MODEL_SCALE_2016 = 0.06;

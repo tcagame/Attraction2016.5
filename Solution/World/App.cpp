@@ -40,7 +40,7 @@ void App::initialize( ) {
 	_field = FieldPtr( new Field( ) );
 	_weapon = WeaponPtr( new Weapon( ) );
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		Character::STATUS status = Character::STATUS( 100000, 100, 1 );
+		Character::STATUS status = Character::STATUS( 100000, 100, 0.1 );
 		_player[ i ] = PlayerPtr( new Player( i, status ) );
 		_player[ i ]->create( Vector( 7 + ( i % 2 ), 8 + ( i / 2 ) ) );
 	}

@@ -8,6 +8,14 @@
     <ClCompile Include="GroundModel.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Field.cpp" />
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BulletFire.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Viewer.h" />
@@ -17,5 +25,13 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="MapType.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Field.h" />
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="BulletFire.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Enemy.h" />
   </ItemGroup>
 </Project>

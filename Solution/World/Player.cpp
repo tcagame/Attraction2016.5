@@ -13,6 +13,7 @@
 Player::Player( unsigned char player_id, Character::STATUS status ) :
 Character( status ),
 _player_id( player_id ) {
+	setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_WAIT ) ) );
 }
 
 Player::~Player( ) {
@@ -28,6 +29,7 @@ void Player::otherUpdate( ) {
 	if ( getStatus( ).hp <= 0 ) {
 		_player_state = PLAYER_STATE_DEAD;
 	}
+	animationUpdate( );
 	_before_state = _player_state;
 }
 
@@ -89,4 +91,42 @@ Player::CONTROLL Player::makeControll( ) {
 		controll.action = CONTROLL::NONE;
 	}
 	return controll;
+}
+
+void Player::animationUpdate( ) {
+	AnimationPtr animation = getAnimation( );
+	if ( _player_state == PLAYER_STATE_DEAD && animation->isEndAnimation( ) ) {
+		dead( );
+		return;
+	}
+
+	if ( _player_state == PLAYER_STATE_WAIT ) {
+		if ( animation->getMotion( ) != Animation::MOTION_PLAYER_WAIT ) {
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_WAIT ) ) );
+		} else {
+			if( animation->isEndAnimation( ) ) {
+				animation->setAnimationTime( 0 );
+			}
+		}
+	}
+	if ( _player_state == PLAYER_STATE_WALK ) {
+		if ( animation->getMotion( ) != Animation::MOTION_PLAYER_WALK ) {
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_WALK ) ) );
+		} else {
+			if ( animation->isEndAnimation( ) ) {
+				animation->setAnimationTime( 0 );
+			}
+		}
+	}
+	if ( _player_state == PLAYER_STATE_ATTACK ) {
+		if ( animation->getMotion( ) != Animation::MOTION_PLAYER_ATTACK_FIRE ) {
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_ATTACK_FIRE ) ) );
+			animation->setAnimationTime( 20 );
+		}
+	}
+	if ( _player_state == PLAYER_STATE_DEAD ) {
+		if ( animation->getMotion( ) != Animation::MOTION_PLAYER_DEAD ) {
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_DEAD ) ) );
+		}
+	}
 }

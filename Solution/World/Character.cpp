@@ -4,6 +4,7 @@
 #include "Field.h"
 #include "GroundModel.h"
 #include "Camera.h"
+#include "Animation.h"
 
 const Vector START_DIR = Vector( 0, 1, 0 );
 
@@ -27,6 +28,7 @@ void Character::update( ) {
 		return;
 	}
 	otherUpdate( );
+	_animation->update( );
 }
 
 

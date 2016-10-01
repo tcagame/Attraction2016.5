@@ -28,6 +28,7 @@ protected:
 private:
 	void attack( const CONTROLL& controll );
 	void walk( const CONTROLL& controll );
+	void animationUpdate( );
 	CONTROLL makeControll( );
 private:
 	const int _player_id;

@@ -20,6 +20,7 @@ public:
 	void drawBackGround( );
 	void drawPlayer( );
 	void drawEnemy( );
+	void drawBullet( );
 	void updateCamera( );
 };
 

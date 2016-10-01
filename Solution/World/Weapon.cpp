@@ -33,3 +33,16 @@ void Weapon::update( ) {
 void Weapon::add( BulletPtr bullet ) {
 	_list_bullet.push_back( bullet );
 }
+
+int Weapon::getBulletNum( ) {
+	return _list_bullet.size( );
+}
+
+BulletPtr Weapon::getBullet( int idx ) {
+	std::list<BulletPtr>::iterator it = _list_bullet.begin( );
+	for ( int i = 0; i < idx; i++ ) {
+		it++;
+	}
+	BulletPtr bullet = *it;
+	return bullet;
+}

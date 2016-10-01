@@ -48,6 +48,8 @@ void Viewer::initialize( ) {
 	drawer->loadMV1Model( Animation::MOTION_GOBLIN_ATTACK,	    "EnemyModel/goblin/enemy_goblin_attack.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
 	drawer->loadMV1Model( Animation::MOTION_GOBLIN_DAMAGE,		"EnemyModel/goblin/enemy_goblin_damage.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
 	drawer->loadMV1Model( Animation::MOTION_GOBLIN_DEAD,		"EnemyModel/goblin/enemy_goblin_dead.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
+
+	drawer->loadGraph( 0, "Billboard/missile.png" );
 }
 
 void Viewer::update( ) {
@@ -56,6 +58,7 @@ void Viewer::update( ) {
 	drawStatus( );
 	drawBackGround( );
 	drawEnemy( );
+	drawBullet( );
 	updateCamera( );
 }
 
@@ -154,5 +157,21 @@ void Viewer::drawEnemy ( ) {
 		DrawerPtr drawer = Drawer::getTask( );
 		Drawer::ModelMV1 model = Drawer::ModelMV1( pos, dir, motion, time );
 		drawer->setModelMV1( model );
+	}
+}
+
+void Viewer::drawBullet( ) {
+	AppPtr app = App::getTask( );
+	WeaponPtr weapon = app->getWeapon( );
+	DrawerPtr drawer = Drawer::getTask( );
+	for ( int i = 0; i < weapon->getBulletNum( ); i++ ) {
+		BulletPtr bullet = weapon->getBullet( i );
+		Drawer::Billboard billboad;
+		billboad.res = 0;
+		billboad.pos = bullet->getPos( );
+		billboad.size = 0.5;
+		billboad.blend = Drawer::BLEND_NONE;
+		billboad.ratio = 0;
+		drawer->setBillboard( billboad );
 	}
 }

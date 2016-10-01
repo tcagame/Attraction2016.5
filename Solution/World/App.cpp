@@ -117,6 +117,7 @@ void App::updateStatePlay( ) {
 		_player[ i ]->update( );
 	}
 	_cohort->update( );
+	_weapon->update( );
 }
 
 void App::updateStateClear( ) {

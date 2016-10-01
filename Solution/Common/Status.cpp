@@ -15,10 +15,10 @@ Status::Status( ) {
 	form.col[ 3 ] = 150;
 	_td = TableDrawerPtr( new TableDrawer( form ) );
 
-	_td->setCell( 0, 0 , "PLAYER(KNIGHT)" );
-	_td->setCell( 0, 1 , "PLAYER(HUNTER)" );
-	_td->setCell( 0, 2 , "PLAYER(MONK)" );
-	_td->setCell( 0, 3 , "PLAYER(WIDTH)" );
+	_td->setCell( 0, 0 , "PLAYER:1" );
+	_td->setCell( 0, 1 , "PLAYER:2" );
+	_td->setCell( 0, 2 , "PLAYER:3" );
+	_td->setCell( 0, 3 , "PLAYER:4" );
 	for ( int i = 0; i < 4; i++ ) {
 		_data.player[ i ].x = 0;
 		_data.player[ i ].y = 0;

@@ -43,6 +43,7 @@ void App::initialize( ) {
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		Character::STATUS status = Character::STATUS( 100000, 100, 1 );
 		_player[ i ] = PlayerPtr( new Player( i, status ) );
+		_player[ i ]->create( Vector( 7 + ( i % 2 ), 8 + ( i / 2 ) ) );
 	}
 	
 	_cohort = CohortPtr( new Cohort( ) );
@@ -112,6 +113,9 @@ void App::updateStateReady( ) {
 }
 
 void App::updateStatePlay( ) {
+	for ( int i = 0; i < PLAYER_NUM; i++ ){
+		_player[ i ]->update( );
+	}
 }
 
 void App::updateStateClear( ) {

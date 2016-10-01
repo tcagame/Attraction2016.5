@@ -50,6 +50,7 @@ void Viewer::initialize( ) {
 
 void Viewer::update( ) {
 	drawGroundModel( );
+	drawPlayer( );
 	drawStatus( );
 	drawBackGround( );
 	drawEnemy( );
@@ -106,7 +107,7 @@ void Viewer::drawBackGround( ) {
 	drawer->setModelMDL( model_mdl );
 }
 
-void drawPlayer( ) {
+void Viewer::drawPlayer( ) {
 	AppPtr app = App::getTask( );
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		PlayerPtr player = app->getPlayer( i );

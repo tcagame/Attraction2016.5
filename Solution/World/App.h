@@ -2,9 +2,13 @@
 #include "Task.h"
 #include <string>
 #include <array>
+#include "Network.h"
 
 PTR( App );
 PTR( Ground );
+PTR( Field );
+PTR( Weapon );
+PTR( Player );
 PTR( GroundModel );
 
 class App : public Task {
@@ -27,6 +31,9 @@ public:
 	void update( );
 	GroundPtr getGround( ) const;
 	GroundModelPtr getGroundModel( ) const;
+	FieldPtr getField( ) const;
+	WeaponPtr getWeapon( ) const;
+	PlayerPtr getPlayer( unsigned char player_id ) const;
 	void setState( STATE state );
 	STATE getState( ) const;
 	int getStartCount( ) const;
@@ -45,6 +52,9 @@ private:
 private:
 	GroundPtr _ground;
 	GroundModelPtr _ground_model;
+	FieldPtr _field;
+	WeaponPtr _weapon;
+	std::array< PlayerPtr, PLAYER_NUM > _player;
 	STATE _state;
 	int _push_reset_count;
 	int _push_start_count;

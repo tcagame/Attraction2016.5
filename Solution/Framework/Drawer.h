@@ -69,14 +69,6 @@ public:
 		Billboard( );
 		Billboard( Vector pos_, double size_, int res, BLEND blend_, double ratio_ );
 	};
-	struct PlayingEffect {
-		int playing_handle;
-		Vector scale;
-		Vector pos;
-		Vector dir;
-		PlayingEffect( );
-		PlayingEffect( int playing_effect_, Vector scale_, Vector pos_, Vector dir_ );
-	};
 	
 public:
 	void initialize( );
@@ -84,7 +76,6 @@ public:
 	void loadMV1Model( int motion, const char* filename, double scale );
 	void loadMDLModel( int type, const char* filename, const char* texture_filename, Matrix matrix = Matrix( ) );
 	void loadGraph( int res, const char* filename );
-	void loadEffect( int res,  const char* filename );
 	double getEndAnimTime( int res );
 	void setSprite( const Sprite& sprite );
 	void setModelMV1( const ModelMV1& model );
@@ -126,9 +117,6 @@ private:
 	static const int BILLBOARD_NUM = 1000;
 	std::array< Billboard, BILLBOARD_NUM > _billboard;
 	int _billboard_idx;
-
-	std::array< PlayingEffect, EFFECT_ID_NUM > _effect;
-	int _effect_idx;
 
 	static const int MODEL_MDL_NUM = 500;
 	std::array< ModelMDL, MODEL_MDL_NUM > _model_mdl;

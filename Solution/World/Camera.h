@@ -21,6 +21,7 @@ public:
 	void setTarget( Vector target );
 	virtual void initialize( ) { };
 	bool isInScreen( Vector pos );
+	Vector getConvertDeviceVec( const Vector& vec );
 protected:
 	Vector getStartPos( ) const;
 	Vector getStartTargetPos( ) const;

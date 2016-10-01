@@ -3,7 +3,7 @@
 #include "Ground.h"
 #include "Application.h"
 
-const Vector START_CAMERA_POS = Vector( 0, 20, 20 );
+const Vector START_CAMERA_POS = Vector( 10, 0, 20 );
 const Vector START_TARGET_POS = Vector( 0, 0, 0 );
 
 const double SCREEN_LENGTH = 800.0;
@@ -19,7 +19,8 @@ CameraPtr Camera::getTask( ) {
 Camera::Camera( ) :
 _pos( START_CAMERA_POS ),
 _target( START_TARGET_POS ) {
-
+	ApplicationPtr fw = Application::getInstance( );
+	fw->setCameraUp( Vector( 0, 0, 1 ) );
 }
 
 
@@ -65,4 +66,20 @@ Vector Camera::getStartTargetPos( ) const {
 bool Camera::isInScreen( Vector pos ) {
 	double length = ( _target - pos ).getLength2( );
 	return length < SCREEN_LENGTH;
+}
+
+Vector Camera::getConvertDeviceVec( const Vector& vec ) {
+
+	//ƒJƒƒ‰‚ÌŒü‚«‚ð‹‚ß‚Ä‚¢‚é
+	Vector camera_dir = _target - _pos;
+	camera_dir.z = 0;
+	//ƒfƒoƒCƒX‚Ì•ûŠp‚Æ‚Ü‚Á‚·‚®i‚ÞŒü‚«‚Æ‚Ì·Šp‚ð‹‚ß‚é
+	//·Šp•ª‰ñ“]‚·‚é‰ñ“]s—ñ‚ð‚Â‚­‚é
+	double angle = vec.angle( Vector( 0, -1, 0 ) );
+	Vector axis = vec.cross( Vector( 0, -1, 0 ) );
+	Matrix mat = Matrix::makeTransformRotation( axis, angle );
+
+	//·Šp•ª‰ñ“]‚³‚¹‚é
+	Vector move_dir = mat.multiply( camera_dir );
+	return move_dir.normalize( );
 }

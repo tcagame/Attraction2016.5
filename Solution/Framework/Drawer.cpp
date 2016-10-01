@@ -67,22 +67,6 @@ ratio( ratio_ ) {
 
 }
 
-Drawer::PlayingEffect::PlayingEffect( ) :
-playing_handle( -1 ),
-scale( Vector( 1, 1, 1 ) ),
-pos( Vector( 0, 0, 0 ) ),
-dir( Vector( 0, 0, 0 ) ) {
-
-}
-
-Drawer::PlayingEffect::PlayingEffect( int playing_handle_, Vector scale_,Vector pos_, Vector dir_ ) :
-playing_handle ( playing_handle_ ),
-scale( scale_ ),
-pos( pos_ ),
-dir( dir_ ) {
-
-}
-
 Drawer::Billboard::Billboard( ) :
 size( 0 ),
 res( 0 ),
@@ -120,7 +104,6 @@ void Drawer::initialize( ) {
 	_sprite_idx = 0;
 	_model_mv1_idx = 0;
 	_billboard_idx = 0;
-	_effect_idx = 0;
 
 	_shadow_model = ModelPtr( new Model );
 	_shadow_model->alloc( SHADOW_NUM * 2 );

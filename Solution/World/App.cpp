@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "Ground.h"
 #include "GroundModel.h"
+#include "Field.h"
+#include "Weapon.h"
 #include "Device.h"
 #include "Application.h"
 #include "Client.h"
@@ -35,18 +37,15 @@ void App::initialize( ) {
 	std::string filepath = DIRECTORY + "CSV/";
 	_ground = GroundPtr( new Ground( filepath + "map.csv" ) );//マップデータ
 	_ground_model = GroundModelPtr( new GroundModel( ) );
-	/*_field = FieldPtr( new Field( ) );
+	_field = FieldPtr( new Field( ) );
 	_weapon = WeaponPtr( new Weapon( ) );
-	if ( _player_id == PLAYER_KNIGHT ||
-		 _player_id == PLAYER_MONK ||
-		 _player_id == PLAYER_WITCH ||
-		 _player_id == PLAYER_HUNTER||
-		 _player_id == PLAYER_NONE ) {
-		_cohort = CohortPtr( new Cohort( ) );
-		_crystals = CrystalsPtr( new Crystals( ) );
-		_adv_mgr = AdvMgrPtr( new AdvMgr( _player_id ) );
-		_adventure = AdventurePtr( new Adventure( ) );
-	}*/
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		Character::STATUS status = Character::STATUS( 100000, 100, 1 );
+		_player[ i ] = PlayerPtr( new Player( i, status ) );
+	}
+	/*
+	_cohort = CohortPtr( new Cohort( ) );
+	*/
 	
 	loadToGround( ) ;//GroundModelとCohortのデータ読み込み
 	/*if ( _cohort ) {
@@ -193,10 +192,22 @@ void App::setState( STATE state ) {
 	_state = state;
 }
 
+FieldPtr App::getField( ) const {
+	return _field;
+}
+
+WeaponPtr App::getWeapon( ) const {
+	return _weapon;
+}
+
 int App::getStartCount( ) const {
 	return _push_start_count;
 }
 
 int App::getStartCountMax( ) const {
 	return START_COUNT;
+}
+
+PlayerPtr App::getPlayer( unsigned char player_id ) const {
+	return _player[ player_id ];
 }

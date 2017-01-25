@@ -4,6 +4,8 @@
 #include "Device.h"
 #include "Server.h"
 
+const int PLAYER_START_HP = 1000;//‚Æ‚è‚ ‚¦‚¸‚±‚±‚Å’è‹`
+
 ProcessorPtr Processor::getTask( ) {
 	ApplicationPtr app = Application::getInstance( );
 	return std::dynamic_pointer_cast< Processor >( app->getTask( getTag( ) ) );
@@ -11,6 +13,7 @@ ProcessorPtr Processor::getTask( ) {
 
 Processor::Processor( ) {
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		_data.player[ i ].hp = PLAYER_START_HP;
 		_data.player[ i ].x = 0;
 		_data.player[ i ].y = 0;
 		_data.player[ i ].button = 0;

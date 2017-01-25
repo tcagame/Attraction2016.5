@@ -15,15 +15,11 @@ const unsigned char COMMAND_STATUS_ACTION  = 0x11; // StatusïœçX
 
 const int PLAYER_NUM = 4;
 
-const unsigned char PLAYER_KNIGHT      = 0;
-const unsigned char PLAYER_HUNTER      = 1;
-const unsigned char PLAYER_MONK        = 2;
-const unsigned char PLAYER_WITCH       = 3;
-const unsigned char PLAYER_NONE        = 0xff;
-
-//const unsigned char ACTION_NONE = 0x01;
-//const unsigned char ACTION_ATTACK = 0x02;
-//const unsigned char ACTION_DEATHBLOW = 0x04;
+const unsigned char PLAYER_1 = 0x00;
+const unsigned char PLAYER_2 = 0x01;
+const unsigned char PLAYER_3 = 0x02;
+const unsigned char PLAYER_4 = 0x03;
+const unsigned char PLAYER_NONE = 0xff;
 
 const unsigned char BUTTON_A = 0x01; // INPUT_A ( 0b00000001 )
 const unsigned char BUTTON_B = 0x02; // INPUT_B ( 0b00000010 )
@@ -40,6 +36,7 @@ const int MAX_MACHINE = 4;
 
 	struct CLIENTDATA {
 		struct PLAYER {
+			int hp;
 			int x;
 			int y;
 			unsigned int button;

@@ -19,6 +19,8 @@ public:
 	void draw( );
 	void setInput( CLIENTDATA data );
 private:
+	std::string getButtonBinary( unsigned char button_key );
+private:
 	TableDrawerPtr _td;
 	CLIENTDATA _data;
 };

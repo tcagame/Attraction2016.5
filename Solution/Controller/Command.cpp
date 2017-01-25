@@ -5,6 +5,7 @@
 #include "log.h"
 
 const char * COM_IP     = "ip";
+const char * COM_DEVICE = "device";
 
 CommandPtr Command::getTask( ) {
 	ApplicationPtr fw = Application::getInstance( );
@@ -79,7 +80,14 @@ void Command::execute( ) {
 		return;
 	}
 
+	// IPアドレス取得
+	if ( _word[ 0 ] == COM_DEVICE ) {
+		ReSetupJoypad( );
+		log->send( "deviceの再読み込みをしました。" );
+		return;
+	}
+
 	// コマンドエラー
-	log->send( "#ERROR# %s", com.c_str( ) );
+	log->send( "[エラー]このコマンドは登録されていません(%s)", com.c_str( ) );
 }
 

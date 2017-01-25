@@ -19,7 +19,7 @@ DevicePtr Device::getTask( ) {
 
 
 Device::Device( ) {
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+	for ( int i = 0; i < MAX_JOYPAD_USE_NUM; i++ ) {
 		_data.player[ i ].x = 0;
 		_data.player[ i ].y = 0;
 		_data.player[ i ].button = 0;

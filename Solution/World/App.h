@@ -37,7 +37,7 @@ public:
 	WeaponPtr getWeapon( ) const;
 	CohortPtr getCohort( ) const;
 
-	PlayerPtr getPlayer( unsigned char player_id ) const;
+	PlayerPtr getPlayer( ) const;
 	void setState( STATE state );
 	PlayerPtr getPlayerTarget( const Vector& pos );
 	STATE getState( ) const;
@@ -60,7 +60,7 @@ private:
 	FieldPtr _field;
 	CohortPtr _cohort;
 	WeaponPtr _weapon;
-	std::array< PlayerPtr, PLAYER_NUM > _player;
+	PlayerPtr _player;
 	STATE _state;
 	int _push_reset_count;
 	int _push_start_count;

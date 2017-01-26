@@ -39,15 +39,12 @@ void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
 	drawer->loadMDLModel( MODEL_MDL_FLOOR, "MapModel/floor01.mdl", "MapModel/floor01_DM.jpg" );
 	drawer->loadMDLModel( MODEL_MDL_BACK_GROUND, "MapModel/bg.mdl", "MapModel/bg01_DM.jpg" );
-	drawer->loadMV1Model( Animation::MOTION_PLAYER_WAIT,		"CaracterModel/hunter/player_hunter_wait.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
-	drawer->loadMV1Model( Animation::MOTION_PLAYER_WALK,		"CaracterModel/hunter/player_hunter_walk.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
-	drawer->loadMV1Model( Animation::MOTION_PLAYER_ATTACK_FIRE,	"CaracterModel/hunter/player_hunter_attack_fire.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
-	drawer->loadMV1Model( Animation::MOTION_PLAYER_DEAD,		"CaracterModel/hunter/player_hunter_dead.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WAIT,		"EnemyModel/goblin/enemy_goblin_wait.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WALK,		"EnemyModel/goblin/enemy_goblin_walk.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_ATTACK,	    "EnemyModel/goblin/enemy_goblin_attack.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_DAMAGE,		"EnemyModel/goblin/enemy_goblin_damage.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_DEAD,		"EnemyModel/goblin/enemy_goblin_dead.mv1", MODEL_SCALE_2016 * MODEL_SCALE_ALL );
+	drawer->loadMV1Model( Animation::MOTION_PLAYER_WAIT,		"CaracterModel/hunter/player_hunter_wait.mv1" );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WAIT,		"EnemyModel/goblin/enemy_goblin_wait.mv1" );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WALK,		"EnemyModel/goblin/enemy_goblin_walk.mv1" );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_ATTACK,	    "EnemyModel/goblin/enemy_goblin_attack.mv1" );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_DAMAGE,		"EnemyModel/goblin/enemy_goblin_damage.mv1" );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_DEAD,		"EnemyModel/goblin/enemy_goblin_dead.mv1" );
 
 	drawer->loadGraph( 0, "Billboard/missile.png" );
 }
@@ -66,8 +63,8 @@ void Viewer::updateCamera( ) {
 	CameraPtr camera = Camera::getTask( );
 	Vector camera_pos = camera->getPos( );
 	Vector camera_target = camera->getTarget( );
-	ApplicationPtr fw = Application::getInstance( );
-	fw->setCamera( camera_pos, camera_target );
+	DrawerPtr drawer = Drawer::getTask( );
+	drawer->setCamera( camera_pos, camera_target );
 }
 
 void Viewer::drawGroundModel( ) {
@@ -114,25 +111,23 @@ void Viewer::drawBackGround( ) {
 
 void Viewer::drawPlayer( ) {
 	AppPtr app = App::getTask( );
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		PlayerPtr player = app->getPlayer( i );
-		if ( !player ) {
-			continue;
-		}
-		if ( !player->isExpired( ) ) {
-			continue;
-		}
-
-		AnimationPtr animation = player->getAnimation( );
-		int motion = animation->getMotion( );
-		double time = animation->getAnimTime( );
-		Vector pos = player->getPos( );
-		Vector dir = player->getDir( );
-
-		DrawerPtr drawer = Drawer::getTask( );
-		Drawer::ModelMV1 model = Drawer::ModelMV1( pos, dir, motion, time );
-		drawer->setModelMV1( model );
+	PlayerPtr player = app->getPlayer( );
+	if ( !player ) {
+		return;
 	}
+	if ( !player->isExpired( ) ) {
+		return;
+	}
+
+	AnimationPtr animation = player->getAnimation( );
+	int motion = animation->getMotion( );
+	double time = animation->getAnimTime( );
+	Vector pos = player->getPos( );
+	Vector dir = player->getDir( );
+
+	DrawerPtr drawer = Drawer::getTask( );
+	Drawer::ModelMV1 model = Drawer::ModelMV1( motion, time );
+	drawer->setModelMV1( model );
 }
 
 void Viewer::drawEnemy ( ) {

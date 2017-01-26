@@ -6,7 +6,7 @@
 #include "Camera.h"
 #include "Animation.h"
 
-const Vector START_DIR = Vector( 0, 1, 0 );
+const Vector START_DIR = Vector( 1, -1, 0 );
 
 Character::Character( Character::STATUS status ) :
 _origin_status( status ) {
@@ -115,8 +115,8 @@ void Character::dead( ) {
 	if ( !_expired ) {
 		return;
 	}
-	AppPtr app = App::getTask();
-	FieldPtr field = app->getField();
+	AppPtr app = App::getTask( );
+	FieldPtr field = app->getField( );
 	field->delTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
 	_expired = false;
 }

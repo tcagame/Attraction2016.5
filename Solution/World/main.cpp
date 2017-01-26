@@ -5,6 +5,7 @@
 #include "Drawer.h"
 #include "Client.h"
 #include "Camera.h"
+#include "Device.h"
 
 
 void main( ) {
@@ -15,6 +16,7 @@ void main( ) {
 	ClientPtr client = ClientPtr( new Client );
 	ViewerPtr viewer = ViewerPtr( new Viewer );
 	CameraPtr camera = CameraPtr( new Camera );
+	DevicePtr device = DevicePtr( new Device );
 
 	application->addTask( App::getTag( ), app );
 	application->addTask( Drawer::getTag( ), drawer );
@@ -22,4 +24,5 @@ void main( ) {
 	application->addTask( Viewer::getTag( ), viewer );
 	application->addTask( Client::getTag( ), client );
 	application->addTask( Camera::getTag( ), camera );
+	application->addTask( Device::getTag( ), device );
 }

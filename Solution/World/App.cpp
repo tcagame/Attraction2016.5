@@ -40,11 +40,9 @@ void App::initialize( ) {
 	_ground_model = GroundModelPtr( new GroundModel( ) );
 	_field = FieldPtr( new Field( ) );
 	_weapon = WeaponPtr( new Weapon( ) );
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		Character::STATUS status = Character::STATUS( 100000, 100, 0.1 );
-		_player[ i ] = PlayerPtr( new Player( i, status ) );
-		_player[ i ]->create( Vector( 7 + ( i % 2 ), 8 + ( i / 2 ) ) );
-	}
+	Character::STATUS status = Character::STATUS( 100000, 100, 0.1 );
+	_player = PlayerPtr( new Player( PLAYER_1, status ) );
+	_player->create( Vector( 5, 10 ) );
 	
 	_cohort = CohortPtr( new Cohort( ) );
 	
@@ -113,9 +111,7 @@ void App::updateStateReady( ) {
 }
 
 void App::updateStatePlay( ) {
-	for ( int i = 0; i < PLAYER_NUM; i++ ){
-		_player[ i ]->update( );
-	}
+	_player->update( );
 	_cohort->update( );
 	_weapon->update( );
 }
@@ -138,16 +134,13 @@ PlayerPtr App::getPlayerTarget( const Vector& pos ){
 	PlayerPtr target;
 
 	double min = 1000;
-	for ( int i = 0; i < 4; i++ ) {
-		if ( !_player[ i ]->isExpired( ) ) {
-			continue;
-		}
-		Vector vec = _player[ i ]->getPos( ) - pos;
-		double length = vec.getLength( );
-		if ( length < min ) {
-			target = _player[ i ];
-			min = length;
-		}
+	if ( !_player->isExpired( ) ) {
+		return target;
+	}
+	Vector vec = _player->getPos( ) - pos;
+	double length = vec.getLength( );
+	if ( length < min ) {
+		target = _player;
 	}
 	return target;	
 }
@@ -237,6 +230,6 @@ int App::getStartCountMax( ) const {
 	return START_COUNT;
 }
 
-PlayerPtr App::getPlayer( unsigned char player_id ) const {
-	return _player[ player_id ];
+PlayerPtr App::getPlayer( ) const {
+	return _player;
 }

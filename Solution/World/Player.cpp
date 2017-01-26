@@ -23,50 +23,9 @@ void Player::otherUpdate( ) {
 	_player_state = PLAYER_STATE_WAIT;
 	
 	CONTROLL controll = makeControll( );
-	walk( controll );
-	attack( controll );
 
-	if ( getStatus( ).hp <= 0 ) {
-		_player_state = PLAYER_STATE_DEAD;
-	}
 	animationUpdate( );
 	_before_state = _player_state;
-}
-
-void Player::walk( const CONTROLL& controll ) {
-	if ( _before_state != PLAYER_STATE_ATTACK &&
-		 _before_state != PLAYER_STATE_DEAD ) {
-
-		if ( controll.move.getLength( ) > 0.0 ) {
-			//i‚ß‚éê‡ˆÚ“®
-			move( controll.move );
-			_player_state = PLAYER_STATE_WALK;
-		}
-	}
-}
-
-void Player::attack( const CONTROLL& controll ) {
-	AppPtr app = App::getTask( );
-	WeaponPtr weapon = app->getWeapon( );
-	BulletPtr bullet;
-	AnimationPtr animation = getAnimation( );
-	int power = getStatus(  ).power;
-
-	//UŒ‚‚É“ü‚éuŠÔ
-	bool in_attack = controll.action == CONTROLL::ATTACK && animation->getMotion( ) != Animation::MOTION_PLAYER_ATTACK_FIRE;
-	if ( in_attack ) {
-		_player_state = PLAYER_STATE_ATTACK;
-	}
-	//UŒ‚’†
-	if ( animation->getMotion( ) == Animation::MOTION_PLAYER_ATTACK_FIRE ) {
-		if ( !animation->isEndAnimation( ) ) {
-			if ( animation->getAnimTime( ) == 30.0 ) {
-				bullet = BulletFirePtr( new BulletFire( getPos( ), getDir( ), power ) );
-				weapon->add( bullet );
-			}
-			_player_state = PLAYER_STATE_ATTACK;
-		}
-	}
 }
 
 Player::CONTROLL Player::makeControll( ) {
@@ -95,10 +54,6 @@ Player::CONTROLL Player::makeControll( ) {
 
 void Player::animationUpdate( ) {
 	AnimationPtr animation = getAnimation( );
-	if ( _player_state == PLAYER_STATE_DEAD && animation->isEndAnimation( ) ) {
-		dead( );
-		return;
-	}
 
 	if ( _player_state == PLAYER_STATE_WAIT ) {
 		if ( animation->getMotion( ) != Animation::MOTION_PLAYER_WAIT ) {
@@ -107,26 +62,6 @@ void Player::animationUpdate( ) {
 			if( animation->isEndAnimation( ) ) {
 				animation->setAnimationTime( 0 );
 			}
-		}
-	}
-	if ( _player_state == PLAYER_STATE_WALK ) {
-		if ( animation->getMotion( ) != Animation::MOTION_PLAYER_WALK ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_WALK ) ) );
-		} else {
-			if ( animation->isEndAnimation( ) ) {
-				animation->setAnimationTime( 0 );
-			}
-		}
-	}
-	if ( _player_state == PLAYER_STATE_ATTACK ) {
-		if ( animation->getMotion( ) != Animation::MOTION_PLAYER_ATTACK_FIRE ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_ATTACK_FIRE, 1.5 ) ) );
-			animation->setAnimationTime( 20 );
-		}
-	}
-	if ( _player_state == PLAYER_STATE_DEAD ) {
-		if ( animation->getMotion( ) != Animation::MOTION_PLAYER_DEAD ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_DEAD ) ) );
 		}
 	}
 }

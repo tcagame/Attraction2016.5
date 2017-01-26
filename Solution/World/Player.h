@@ -7,10 +7,7 @@ PTR( Player );
 class Player : public Character {
 public:
 	enum PLAYER_STATE {
-		PLAYER_STATE_WAIT,
-		PLAYER_STATE_WALK,
-		PLAYER_STATE_ATTACK,
-		PLAYER_STATE_DEAD,
+		PLAYER_STATE_WAIT
 	};
 public:
 	Player( unsigned char player_id, Character::STATUS status );
@@ -26,8 +23,6 @@ protected:
 		} action;
 	};
 private:
-	void attack( const CONTROLL& controll );
-	void walk( const CONTROLL& controll );
 	void animationUpdate( );
 	CONTROLL makeControll( );
 private:

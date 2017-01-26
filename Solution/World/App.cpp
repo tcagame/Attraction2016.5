@@ -98,16 +98,8 @@ void App::updateReset( ) {
 void App::updateStateReady( ) {
 	DevicePtr device = Device::getTask( );
 	if ( device->getButton( 0 ) > 0 ) {
-		_push_start_count += 1;
-	} else {
-		_push_start_count = 0;
+		setState( STATE_PLAY );
 	}
-	if ( _push_start_count < START_COUNT ) {
-		return;
-	}
-
-	setState( STATE_PLAY );
-	_push_start_count = 0;
 }
 
 void App::updateStatePlay( ) {
@@ -144,7 +136,6 @@ PlayerPtr App::getPlayerTarget( const Vector& pos ){
 	}
 	return target;	
 }
-
 
 void App::loadToGround( ) {
 	int width = _ground->getWidth( );
@@ -218,6 +209,7 @@ FieldPtr App::getField( ) const {
 WeaponPtr App::getWeapon( ) const {
 	return _weapon;
 }
+
 CohortPtr App::getCohort( ) const{
 	return _cohort;
 }

@@ -4,7 +4,7 @@
 #include "Drawer.h"
 #include "Application.h"
 
-const Vector START_CAMERA_POS = Vector( 10, 5, 20 );
+const Vector START_CAMERA_POS = Vector( 0, 70, 20 );
 const Vector START_TARGET_POS = Vector( 0, 0, 0 );
 
 const double SCREEN_LENGTH = 800.0;
@@ -32,7 +32,7 @@ void Camera::initialize( ) {
 }
 
 void Camera::update( ) {
-Vector vec = _pos - _target;
+	/*Vector vec = _pos - _target;
 	vec.z = 0;
 
 	if( vec.getLength( ) > MAX_LENGTH ) {
@@ -44,7 +44,7 @@ Vector vec = _pos - _target;
 	vec.z = 15;
 
 	// _camera_pos‚ğ•ÏX
-	_pos = _target + vec;
+	_pos = _target + vec;*/
 }
 
 Vector Camera::getPos( ) const {

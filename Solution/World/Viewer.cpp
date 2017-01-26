@@ -47,7 +47,7 @@ void Viewer::initialize( ) {
 }
 
 void Viewer::update( ) {
-//	drawGroundModel( );
+	drawGroundModel( );
 	drawPlayer( );
 	drawBackGround( );
 	drawBullet( );
@@ -114,11 +114,11 @@ void Viewer::drawPlayer( ) {
 	Vector pos = player->getPos( );
 	Vector dir = player->getDir( );
 
-	Matrix mat = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
+	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
 	Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
-	mat.multiply( mat_scale );
 	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
-	mat.multiply( mat_trans );
+
+	Matrix mat = mat_trans * mat_rot * mat_scale;
 
 	DrawerPtr drawer = Drawer::getTask( );
 	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );

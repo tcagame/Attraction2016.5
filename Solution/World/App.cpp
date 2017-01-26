@@ -42,7 +42,7 @@ void App::initialize( ) {
 	_weapon = WeaponPtr( new Weapon( ) );
 	Character::STATUS status = Character::STATUS( 100000, 100, 0.1 );
 	_player = PlayerPtr( new Player( 0, status ) );
-	_player->create( Vector( 5, 10 ) );
+	_player->create( Vector( 0, 0 ) );
 	
 	_cohort = CohortPtr( new Cohort( ) );
 	

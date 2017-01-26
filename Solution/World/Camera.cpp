@@ -5,7 +5,7 @@
 #include "Application.h"
 
 const Vector START_CAMERA_POS = Vector( 10, 5, 20 );
-const Vector START_TARGET_POS = Vector( 5, 10, 0 );
+const Vector START_TARGET_POS = Vector( 0, 0, 0 );
 
 const double SCREEN_LENGTH = 800.0;
 
@@ -20,19 +20,22 @@ CameraPtr Camera::getTask( ) {
 Camera::Camera( ) :
 _pos( START_CAMERA_POS ),
 _target( START_TARGET_POS ) {
-	DrawerPtr drawer = Drawer::getTask( );
-	drawer->setCameraUp( Vector( 0, 0, 1 ) );
 }
 
 
 Camera::~Camera( ) {
 }
 
+void Camera::initialize( ) {
+	DrawerPtr drawer = Drawer::getTask( );
+	drawer->setCameraUp( Vector( 0, 0, 1 ) );
+}
+
 void Camera::update( ) {
 Vector vec = _pos - _target;
 	vec.z = 0;
 
-	if( vec.getLength( ) > MAX_LENGTH) {
+	if( vec.getLength( ) > MAX_LENGTH ) {
 		vec = vec.normalize( ) * MAX_LENGTH;
 	}
 	if ( vec.getLength( ) < MIN_LENGTH ) {

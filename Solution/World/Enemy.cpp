@@ -13,7 +13,7 @@ Enemy::Enemy( Character::STATUS status ) :
 Character( status ) {
 	_state = ENEMY_STATE_WAIT;
 	_before_state = ENEMY_STATE_WAIT;
-	setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_WAIT, MOTION_SPEED ) ) );
+	setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER, Animation::MOTION_GOBLIN_WAIT, MOTION_SPEED ) ) );
 	_on_damage = false;
 	_before_hp = status.hp;
 }

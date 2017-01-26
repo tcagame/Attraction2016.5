@@ -37,18 +37,18 @@ Viewer::~Viewer( ) {
 
 void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
-	drawer->loadMDLModel( MODEL_MDL_FLOOR, "MapModel/floor01.mdl", "MapModel/floor01_DM.jpg" );
-	drawer->loadMDLModel( MODEL_MDL_BACK_GROUND, "MapModel/bg.mdl", "MapModel/bg01_DM.jpg" );
-	drawer->loadMV1Model( Animation::MOTION_PLAYER_WAIT,		"CaracterModel/hunter/player_hunter_wait.mv1" );
+	drawer->loadMDLModel( MODEL_MDL_FLOOR,						"MapModel/floor01.mdl", "MapModel/floor01_DM.jpg" );
+	drawer->loadMDLModel( MODEL_MDL_BACK_GROUND,				"MapModel/bg.mdl", "MapModel/bg01_DM.jpg" );
+	drawer->loadMV1Model( Animation::MOTION_PLAYER,				"CaracterModel/player/player.mv1" );
+	drawer->loadMV1Model( Animation::MOTION_PLAYER_WAIT,		"CaracterModel/player/player_idle.mv1" );
 	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WAIT,		"EnemyModel/goblin/enemy_goblin_wait.mv1" );
 
 	drawer->loadGraph( 0, "Billboard/missile.png" );
 }
 
 void Viewer::update( ) {
-	drawGroundModel( );
+//	drawGroundModel( );
 	drawPlayer( );
-	drawStatus( );
 	drawBackGround( );
 	drawBullet( );
 	updateCamera( );
@@ -90,13 +90,6 @@ void Viewer::drawGroundModel( ) {
 	}
 }
 
-void Viewer::drawStatus( ) {
-	StatusPtr status = Status::getTask( );
-	ClientPtr client = Client::getTask( );
-	status->setInput( client->getClientData( ) );
-	status->draw( );
-}
-
 void Viewer::drawBackGround( ) {
 	AppPtr app = App::getTask( );
 	DrawerPtr drawer = Drawer::getTask( );
@@ -116,18 +109,19 @@ void Viewer::drawPlayer( ) {
 
 	AnimationPtr animation = player->getAnimation( );
 	int motion = animation->getMotion( );
+	int mesh = animation->getMesh( );
 	int time = ( int )animation->getAnimTime( );
 	Vector pos = player->getPos( );
 	Vector dir = player->getDir( );
 
-	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
-	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 0, 0, 1 ), 180 );
+	Matrix mat = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
 	Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
-
-	Matrix mat = mat_trans * mat_rot * mat_scale;
+	mat.multiply( mat_scale );
+	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
+	mat.multiply( mat_trans );
 
 	DrawerPtr drawer = Drawer::getTask( );
-	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, motion, time );
+	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );
 	drawer->setModelMV1( model );
 }
 

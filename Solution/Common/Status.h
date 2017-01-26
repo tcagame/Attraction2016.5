@@ -17,7 +17,6 @@ public:
 public:
 	void update( );
 	void draw( );
-	void setInput( CLIENTDATA data );
 private:
 	std::string getButtonBinary( unsigned char button_key );
 private:

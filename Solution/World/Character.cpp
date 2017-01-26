@@ -6,7 +6,7 @@
 #include "Camera.h"
 #include "Animation.h"
 
-const Vector START_DIR = Vector( 1, -1, 0 );
+const Vector START_DIR = Vector( 0, 0, 1 );
 
 Character::Character( Character::STATUS status ) :
 _origin_status( status ) {

@@ -13,7 +13,7 @@
 Player::Player( unsigned char player_id, Character::STATUS status ) :
 Character( status ),
 _player_id( player_id ) {
-	setAnimation( AnimationPtr( new Animation( Animation::MOTION_GOBLIN_WAIT ) ) );
+	setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_WAIT ) ) );
 }
 
 Player::~Player( ) {
@@ -57,11 +57,12 @@ void Player::animationUpdate( ) {
 
 	if ( _player_state == PLAYER_STATE_WAIT ) {
 		if ( animation->getMotion( ) != Animation::MOTION_PLAYER_WAIT ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER_WAIT ) ) );
+			setAnimation( AnimationPtr( new Animation( Animation::MOTION_PLAYER,Animation::MOTION_PLAYER_WAIT ) ) );
 		} else {
 			if( animation->isEndAnimation( ) ) {
 				animation->setAnimationTime( 0 );
 			}
 		}
 	}
+	animation->update( );
 }

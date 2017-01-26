@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "App.h"
 #include "Ground.h"
+#include "Drawer.h"
 #include "Application.h"
 
 const Vector START_CAMERA_POS = Vector( 10, 5, 20 );
@@ -19,8 +20,8 @@ CameraPtr Camera::getTask( ) {
 Camera::Camera( ) :
 _pos( START_CAMERA_POS ),
 _target( START_TARGET_POS ) {
-	ApplicationPtr fw = Application::getInstance( );
-	fw->setCameraUp( Vector( 0, 0, 1 ) );
+	DrawerPtr drawer = Drawer::getTask( );
+	drawer->setCameraUp( Vector( 0, 0, 1 ) );
 }
 
 

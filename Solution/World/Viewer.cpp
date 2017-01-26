@@ -41,10 +41,6 @@ void Viewer::initialize( ) {
 	drawer->loadMDLModel( MODEL_MDL_BACK_GROUND, "MapModel/bg.mdl", "MapModel/bg01_DM.jpg" );
 	drawer->loadMV1Model( Animation::MOTION_PLAYER_WAIT,		"CaracterModel/hunter/player_hunter_wait.mv1" );
 	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WAIT,		"EnemyModel/goblin/enemy_goblin_wait.mv1" );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WALK,		"EnemyModel/goblin/enemy_goblin_walk.mv1" );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_ATTACK,	    "EnemyModel/goblin/enemy_goblin_attack.mv1" );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_DAMAGE,		"EnemyModel/goblin/enemy_goblin_damage.mv1" );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_DEAD,		"EnemyModel/goblin/enemy_goblin_dead.mv1" );
 
 	drawer->loadGraph( 0, "Billboard/missile.png" );
 }
@@ -54,7 +50,6 @@ void Viewer::update( ) {
 	drawPlayer( );
 	drawStatus( );
 	drawBackGround( );
-	drawEnemy( );
 	drawBullet( );
 	updateCamera( );
 }
@@ -121,38 +116,19 @@ void Viewer::drawPlayer( ) {
 
 	AnimationPtr animation = player->getAnimation( );
 	int motion = animation->getMotion( );
-	double time = animation->getAnimTime( );
+	int time = ( int )animation->getAnimTime( );
 	Vector pos = player->getPos( );
 	Vector dir = player->getDir( );
 
+	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
+	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 0, 0, 1 ), 180 );
+	Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
+
+	Matrix mat = mat_trans * mat_rot * mat_scale;
+
 	DrawerPtr drawer = Drawer::getTask( );
-	Drawer::ModelMV1 model = Drawer::ModelMV1( motion, time );
+	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, motion, time );
 	drawer->setModelMV1( model );
-}
-
-void Viewer::drawEnemy ( ) {
-	AppPtr app = App::getTask( );
-	CohortPtr cohort = app->getCohort( );
-	int num = cohort->getMaxNum( );
-	for ( int i = 0; i < num; i++ ) {
-		EnemyPtr enemy = cohort->getEnemy( i );
-		if ( !enemy ) {
-			continue;
-		}
-		if ( !enemy->isExpired( ) ) {
-			continue;
-		}
-
-		AnimationPtr animation = enemy->getAnimation( );
-		int motion = animation->getMotion( );
-		double time = animation->getAnimTime( );
-		Vector pos = enemy->getPos( );
-		Vector dir = enemy->getDir( );
-
-		DrawerPtr drawer = Drawer::getTask( );
-		Drawer::ModelMV1 model = Drawer::ModelMV1( pos, dir, motion, time );
-		drawer->setModelMV1( model );
-	}
 }
 
 void Viewer::drawBullet( ) {

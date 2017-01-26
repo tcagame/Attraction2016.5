@@ -12,3 +12,4 @@ Solution/Framework/Test/Debug/
 Solution/World/Debug/World.tlog/
 Solution/World/Log.txt
 Solution/World/Debug/
+*.opensdf

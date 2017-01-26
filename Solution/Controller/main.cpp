@@ -7,7 +7,6 @@
 #include "Drawer.h"
 #include "Status.h"
 #include "Server.h"
-#include "Processor.h"
 #include "Server.h"
 
 void main( ) {
@@ -19,7 +18,6 @@ void main( ) {
 	LogPtr log = LogPtr( new Log );
 	DrawerPtr drawer = DrawerPtr( new Drawer( "../Resource/" ) );
 	StatusPtr status = StatusPtr( new Status );
-	ProcessorPtr processor = ProcessorPtr( new Processor );
 	ServerPtr server = ServerPtr( new Server );
 
 	app->addTask( Viewer::getTag( ), viewer );
@@ -29,6 +27,5 @@ void main( ) {
 	app->addTask( Log::getTag( ), log );
 	app->addTask( Drawer::getTag( ), drawer );
 	app->addTask( Status::getTag( ), status );
-	app->addTask( Processor::getTag( ), processor );
 	app->addTask( Server::getTag( ), server );
 }

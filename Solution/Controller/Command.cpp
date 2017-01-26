@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Keyboard.h"
 #include "Server.h"
+#include "Device.h"
 #include "log.h"
 
 const char * COM_IP     = "ip";
@@ -82,7 +83,8 @@ void Command::execute( ) {
 
 	// IPアドレス取得
 	if ( _word[ 0 ] == COM_DEVICE ) {
-		ReSetupJoypad( );
+		DevicePtr device = Device::getTask( );
+		device->resetup( );
 		log->send( "deviceの再読み込みをしました。" );
 		return;
 	}

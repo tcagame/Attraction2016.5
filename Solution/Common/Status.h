@@ -22,6 +22,5 @@ private:
 	std::string getButtonBinary( unsigned char button_key );
 private:
 	TableDrawerPtr _td;
-	CLIENTDATA _data;
 };
 

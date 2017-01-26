@@ -2,6 +2,7 @@
 #include "TableDrawer.h"
 #include "Application.h"
 #include "Device.h"
+#include "Server.h"
 
 Status::Status( ) {
 	TableDrawer::FORM form;
@@ -46,20 +47,19 @@ void Status::draw( ) {
 
 void Status::update( ) {
 	DevicePtr device = Device::getTask( );
+	ServerPtr server = Server::getTask( );
+	CLIENTDATA data = server->getData( );
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		if ( i < device->getDeviceNum( ) ) {
 			_td->setCell( 1, i + 1, "CONNECTING" );
 		} else {
 			_td->setCell( 1, i + 1, "DISCONNECT" );
 		}
-		_td->setCell( 2, i + 1, std::to_string( _data.player[ i ].hp ) );
-		_td->setCell( 3, i + 1, std::to_string( _data.player[ i ].x ) );
-		_td->setCell( 4, i + 1, std::to_string( _data.player[ i ].y ) );
-		_td->setCell( 5, i + 1, getButtonBinary( _data.player[ i ].button ) );
+		_td->setCell( 2, i + 1, std::to_string( data.player[ i ].hp ) );
+		_td->setCell( 3, i + 1, std::to_string( device->getDirX( i ) ) );
+		_td->setCell( 4, i + 1, std::to_string( device->getDirX( i ) ) );
+		_td->setCell( 5, i + 1, getButtonBinary( device->getButton( i ) ) );
 	}
-}
-void Status::setInput( CLIENTDATA data ) {
-	_data = data;
 }
 
 std::string Status::getButtonBinary( unsigned char button_key ) {

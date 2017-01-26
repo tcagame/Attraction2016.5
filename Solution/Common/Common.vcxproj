@@ -18,6 +18,11 @@
     <ClInclude Include="Status.h" />
     <ClInclude Include="TableDrawer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Framework2017\Framework2017.vcxproj">
+      <Project>{5ee8c2ee-5877-4647-bb7c-6bc53c390de4}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CB6AE3F1-299A-484F-BCB2-FE6D39D7EE73}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

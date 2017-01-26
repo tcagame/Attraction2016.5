@@ -19,7 +19,6 @@ public:
 	void drawStatus( );
 	void drawBackGround( );
 	void drawPlayer( );
-	void drawEnemy( );
 	void drawBullet( );
 	void updateCamera( );
 };

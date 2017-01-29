@@ -15,10 +15,15 @@ public:
 	void initialize( );
 public:
 	void update( );
+	//READY
+	void drawReady( );
+	//PLAY
 	void drawGroundModel( );
 	void drawBackGround( );
 	void drawPlayer( );
 	void drawBullet( );
 	void updateCamera( );
+	//CLEAR
+	//DEAD
 };
 

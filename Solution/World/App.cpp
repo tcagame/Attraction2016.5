@@ -55,8 +55,8 @@ void App::initialize( ) {
 
 
 void App::reset( ) {
-	//_state = STATE_READY;
-	_state = STATE_PLAY;//デバック用にプレイスタート
+	_state = STATE_READY;
+	//_state = STATE_PLAY;//デバック用にプレイスタート
 	_push_reset_count = 0;
 	_push_start_count = 0;
 }
@@ -96,10 +96,13 @@ void App::updateReset( ) {
 }
 
 void App::updateStateReady( ) {
+
+	/*どれかのデバイスのボタン押されたらプレイに移行
 	DevicePtr device = Device::getTask( );
 	if ( device->getButton( 0 ) > 0 ) {
 		setState( STATE_PLAY );
 	}
+	*/
 }
 
 void App::updateStatePlay( ) {

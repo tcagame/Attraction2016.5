@@ -17,10 +17,21 @@ const double MODEL_SCALE_2015 = 0.008;
 const double MODEL_SCALE_2016 = 0.06;
 const double MODEL_SCALE_ALL = 1.0;
 
+const int GRAPH_READY_BACK_X = 0;
+const int GRAPH_READY_BACK_Y = 0;
+const int GRAPH_READY_STRING_X = 1280;
+const int GRAPH_READY_STRING_Y = 1024;
+
 enum MODEL_MDL {
 	MODEL_MDL_NONE,
 	MODEL_MDL_FLOOR,
 	MODEL_MDL_BACK_GROUND
+};
+
+enum GRAPH_ID {
+	GRAPH_ID_READY_BACK,
+	GRAPH_ID_READY_STRING,
+	GRAPH_ID_MISSILE
 };
 
 ViewerPtr Viewer::getTask( ) {
@@ -31,26 +42,41 @@ ViewerPtr Viewer::getTask( ) {
 Viewer::Viewer( ) {
 }
 
-
 Viewer::~Viewer( ) {
 }
 
 void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
-	drawer->loadMDLModel( MODEL_MDL_FLOOR,						"MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
-	drawer->loadMV1Model( Animation::MOTION_PLAYER,				"CaracterModel/player/player.mv1" );
-	drawer->loadMV1Model( Animation::MOTION_PLAYER_WAIT,		"CaracterModel/player/player_idle.mv1" );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WAIT,		"EnemyModel/goblin/enemy_goblin_wait.mv1" );
+	drawer->loadMDLModel( MODEL_MDL_FLOOR,					"MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
+	drawer->loadMV1Model( Animation::MOTION_PLAYER,			"CaracterModel/player/player.mv1" );
+	drawer->loadMV1Model( Animation::MOTION_PLAYER_WAIT,	"CaracterModel/player/player_idle.mv1" );
+	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WAIT,	"EnemyModel/goblin/enemy_goblin_wait.mv1" );
 
-	drawer->loadGraph( 0, "Billboard/missile.png" );
+	drawer->loadGraph( GRAPH_ID_MISSILE,      "Billboard/missile.png" );
+	drawer->loadGraph( GRAPH_ID_READY_BACK,   "Images/ready_back.png" );
+	drawer->loadGraph( GRAPH_ID_READY_STRING, "Images/ready_string.png" );
+
 }
 
 void Viewer::update( ) {
-	drawGroundModel( );
-	drawPlayer( );
-	//drawBackGround( );
-	drawBullet( );
-	updateCamera( );
+	AppPtr app = App::getTask( );
+	App::STATE state = app->getState( );
+	switch ( state ) {
+	case App::STATE_READY:
+		drawReady( );
+		break;
+	case App::STATE_PLAY:
+		drawGroundModel( );
+		drawPlayer( );
+		//drawBackGround( );
+		drawBullet( );
+		updateCamera( );
+		break;
+	case App::STATE_CLEAR:
+		break;
+	case App::STATE_DEAD:
+		break;
+	}
 }
 
 void Viewer::updateCamera( ) {
@@ -139,5 +165,34 @@ void Viewer::drawBullet( ) {
 		billboad.blend = Drawer::BLEND_NONE;
 		billboad.ratio = 0;
 		drawer->setBillboard( billboad );
+	}
+}
+
+void Viewer::drawReady( ) {
+	ApplicationPtr app = Application::getInstance( );
+	DrawerPtr drawer = Drawer::getTask( );
+	{//READY”wŒi
+		Drawer::Sprite sprite;
+		sprite.res = GRAPH_ID_READY_BACK;
+		sprite.trans.sx = GRAPH_READY_BACK_X;
+		sprite.trans.sy = GRAPH_READY_BACK_Y;
+		sprite.trans.tw = -1;
+		sprite.blend = Drawer::BLEND_NONE;
+		drawer->setSprite( sprite );
+	}
+	{//READY•¶Žš
+		Drawer::Sprite sprite;
+		sprite.res = GRAPH_ID_READY_STRING;
+		sprite.trans.sx = 0;
+		if ( ( GRAPH_READY_STRING_X - app->getWindowWidth( )  ) / 2 > 0 ) {
+			sprite.trans.sx += ( GRAPH_READY_STRING_X - app->getWindowWidth( )  ) / 2;
+		}
+		sprite.trans.sy = 0;
+		if ( ( GRAPH_READY_STRING_Y - app->getWindowHeight( ) ) / 2 > 0 ) {
+			sprite.trans.sy += ( GRAPH_READY_STRING_Y - app->getWindowHeight( ) ) / 2;
+		}
+		sprite.trans.tw = -1;
+		sprite.blend = Drawer::BLEND_NONE;
+		drawer->setSprite( sprite );
 	}
 }

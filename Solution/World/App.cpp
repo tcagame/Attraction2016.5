@@ -97,12 +97,17 @@ void App::updateReset( ) {
 
 void App::updateStateReady( ) {
 
-	/*どれかのデバイスのボタン押されたらプレイに移行
-	DevicePtr device = Device::getTask( );
-	if ( device->getButton( 0 ) > 0 ) {
+	ClientPtr client = Client::getTask( );
+	CLIENTDATA data = client->getClientData( );
+	bool next = false;
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		if ( data.player[ i ].button > 0 ) {
+			next = true;
+		}
+	}
+	if ( next ) {
 		setState( STATE_PLAY );
 	}
-	*/
 }
 
 void App::updateStatePlay( ) {

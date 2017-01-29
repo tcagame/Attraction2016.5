@@ -24,6 +24,7 @@ void Player::otherUpdate( ) {
 	
 	CONTROLL controll = makeControll( );
 
+	walk( controll );
 	animationUpdate( );
 	_before_state = _player_state;
 }
@@ -65,4 +66,12 @@ void Player::animationUpdate( ) {
 		}
 	}
 	animation->update( );
+}
+
+void Player::walk( Player::CONTROLL controll ) {
+	if ( controll.move.getLength( ) > 0.0 ) {
+		Vector vec = controll.move.normalize( );
+		move( vec );
+		setDir( vec );
+	}
 }

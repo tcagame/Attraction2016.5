@@ -43,8 +43,8 @@ Player::CONTROLL Player::makeControll( ) {
 	move_vec = move_vec.normalize( ) * status.speed;//プレイヤーの進行ベクトル
 	controll.move = move_vec;
 
-	unsigned char action = data.player[ _player_id ].action;
-	if ( action & ACTION_ATTACK ) {
+	unsigned char action = data.player[ _player_id ].button;
+	if ( action & BUTTON_A ) {
 		controll.action = CONTROLL::ATTACK;
 	} else {
 		controll.action = CONTROLL::NONE;

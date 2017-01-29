@@ -7,7 +7,7 @@
 #include "Drawer.h"
 #include "Status.h"
 #include "Server.h"
-#include "Server.h"
+#include "AppController.h"
 
 void main( ) {
 	ApplicationPtr app = Application::getInstance( );
@@ -19,6 +19,7 @@ void main( ) {
 	DrawerPtr drawer = DrawerPtr( new Drawer( "../Resource/" ) );
 	StatusPtr status = StatusPtr( new Status );
 	ServerPtr server = ServerPtr( new Server );
+	AppControllerPtr app_controller = AppControllerPtr( new AppController );
 
 	app->addTask( Viewer::getTag( ), viewer );
 	app->addTask( Keyboard::getTag( ), keyboard );
@@ -28,4 +29,5 @@ void main( ) {
 	app->addTask( Drawer::getTag( ), drawer );
 	app->addTask( Status::getTag( ), status );
 	app->addTask( Server::getTag( ), server );
+	app->addTask( AppController::getTag( ), app_controller );
 }

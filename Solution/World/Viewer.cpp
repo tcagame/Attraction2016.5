@@ -37,8 +37,7 @@ Viewer::~Viewer( ) {
 
 void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
-	drawer->loadMDLModel( MODEL_MDL_FLOOR,						"MapModel/floor01.mdl", "MapModel/floor01_DM.jpg" );
-	drawer->loadMDLModel( MODEL_MDL_BACK_GROUND,				"MapModel/bg.mdl", "MapModel/bg01_DM.jpg" );
+	drawer->loadMDLModel( MODEL_MDL_FLOOR,						"MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
 	drawer->loadMV1Model( Animation::MOTION_PLAYER,				"CaracterModel/player/player.mv1" );
 	drawer->loadMV1Model( Animation::MOTION_PLAYER_WAIT,		"CaracterModel/player/player_idle.mv1" );
 	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WAIT,		"EnemyModel/goblin/enemy_goblin_wait.mv1" );
@@ -49,7 +48,7 @@ void Viewer::initialize( ) {
 void Viewer::update( ) {
 	drawGroundModel( );
 	drawPlayer( );
-	drawBackGround( );
+	//drawBackGround( );
 	drawBullet( );
 	updateCamera( );
 }
@@ -63,10 +62,12 @@ void Viewer::updateCamera( ) {
 }
 
 void Viewer::drawGroundModel( ) {
-	AppPtr app = App::getTask( );
-	GroundPtr ground = app->getGround( );
+	//AppPtr app = App::getTask( );
+	//GroundPtr ground = app->getGround( );
 	DrawerPtr drawer = Drawer::getTask( );
-	int width = ground->getWidth( );
+	Drawer::ModelMDL model_mdl = Drawer::ModelMDL( Vector( 0, 0, 0 ), MODEL_MDL_FLOOR );
+	drawer->setModelMDL( model_mdl );
+	/*int width = ground->getWidth( );
 	int height = ground->getHeight( );
 	int tex_handle = 0;
 	for ( int i = 0; i < width; i++ ) {
@@ -87,7 +88,7 @@ void Viewer::drawGroundModel( ) {
 			Drawer::ModelMDL model_mdl = Drawer::ModelMDL( Vector(  i *  Ground::CHIP_WIDTH, j *  Ground::CHIP_HEIGHT, 0 ), type );
 			drawer->setModelMDL( model_mdl );
 		}
-	}
+	}*/
 }
 
 void Viewer::drawBackGround( ) {

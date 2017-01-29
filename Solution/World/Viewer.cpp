@@ -141,6 +141,7 @@ void Viewer::drawPlayer( ) {
 	Vector pos = player->getPos( );
 	Vector dir = player->getDir( );
 
+//	Matrix mat_dir = Matrix::makeTransformRotation( Vector( 0.0, 0.0, 1.0 ), );
 	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
 	Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
 	Matrix mat_trans = Matrix::makeTransformTranslation( pos );

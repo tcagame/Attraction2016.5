@@ -51,6 +51,7 @@ public:
 protected:
 	bool move( const Vector& vec );
 	void setAnimation( AnimationPtr animation );
+	void setDir( Vector dir );
 	virtual void otherUpdate( ) = 0;
 private:
 	Vector _pos;

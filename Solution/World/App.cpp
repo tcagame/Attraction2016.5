@@ -40,7 +40,7 @@ void App::initialize( ) {
 	_ground_model = GroundModelPtr( new GroundModel( ) );
 	_field = FieldPtr( new Field( ) );
 	_weapon = WeaponPtr( new Weapon( ) );
-	Character::STATUS status = Character::STATUS( 100000, 100, 0.1 );
+	Character::STATUS status = Character::STATUS( 100000, 100, 0.5 );
 	_player = PlayerPtr( new Player( 0, status ) );
 	_player->create( Vector( 0, 0 ) );
 	

@@ -45,23 +45,11 @@ bool Character::move( const Vector& vec ) {
 		_dir = vec.normalize( );
 	}
 	AppPtr app = App::getTask( );
-	FieldPtr field = app->getField( );
-	
-	field->delTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
 
 	Vector store = _pos;
-	Vector move_pos = _pos + vec;
-	ObjectPtr object = field->getTarget( ( int )move_pos.x, ( int )move_pos.y );
-	if ( !object ) {
-		GroundModelPtr ground_model = app->getGroundModel( );
-		bool is_ground = ground_model->isCollisionGround( move_pos );//’n–Ê‚Æ‚Ì”»’è
-		if ( is_ground ) {
-			_pos = move_pos;
-		}
-	}
-
-	field->setTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
-
+	Vector move_pos = _pos + vec * _status.speed;
+	_pos = move_pos;
+	
 	return
 		( int )_pos.x == ( int )store.x &&
 		( int )_pos.y == ( int )store.y;   
@@ -123,4 +111,8 @@ void Character::dead( ) {
 
 void Character::setAnimation( AnimationPtr animation ) {
 	_animation = animation;
+}
+
+void Character::setDir( Vector dir ) {
+	_dir = dir;
 }

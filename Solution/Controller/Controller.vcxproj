@@ -84,6 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AppController.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
@@ -98,6 +99,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppController.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Viewer.h" />

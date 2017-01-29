@@ -24,6 +24,7 @@ void Player::otherUpdate( ) {
 	
 	CONTROLL controll = makeControll( );
 
+	walk( controll );
 	animationUpdate( );
 	_before_state = _player_state;
 }
@@ -43,8 +44,8 @@ Player::CONTROLL Player::makeControll( ) {
 	move_vec = move_vec.normalize( ) * status.speed;//プレイヤーの進行ベクトル
 	controll.move = move_vec;
 
-	unsigned char action = data.player[ _player_id ].action;
-	if ( action & ACTION_ATTACK ) {
+	unsigned char action = data.player[ _player_id ].button;
+	if ( action & BUTTON_A ) {
 		controll.action = CONTROLL::ATTACK;
 	} else {
 		controll.action = CONTROLL::NONE;
@@ -65,4 +66,12 @@ void Player::animationUpdate( ) {
 		}
 	}
 	animation->update( );
+}
+
+void Player::walk( Player::CONTROLL controll ) {
+	if ( controll.move.getLength( ) > 0.0 ) {
+		Vector vec = controll.move.normalize( );
+		move( vec );
+		setDir( vec );
+	}
 }

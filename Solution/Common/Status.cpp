@@ -58,7 +58,7 @@ void Status::update( ) {
 		_td->setCell( 2, i + 1, std::to_string( data.player[ i ].hp ) );
 		_td->setCell( 3, i + 1, std::to_string( data.player[ i ].x ) );
 		_td->setCell( 4, i + 1, std::to_string( data.player[ i ].y ) );
-		_td->setCell( 5, i + 1, getButtonBinary( data.player[ i ].action ) );
+		_td->setCell( 5, i + 1, getButtonBinary( data.player[ i ].button ) );
 	}
 }
 

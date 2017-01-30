@@ -20,10 +20,11 @@ protected:
 		Vector move;
 		enum ACTION {
 			NONE,
-			ATTACK,
+			ATTACK
 		} action;
 	};
 private:
+	void swicthState( );
 	void animationUpdate( );
 	CONTROLL makeControll( );
 	void walk( CONTROLL controll );
@@ -32,4 +33,5 @@ private:
 	PLAYER_STATE _player_state;
 	PLAYER_STATE _before_state;
 
+	Vector _speed;
 };

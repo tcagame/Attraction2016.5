@@ -50,6 +50,8 @@ void Viewer::initialize( ) {
 	drawer->loadMDLModel( MODEL_MDL_FLOOR,					"MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
 	drawer->loadMV1Model( Animation::MOTION_PLAYER,			"CaracterModel/player/player.mv1" );
 	drawer->loadMV1Model( Animation::MOTION_PLAYER_WAIT,	"CaracterModel/player/player_idle.mv1" );
+	drawer->loadMV1Model( Animation::MOTION_PLAYER_WALK,	"CaracterModel/player/player_run.mv1" );
+
 	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WAIT,	"EnemyModel/goblin/enemy_goblin_wait.mv1" );
 
 	drawer->loadGraph( GRAPH_ID_MISSILE,      "Billboard/missile.png" );
@@ -149,7 +151,7 @@ void Viewer::drawPlayer( ) {
 	Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
 	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
 
-	Matrix mat = mat_dir * mat_rot* mat_trans * mat_scale;
+	Matrix mat = mat_dir * mat_rot * mat_trans * mat_scale;
 
 	DrawerPtr drawer = Drawer::getTask( );
 	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );

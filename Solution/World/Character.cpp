@@ -7,6 +7,7 @@
 #include "Animation.h"
 
 const Vector START_DIR = Vector( 0, 1, 0 );
+const double CHARACTER_HEIGHT = 2.0;
 
 Character::Character( Character::STATUS status ) :
 _origin_status( status ) {
@@ -45,14 +46,19 @@ bool Character::move( const Vector& vec ) {
 		_dir = vec.normalize( );
 	}
 	AppPtr app = App::getTask( );
-
+	GroundModelPtr ground_model = app->getGroundModel( );
 	Vector store = _pos;
-	Vector move_pos = _pos + vec * _status.speed;
-	_pos = move_pos;
-	
-	return
-		( int )_pos.x == ( int )store.x &&
-		( int )_pos.y == ( int )store.y;   
+	Vector move_pos = _pos + vec.normalize( ) ;//* _status.speed;
+	Vector head_pos = move_pos;
+	Vector foot_pos = move_pos;
+	head_pos.z += CHARACTER_HEIGHT / 2;
+	foot_pos.z -= CHARACTER_HEIGHT / 2;
+	Vector ground_pos = ground_model->HitGroundPos( head_pos, foot_pos );
+	if ( ground_pos.y < -50 ) {
+		return false;
+	}
+	_pos = ground_pos;
+	return true;
 }
 
 void Character::create( const Vector& pos ) {

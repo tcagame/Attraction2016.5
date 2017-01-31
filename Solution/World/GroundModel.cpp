@@ -3,6 +3,7 @@
 #include "Ground.h"
 #include "Model.h"
 #include "MapType.h"
+#include "Drawer.h"
 
 
 GroundModel::ModelData::ModelData( ) :
@@ -29,11 +30,27 @@ void GroundModel::loadModelPos( int x, int y, ModelPtr model ) {
 	_model_data_ground.polygon_num = polygon_num;
 	model->translate( Vector( x * Ground::CHIP_WIDTH, y * Ground::CHIP_HEIGHT ) );
 	int num = 0;
+	
 	for ( int i = 0; i < polygon_num * 3; i++ ) {
 		Vector pos = model->getPoint( i );
 		_model_data_ground.pos[ num ] = pos;
 		num++;
 	}
+}
+
+void GroundModel::drawGroundModel( ) {
+	Vector plane_point_a = _model_data_ground.pos[ 0 ];
+	Vector plane_point_b = _model_data_ground.pos[ 1 ];
+	Vector plane_point_c = _model_data_ground.pos[ 2 ];
+	Vector pos1 = plane_point_a;
+	Vector pos2 = plane_point_b;
+	Vector pos3 = plane_point_c;
+	pos1.z += 1;
+	pos2.z += 1;
+	pos3.z += 1;
+	DrawerPtr drawer = Drawer::getTask( );
+	drawer->drawTriangle( pos1, pos2, pos3, true );
+
 }
 
 Vector GroundModel::HitGroundPos( Vector head_pos, Vector foot_pos ) {
@@ -51,13 +68,13 @@ Vector GroundModel::HitGroundPos( Vector head_pos, Vector foot_pos ) {
 		Vector plane_point_a = _model_data_ground.pos[ polygon_idx ];
 		Vector plane_point_b = _model_data_ground.pos[ polygon_idx + 1 ];
 		Vector plane_point_c = _model_data_ground.pos[ polygon_idx + 2 ];
-	
+		
 		Vector normal_plane = ( plane_point_b - plane_point_a ).cross( plane_point_c - plane_point_b );
 		normal_plane = normal_plane.normalize( );
-	
+		
+		
 		Vector plane_to_pos_a = plane_point_a - pos_a;
 		Vector plane_to_pos_b = plane_point_a - pos_b;
-		
 		double dot_a = normal_plane.dot( plane_to_pos_a );
 		double dot_b = normal_plane.dot( plane_to_pos_b );
 		
@@ -85,11 +102,7 @@ Vector GroundModel::HitGroundPos( Vector head_pos, Vector foot_pos ) {
 			 bc_cross_ccroos_pos != normal_plane ) {
 			continue;
 		}
-
-		ret.x = pos_a.x + ( pos_a_to_b.x * ratio );
-		ret.y = pos_a.y + ( pos_a_to_b.y * ratio );
-		ret.z = pos_a.z + ( pos_a_to_b.z * ratio );
-
+		ret = cross_pos;
 	}
 	return ret;
 }

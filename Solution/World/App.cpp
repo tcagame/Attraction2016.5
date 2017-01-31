@@ -26,7 +26,6 @@ AppPtr App::getTask( ) {
 App::App( ) {
 	_ground = GroundPtr( new Ground( DIRECTORY + "CSV/map.csv" ) );
 	_ground_model = GroundModelPtr( new GroundModel );
-	_ground_model->loadModelData( 0, 0, DIRECTORY + "MapModel/floor01.mdl" );
 	reset( );
 }
 
@@ -46,6 +45,7 @@ void App::initialize( ) {
 	std::string floor_model_path = DIRECTORY + "MapModel/floor_collision.mdl";
 	_ground_model->loadModelData( 0, 0, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
+
 	
 }
 

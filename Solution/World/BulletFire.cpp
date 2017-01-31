@@ -1,14 +1,14 @@
 #include "BulletFire.h"
 #include "App.h"
 
-const int VANISH_TIME = 20;
+const int VANISH_TIME = 60;
 const int POWER = 100;
-const double SPEED = Bullet::BULLET_SCALE;
+const double SPEED = 1.0;
 const double EFFECT_SCALE = 0.3;
 
 BulletFire::BulletFire( const Vector& pos, const Vector& dir, int power )
 : Bullet( Bullet::TYPE_FIRE ) {
-	_pos = pos + Vector( 0, 0, 1 ) * Bullet::BULLET_SCALE;
+	_pos = pos + Vector( 0, 0, 0.1 ) * Bullet::BULLET_SCALE;
 	_dir = dir.normalize( );
 	_power = POWER * power;
 	_speed = SPEED;

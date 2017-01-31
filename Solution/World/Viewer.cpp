@@ -28,10 +28,10 @@ enum MODEL_MDL {
 };
 
 enum GRAPH_ID {
+	GRAPH_ID_MISSILE,
 	GRAPH_ID_CLEAR_STRING,
 	GRAPH_ID_GAMEOVER_STRING,
 	GRAPH_ID_TITLE_STRING,
-	GRAPH_ID_MISSILE
 };
 
 ViewerPtr Viewer::getTask( ) {
@@ -47,10 +47,13 @@ Viewer::~Viewer( ) {
 
 void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
-	drawer->loadMDLModel( MODEL_MDL_FLOOR,				"MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
-	drawer->loadMV1Model( Animation::MV1_PLAYER,		"CaracterModel/player/player.mv1" );
-	drawer->loadMV1Model( Animation::MV1_PLAYER_WAIT,	"CaracterModel/player/player_idle.mv1" );
-	drawer->loadMV1Model( Animation::MV1_PLAYER_WALK,	"CaracterModel/player/player_run.mv1" );
+	drawer->loadMDLModel( MODEL_MDL_FLOOR,					  "MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER,			  "CaracterModel/player/player.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_WAIT,	      "CaracterModel/player/player_idle.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_WALK,	      "CaracterModel/player/player_run.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_ATTACK_BEGIN, "CaracterModel/player/player_attack_begin.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_ATTACK_LOOP,  "CaracterModel/player/player_attack_loop.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_ATTACK_END,	  "CaracterModel/player/player_attack_end.mv1" );
 	drawer->loadMV1Model( Animation::MV1_BACK_GROUND,	"MapModel/background.mv1" );
 	drawer->loadMV1Model( Animation::MV1_GOBLIN_WAIT,	"EnemyModel/goblin/enemy_goblin_wait.mv1" );
 
@@ -70,7 +73,6 @@ void Viewer::update( ) {
 	case SCENE_PLAY:
 		//drawGroundModel( );
 		drawPlayer( );
-		drawBackGround( );
 		drawBullet( );
 		updateCamera( );
 		break;
@@ -158,10 +160,11 @@ void Viewer::drawBullet( ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	for ( int i = 0; i < weapon->getBulletNum( ); i++ ) {
 		BulletPtr bullet = weapon->getBullet( i );
+		Bullet::TYPE type = bullet->getType( );
 		Drawer::Billboard billboad;
-		billboad.res = 0;
+		billboad.res = type;
 		billboad.pos = bullet->getPos( );
-		billboad.size = 0.5;
+		billboad.size = 1.0;
 		billboad.blend = Drawer::BLEND_NONE;
 		billboad.ratio = 0;
 		drawer->setBillboard( billboad );

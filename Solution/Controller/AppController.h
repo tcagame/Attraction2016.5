@@ -16,8 +16,6 @@ public:
 private:
 	void updateTitle( );
 	void updatePlay( CLIENTDATA data );
-	void updateClear( );
-	void updateGameOver( );
 public:
 	void initialize( );
 	void update( );

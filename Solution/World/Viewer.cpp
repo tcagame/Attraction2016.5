@@ -145,6 +145,9 @@ void Viewer::drawPlayer( ) {
 
 	double angle = dir.angle( Vector( 0, 1, 0 ) );
 	Vector axis = dir.cross( Vector( 0, -1, 0 ) );
+	if ( dir == Vector( 0, -1, 0 ) ) {
+		axis = Vector( 0, 0, 1 );
+	}
 
 	Matrix mat_dir = Matrix::makeTransformRotation( axis, angle );
 	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );

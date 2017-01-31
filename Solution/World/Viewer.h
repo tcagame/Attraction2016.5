@@ -24,6 +24,8 @@ public:
 	void drawBullet( );
 	void updateCamera( );
 	//CLEAR
+	void drawClear( );
 	//DEAD
+	void drawGameover( );
 };
 

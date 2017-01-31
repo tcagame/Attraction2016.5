@@ -75,10 +75,10 @@ void Viewer::update( ) {
 		updateCamera( );
 		break;
 	case SCENE_CLEAR:
-
+		drawClear( );
 		break;
 	case SCENE_GAMEOVER:
-
+		drawGameover( );
 		break;
 	}
 }
@@ -174,6 +174,32 @@ void Viewer::drawTitle( ) {
 	//READY•¶Žš
 	Drawer::Sprite sprite;
 	sprite.res = GRAPH_ID_TITLE_STRING;
+	sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
+	sprite.trans.sy = app->getWindowHeight( ) / 2 - GRAPH_STRING_Y / 2;
+	sprite.trans.tw = -1;
+	sprite.blend = Drawer::BLEND_NONE;
+	drawer->setSprite( sprite );
+}
+
+void Viewer::drawClear( ) {
+	ApplicationPtr app = Application::getInstance( );
+	DrawerPtr drawer = Drawer::getTask( );
+	//READY•¶Žš
+	Drawer::Sprite sprite;
+	sprite.res = GRAPH_ID_CLEAR_STRING;
+	sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
+	sprite.trans.sy = app->getWindowHeight( ) / 2 - GRAPH_STRING_Y / 2;
+	sprite.trans.tw = -1;
+	sprite.blend = Drawer::BLEND_NONE;
+	drawer->setSprite( sprite );
+}
+
+void Viewer::drawGameover( ) {
+	ApplicationPtr app = Application::getInstance( );
+	DrawerPtr drawer = Drawer::getTask( );
+	//READY•¶Žš
+	Drawer::Sprite sprite;
+	sprite.res = GRAPH_ID_GAMEOVER_STRING;
 	sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
 	sprite.trans.sy = app->getWindowHeight( ) / 2 - GRAPH_STRING_Y / 2;
 	sprite.trans.tw = -1;

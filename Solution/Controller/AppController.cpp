@@ -41,10 +41,7 @@ void AppController::update( ) {
 		updatePlay( data );
 		break;
 	case SCENE_CLEAR:
-		updateClear( );
-		break;
 	case SCENE_GAMEOVER:
-		updateGameOver( );
 		break;
 	}
 	data.scene = _scene;
@@ -76,31 +73,5 @@ void AppController::updatePlay( CLIENTDATA data ) {
 	}
 	if ( !is_alive ) {
 		_scene = SCENE_GAMEOVER;
-	}
-}
-
-void AppController::updateClear( ) {
-	DevicePtr device = Device::getTask( );
-	bool input_button = false;
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		if ( device->getPush( i ) > 0 ) {
-			input_button = true;
-		}
-	}
-	if ( input_button ) {
-		_scene = SCENE_TITLE;
-	}
-}
-
-void AppController::updateGameOver( ) {
-	DevicePtr device = Device::getTask( );
-	bool input_button = false;
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		if ( device->getPush( i ) > 0 ) {
-			input_button = true;
-		}
-	}
-	if ( input_button ) {
-		_scene = SCENE_TITLE;
 	}
 }

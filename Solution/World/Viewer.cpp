@@ -16,7 +16,7 @@
 const double MODEL_SCALE_2015 = 0.008;
 const double MODEL_SCALE_2016 = 0.06;
 const double MODEL_SCALE_ALL = 1.0;
-const double MODEL_BACK_GROUND_SCALE = 0.1;
+const double MODEL_BACK_GROUND_SCALE = 0.01;
 
 const int GRAPH_READY_BACK_X = 0;
 const int GRAPH_READY_BACK_Y = 0;

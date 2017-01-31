@@ -41,15 +41,13 @@ public:
 	void setState( STATE state );
 	PlayerPtr getPlayerTarget( const Vector& pos );
 	STATE getState( ) const;
-	int getStartCount( ) const;
-	int getStartCountMax( ) const;
 	int convertCSVtoMap( int type );
 	void loadToGround( );
 private:
 	static const int MAX_MAP_DATA_NUM = 12;
 private:
 	void reset( );
-	void updateReset( );
+	void updateState( );
 	void updateStateReady( );
 	void updateStatePlay( );
 	void updateStateClear( );
@@ -62,7 +60,5 @@ private:
 	WeaponPtr _weapon;
 	PlayerPtr _player;
 	STATE _state;
-	int _push_reset_count;
-	int _push_start_count;
 	std::array< int, MAX_MAP_DATA_NUM > _map_convert;
 };

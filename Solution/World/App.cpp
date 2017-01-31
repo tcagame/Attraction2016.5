@@ -24,9 +24,7 @@ AppPtr App::getTask( ) {
 }
 
 App::App( ) {
-	_ground = GroundPtr( new Ground( DIRECTORY + "CSV/map.csv" ) );
-	_ground_model = GroundModelPtr( new GroundModel );
-	reset( );
+	_state = STATE_PLAY;//デバッグ用
 }
 
 App::~App( ) {
@@ -49,20 +47,12 @@ void App::initialize( ) {
 	
 }
 
-
-void App::reset( ) {
-	_state = STATE_PLAY;
-	//_state = STATE_PLAY;//デバック用にプレイスタート
-	_push_reset_count = 0;
-	_push_start_count = 0;
-}
-
 void App::update( ) {
-	updateReset( );
+	updateState( );
 	switch ( _state ) {
 	case STATE_READY:
-	//	updateStateReady( );
-	//	break;
+		updateStateReady( );
+		break;
 	case STATE_PLAY:
 		updateStatePlay( );
 		break;
@@ -75,35 +65,37 @@ void App::update( ) {
 	}
 }
 
-void App::updateReset( ) {
-	DevicePtr device = Device::getTask( );
-	if ( !device ) {
+void App::updateState( ) {
+	ClientPtr client = Client::getTask( );
+	CLIENTDATA data = client->getClientData( );
+	STATE state;
+	switch( data.scene ) {
+	case SCENE_TITLE:
+		state = STATE_READY;
+		break;
+	case SCENE_PLAY:
+		state = STATE_PLAY;
+		break;
+	case SCENE_CLEAR:
+		state = STATE_CLEAR;
+		break;
+	case SCENE_GAMEOVER:
+		state = STATE_DEAD;
+		break;
+	default:
 		return;
+		break;
 	}
-	if ( device->getButton( 0 ) == BUTTON_A + BUTTON_B + BUTTON_C + BUTTON_D ) {
-		_push_reset_count += 1;
-	} else  {
-		_push_reset_count = 0;
+	//タイトルに戻るときに初期化
+	if ( _state != state ) {
+		if ( _state != STATE_READY ) {
+			initialize( );
+		}
+		setState( state );
 	}
-	if ( _push_reset_count < RESET_COUNT ) {
-		return;
-	}
-	reset( );
 }
 
 void App::updateStateReady( ) {
-
-	ClientPtr client = Client::getTask( );
-	CLIENTDATA data = client->getClientData( );
-	bool next = false;
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		if ( data.player[ i ].button > 0 ) {
-			next = true;
-		}
-	}
-	if ( next ) {
-		setState( STATE_PLAY );
-	}
 }
 
 void App::updateStatePlay( ) {
@@ -165,14 +157,6 @@ WeaponPtr App::getWeapon( ) const {
 
 CohortPtr App::getCohort( ) const{
 	return _cohort;
-}
-
-int App::getStartCount( ) const {
-	return _push_start_count;
-}
-
-int App::getStartCountMax( ) const {
-	return START_COUNT;
 }
 
 PlayerPtr App::getPlayer( ) const {

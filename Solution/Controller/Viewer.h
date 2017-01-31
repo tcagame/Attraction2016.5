@@ -17,15 +17,18 @@ public:
 	void update( );
 private:
 	void makeTableLog( );
+	void makeTableScene( );
 	void makeTableCommand( );
 	void makeTableConnect( );
 
 	void drawLog( );
+	void drawScene( );
 	void drawCommand( );
 	void drawConnect( );
 	void drawStatus( );
 private:
 	TableDrawerPtr _log;
+	TableDrawerPtr _scene;
 	TableDrawerPtr _command;
 	TableDrawerPtr _connect;
 };

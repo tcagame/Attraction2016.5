@@ -7,6 +7,12 @@
 
 const char * COM_IP     = "ip";
 const char * COM_DEVICE = "device";
+const char * COM_SCENE = "scene";
+
+const char * COM_SCENE_TITLE	= "title";
+const char * COM_SCENE_PLAY		= "play";
+const char * COM_SCENE_CLEAR	= "clear";
+const char * COM_SCENE_GAMEOVER = "gameover";
 
 CommandPtr Command::getTask( ) {
 	ApplicationPtr fw = Application::getInstance( );
@@ -86,6 +92,30 @@ void Command::execute( ) {
 		DevicePtr device = Device::getTask( );
 		device->resetup( );
 		log->send( "deviceの再読み込みをしました。" );
+		return;
+	}
+
+	//リセット
+	if ( _word[ 0 ] == COM_SCENE && _word.size( ) >= 2 ) {
+		ServerPtr server = Server::getTask( );
+		std::string string = "sceneを";
+		if ( _word[ 1 ] == COM_SCENE_TITLE ) {
+			server->setScene( SCENE_TITLE );
+			string += "タイトルに変更しました。";
+		}
+		if ( _word[ 1 ] == COM_SCENE_PLAY ) {
+			server->setScene( SCENE_PLAY );
+			string += "プレイに変更しました。";
+		}
+		if ( _word[ 1 ] == COM_SCENE_CLEAR ) {
+			server->setScene( SCENE_CLEAR );
+			string += "クリアに変更しました。";
+		}
+		if ( _word[ 1 ] == COM_SCENE_GAMEOVER ) {
+			server->setScene( SCENE_GAMEOVER );
+			string += "ゲームオーバーに変更しました。";
+		}
+		log->send( string.c_str( ) );
 		return;
 	}
 

@@ -47,6 +47,10 @@ const int FRAME_LOG_X = FRAME_COMMAND_X;
 const int FRAME_LOG_Y = FRAME_STATUS_Y + FRAME_STATUS_H + PITCH;
 const int FRAME_LOG_W = FRAME_COMMAND_W;
 
+const int FRAME_SCENE_X = FRAME_CONNECT_X + FRAME_CONNECT_W + PITCH;
+const int FRAME_SCENE_Y = FRAME_CONNECT_Y;
+const int FRAME_SCENE_W = 60;
+
 ViewerPtr Viewer::getTask( ) {
 	ApplicationPtr app = Application::getInstance( );
 	return std::dynamic_pointer_cast< Viewer >( app->getTask( getTag( ) ) );
@@ -60,6 +64,7 @@ Viewer::~Viewer( ) {
 
 void Viewer::initialize( ) {
 	makeTableLog( );
+	makeTableScene( );
 	makeTableCommand( );
 	makeTableConnect( );
 }
@@ -69,6 +74,7 @@ void Viewer::update( ) {
 	drawLog( );
 	drawCommand( );
 	drawStatus( );
+	drawScene( );
 }
 
 void Viewer::makeTableLog( ) {
@@ -108,6 +114,18 @@ void Viewer::makeTableConnect( ) {
 	_connect = TableDrawerPtr( new TableDrawer( form ) );
 }
 
+void Viewer::makeTableScene( ) {
+	TableDrawer::FORM form;
+	form.x = FRAME_SCENE_X;
+	form.y = FRAME_SCENE_Y;
+	form.title = "Scene";
+	form.rows = 1;
+	form.cols = 1;
+	form.col[ 0 ] = FRAME_CONNECT_W;
+	form.inner_line = true;
+	_scene = TableDrawerPtr( new TableDrawer( form ) );
+}
+
 void Viewer::drawConnect( ) {
 	ServerPtr server = Server::getTask( );
 
@@ -140,4 +158,24 @@ void Viewer::drawCommand( ) {
 void Viewer::drawStatus( ) {
 	StatusPtr status = Status::getTask( );
 	status->draw( );
+}
+
+void Viewer::drawScene( ) {
+	ServerPtr server = Server::getTask( );
+	CLIENTDATA data = server->getData( );
+	switch ( data.scene ) {
+	case SCENE_TITLE:
+		_scene->setCell( 0, 0, "TITLE" );
+		break;
+	case SCENE_PLAY:
+		_scene->setCell( 0, 0, "PLAY" );
+		break;
+	case SCENE_CLEAR:
+		_scene->setCell( 0, 0, "CLEAR" );
+		break;
+	case SCENE_GAMEOVER:
+		_scene->setCell( 0, 0, "GAMEOVER" );
+		break;
+	}
+	_scene->draw( );
 }

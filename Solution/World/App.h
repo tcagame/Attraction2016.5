@@ -21,14 +21,6 @@ public:
 	App( );
 	virtual ~App( );
 public:
-	enum STATE {
-		STATE_READY,
-		STATE_PLAY,
-		STATE_CLEAR,
-		STATE_DEAD,
-		STATE_MAX
-	};
-public:
 	void initialize( );
 	void update( );
 	GroundPtr getGround( ) const;
@@ -38,19 +30,22 @@ public:
 	CohortPtr getCohort( ) const;
 
 	PlayerPtr getPlayer( ) const;
-	void setState( STATE state );
 	PlayerPtr getPlayerTarget( const Vector& pos );
-	STATE getState( ) const;
+	unsigned char getScene( ) const;
 	int convertCSVtoMap( int type );
 private:
 	static const int MAX_MAP_DATA_NUM = 12;
 private:
 	void reset( );
-	void updateState( );
-	void updateStateReady( );
-	void updateStatePlay( );
-	void updateStateClear( );
-	void updateStateDead( );
+	void changeScene( );
+	void initSceneTitle( );
+	void initScenePlay( );
+	void initSceneClear( );
+	void initSceneGameover( );
+	void updateSceneTitle( );
+	void updateScenePlay( );
+	void updateSceneClear( );
+	void updateSceneGameover( );
 private:
 	GroundPtr _ground;
 	GroundModelPtr _ground_model;
@@ -58,6 +53,6 @@ private:
 	CohortPtr _cohort;
 	WeaponPtr _weapon;
 	PlayerPtr _player;
-	STATE _state;
+	unsigned char _scene;
 	std::array< int, MAX_MAP_DATA_NUM > _map_convert;
 };

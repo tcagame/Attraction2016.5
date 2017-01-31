@@ -18,10 +18,8 @@ const double MODEL_SCALE_2016 = 0.06;
 const double MODEL_SCALE_ALL = 1.0;
 const double MODEL_BACK_GROUND_SCALE = 0.01;
 
-const int GRAPH_READY_BACK_X = 0;
-const int GRAPH_READY_BACK_Y = 0;
-const int GRAPH_READY_STRING_X = 1280;
-const int GRAPH_READY_STRING_Y = 1024;
+const int GRAPH_STRING_X = 1024;
+const int GRAPH_STRING_Y = 1024;
 
 enum MODEL_MDL {
 	MODEL_MDL_NONE,
@@ -30,8 +28,9 @@ enum MODEL_MDL {
 };
 
 enum GRAPH_ID {
-	GRAPH_ID_READY_BACK,
-	GRAPH_ID_READY_STRING,
+	GRAPH_ID_CLEAR_STRING,
+	GRAPH_ID_GAMEOVER_STRING,
+	GRAPH_ID_TITLE_STRING,
 	GRAPH_ID_MISSILE
 };
 
@@ -48,36 +47,38 @@ Viewer::~Viewer( ) {
 
 void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
-	drawer->loadMDLModel( MODEL_MDL_FLOOR,					"MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
-	drawer->loadMV1Model( Animation::MV1_PLAYER,			"CaracterModel/player/player.mv1" );
+	drawer->loadMDLModel( MODEL_MDL_FLOOR,				"MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER,		"CaracterModel/player/player.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WAIT,	"CaracterModel/player/player_idle.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WALK,	"CaracterModel/player/player_run.mv1" );
 	drawer->loadMV1Model( Animation::MV1_BACK_GROUND,	"MapModel/background.mv1" );
 	drawer->loadMV1Model( Animation::MV1_GOBLIN_WAIT,	"EnemyModel/goblin/enemy_goblin_wait.mv1" );
 
-	drawer->loadGraph( GRAPH_ID_MISSILE,      "Billboard/missile.png" );
-	drawer->loadGraph( GRAPH_ID_READY_BACK,   "Images/ready_back.png" );
-	drawer->loadGraph( GRAPH_ID_READY_STRING, "Images/ready_string.png" );
-
+	drawer->loadGraph( GRAPH_ID_MISSILE,		"Billboard/missile.png" );
+	drawer->loadGraph( GRAPH_ID_CLEAR_STRING,	"Images/clear.png" );
+	drawer->loadGraph( GRAPH_ID_GAMEOVER_STRING,"Images/dead.png" );
+	drawer->loadGraph( GRAPH_ID_TITLE_STRING,	"Images/title.png" );
 }
 
 void Viewer::update( ) {
 	AppPtr app = App::getTask( );
-	App::STATE state = app->getState( );
-	switch ( state ) {
-	case App::STATE_READY:
-		drawReady( );
+	unsigned scene = app->getScene( );
+	switch ( scene ) {
+	case SCENE_TITLE:
+		drawTitle( );
 		break;
-	case App::STATE_PLAY:
+	case SCENE_PLAY:
 		//drawGroundModel( );
 		drawPlayer( );
 		drawBackGround( );
 		drawBullet( );
 		updateCamera( );
 		break;
-	case App::STATE_CLEAR:
+	case SCENE_CLEAR:
+
 		break;
-	case App::STATE_DEAD:
+	case SCENE_GAMEOVER:
+
 		break;
 	}
 }
@@ -190,31 +191,15 @@ void Viewer::drawBullet( ) {
 	}
 }
 
-void Viewer::drawReady( ) {
+void Viewer::drawTitle( ) {
 	ApplicationPtr app = Application::getInstance( );
 	DrawerPtr drawer = Drawer::getTask( );
-	{//READY”wŒi
-		Drawer::Sprite sprite;
-		sprite.res = GRAPH_ID_READY_BACK;
-		sprite.trans.sx = GRAPH_READY_BACK_X;
-		sprite.trans.sy = GRAPH_READY_BACK_Y;
-		sprite.trans.tw = -1;
-		sprite.blend = Drawer::BLEND_NONE;
-		drawer->setSprite( sprite );
-	}
-	{//READY•¶Žš
-		Drawer::Sprite sprite;
-		sprite.res = GRAPH_ID_READY_STRING;
-		sprite.trans.sx = 0;
-		if ( ( GRAPH_READY_STRING_X - app->getWindowWidth( )  ) / 2 > 0 ) {
-			sprite.trans.sx += ( GRAPH_READY_STRING_X - app->getWindowWidth( )  ) / 2;
-		}
-		sprite.trans.sy = 0;
-		if ( ( GRAPH_READY_STRING_Y - app->getWindowHeight( ) ) / 2 > 0 ) {
-			sprite.trans.sy += ( GRAPH_READY_STRING_Y - app->getWindowHeight( ) ) / 2;
-		}
-		sprite.trans.tw = -1;
-		sprite.blend = Drawer::BLEND_NONE;
-		drawer->setSprite( sprite );
-	}
+	//READY•¶Žš
+	Drawer::Sprite sprite;
+	sprite.res = GRAPH_ID_TITLE_STRING;
+	sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
+	sprite.trans.sy = app->getWindowHeight( ) / 2 - GRAPH_STRING_Y / 2;
+	sprite.trans.tw = -1;
+	sprite.blend = Drawer::BLEND_NONE;
+	drawer->setSprite( sprite );
 }

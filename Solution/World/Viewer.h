@@ -16,7 +16,7 @@ public:
 public:
 	void update( );
 	//READY
-	void drawReady( );
+	void drawTitle( );
 	//PLAY
 	void drawGroundModel( );
 	void drawBackGround( );

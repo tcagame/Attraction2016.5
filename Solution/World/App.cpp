@@ -27,7 +27,6 @@ App::App( ) {
 	_ground = GroundPtr( new Ground( DIRECTORY + "CSV/map.csv" ) );
 	_ground_model = GroundModelPtr( new GroundModel );
 	_ground_model->loadModelData( 0, 0, DIRECTORY + "MapModel/floor01.mdl" );
-	_state = STATE_PLAY;//デバッグ用
 }
 
 App::~App( ) {
@@ -50,66 +49,80 @@ void App::initialize( ) {
 }
 
 void App::update( ) {
-	updateState( );
-	switch ( _state ) {
-	case STATE_READY:
-		updateStateReady( );
+	changeScene( );
+
+	switch ( _scene ) {
+	case SCENE_TITLE:
+		updateSceneTitle( );
 		break;
-	case STATE_PLAY:
-		updateStatePlay( );
+	case SCENE_PLAY:
+		updateScenePlay( );
 		break;
-	case STATE_CLEAR:
-		updateStateClear( );
+	case SCENE_CLEAR:
+		updateSceneClear( );
 		break;
-	case STATE_DEAD:
-		updateStateDead( );
+	case SCENE_GAMEOVER:
+		updateSceneGameover( );
 		break;
 	}
 }
 
-void App::updateState( ) {
+void App::changeScene( ) {
 	ClientPtr client = Client::getTask( );
 	CLIENTDATA data = client->getClientData( );
-	STATE state;
+
+	if ( _scene == data.scene ) {
+		return;
+	}
+
+	// 各シーンの初期化をおこなう
 	switch( data.scene ) {
 	case SCENE_TITLE:
-		state = STATE_READY;
+		initSceneTitle( );
 		break;
 	case SCENE_PLAY:
-		state = STATE_PLAY;
+		initScenePlay( );
 		break;
 	case SCENE_CLEAR:
-		state = STATE_CLEAR;
+		initSceneClear( );
 		break;
 	case SCENE_GAMEOVER:
-		state = STATE_DEAD;
+		initSceneGameover( );
 		break;
 	default:
 		return;
 		break;
 	}
-	//タイトルに戻るときに初期化
-	if ( _state != state ) {
-		if ( _state != STATE_READY ) {
-			initialize( );
-		}
-		setState( state );
-	}
+
+	_scene = data.scene;
 }
 
-void App::updateStateReady( ) {
+void App::initSceneTitle( ) {
+	// だめ！！initialize( );
 }
 
-void App::updateStatePlay( ) {
+void App::initScenePlay( ) {
+}
+
+void App::initSceneClear( ) {
+}
+
+void App::initSceneGameover( ) {
+}
+
+void App::updateSceneTitle( ) {
+}
+
+void App::updateScenePlay( ) {
 	_player->update( );
 	_cohort->update( );
 	_weapon->update( );
 }
 
-void App::updateStateClear( ) {
+void App::updateSceneClear( ) {
 }
 
-void App::updateStateDead( ) {
+void App::updateSceneGameover( ) {
 }
 
 GroundPtr App::getGround( ) const {
@@ -141,12 +154,8 @@ int App::convertCSVtoMap( int type ) {
 	return _map_convert[ type ];
 }
 
-App::STATE App::getState( ) const {
-	return _state;
-}
-
-void App::setState( STATE state ) {
-	_state = state;
+unsigned char App::getScene( ) const {
+	return _scene;
 }
 
 FieldPtr App::getField( ) const {

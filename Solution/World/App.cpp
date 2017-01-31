@@ -43,14 +43,10 @@ void App::initialize( ) {
 	Character::STATUS status = Character::STATUS( 100000, 100, 0.5 );
 	_player = PlayerPtr( new Player( 0, status ) );
 	_player->create( Vector( 0, 0 ) );
-	
+	std::string floor_model_path = DIRECTORY + "MapModel/floor_collision.mdl";
+	_ground_model->loadModelData( 0, 0, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
 	
-	
-	loadToGround( ) ;//GroundModelとCohortのデータ読み込み
-	if ( _cohort ) {
-		_cohort->init( );
-	}
 }
 
 
@@ -145,58 +141,7 @@ PlayerPtr App::getPlayerTarget( const Vector& pos ){
 	return target;	
 }
 
-void App::loadToGround( ) {
-	int width = _ground->getWidth( );
-	int height = _ground->getHeight( );
 
-	for ( int i = 0; i < height; i++ ) {
-		for ( int j = 0; j < width; j++ ) {
-			int idx = _ground->getIdx( j, i );
-			int type = _ground->getGroundData( idx );
-			
-			char idx_string[ STRING_BUF ] = "";
-			sprintf_s( idx_string, STRING_BUF,"%d", type );
-			
-			std::string md_file_path = DIRECTORY + "MapData/";
-			md_file_path += idx_string;
-			md_file_path += ".md";
-
-			//ファイルの読み込み
-			FILE* fp;
-			errno_t err = fopen_s( &fp, md_file_path.c_str( ), "r" );
-			if ( err != 0 ) {
-				continue;
-			}
-			
-			char buf[ 1024 ];
-			std::string name[ 2 ];
-			for( int k = 0; k < 2; k++ ) {
-				fscanf_s( fp,"%s", buf, 1024 );
-				name[ k ] = buf;
-			}
-			fclose( fp );
-			int model_type = 0;
-			for ( int k = 0; k < 5; k++ ) {
-				if( name[ 0 ] == MODEL_NAME_LIST[ k ] ) {
-					model_type = k;
-				}
-			}
-			_map_convert[ type ] = model_type;
-
-			if ( _cohort ) {
-				std::string enemy_file_path = DIRECTORY + "EnemyData/" + name[ 1 ] + ".ene";
-				_cohort->loadBlockEnemyData( idx, enemy_file_path );
-			}
-			if ( model_type == 0 ) {
-				continue;
-			}
-
-			std::string model_file_path = DIRECTORY + "MapModel/" + MODEL_NAME_LIST[ model_type ] + ".mdl";
-			_ground_model->loadModelData( j, i, model_file_path );
-
-		}
-	}
-}
 
 int App::convertCSVtoMap( int type ) {
 	return _map_convert[ type ];

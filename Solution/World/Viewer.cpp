@@ -68,7 +68,7 @@ void Viewer::update( ) {
 		drawReady( );
 		break;
 	case App::STATE_PLAY:
-		drawGroundModel( );
+		//drawGroundModel( );
 		drawPlayer( );
 		drawBackGround( );
 		drawBullet( );

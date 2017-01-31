@@ -30,9 +30,9 @@ enum MODEL_MDL {
 };
 
 enum GRAPH_ID {
+	GRAPH_ID_MISSILE,
 	GRAPH_ID_READY_BACK,
-	GRAPH_ID_READY_STRING,
-	GRAPH_ID_MISSILE
+	GRAPH_ID_READY_STRING
 };
 
 ViewerPtr Viewer::getTask( ) {
@@ -74,9 +74,9 @@ void Viewer::update( ) {
 		drawReady( );
 		break;
 	case App::STATE_PLAY:
-		drawGroundModel( );
+		//drawGroundModel( );
 		drawPlayer( );
-		drawBackGround( );
+		//drawBackGround( );
 		drawBullet( );
 		updateCamera( );
 		break;
@@ -169,8 +169,8 @@ void Viewer::drawPlayer( ) {
 	Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
 	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
 
-	Matrix mat = mat_dir * mat_trans * mat_rot * mat_scale;
-
+	Matrix mat = mat_dir * mat_rot * mat_scale;
+	mat = mat * mat_trans;
 	DrawerPtr drawer = Drawer::getTask( );
 	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );
 	drawer->setModelMV1( model );
@@ -182,10 +182,11 @@ void Viewer::drawBullet( ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	for ( int i = 0; i < weapon->getBulletNum( ); i++ ) {
 		BulletPtr bullet = weapon->getBullet( i );
+		Bullet::TYPE type = bullet->getType( );
 		Drawer::Billboard billboad;
-		billboad.res = 0;
+		billboad.res = type;
 		billboad.pos = bullet->getPos( );
-		billboad.size = 0.5;
+		billboad.size = 1.0;
 		billboad.blend = Drawer::BLEND_NONE;
 		billboad.ratio = 0;
 		drawer->setBillboard( billboad );

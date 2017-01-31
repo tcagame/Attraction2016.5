@@ -37,6 +37,7 @@ private:
 	void swicthState( CONTROLL controll );
 	void walk( CONTROLL controll );
 	void attack( CONTROLL controll );
+	void onAttack( );
 private:
 	const int _player_id;
 	PLAYER_STATE _player_state;

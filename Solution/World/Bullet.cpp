@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "Field.h"
 
-const double Bullet::BULLET_SCALE( 1.0 );//モデルの大きさに合わせる。
+const double Bullet::BULLET_SCALE( 0.1 );//モデルの大きさに合わせる。
 
 Bullet::Bullet( TYPE type )
 : _type( type ) {

@@ -9,7 +9,11 @@
 #include "Client.h"
 #include "BulletFire.h"
 #include "Weapon.h"
-const int MOVE_SPEED = 5;
+
+const int MOVE_SPEED = 1;
+const int ATTACK_TIME = 1;
+
+const Vector BULLET_OFFSET = Vector( 0.0, 0.0, 1.7 );
 
 Player::Player( unsigned char player_id, Character::STATUS status ) :
 Character( status ),
@@ -117,8 +121,6 @@ void Player::animationUpdate( ) {
 		}
 
 	}
-	
-	animation->update( );
 }
 
 void Player::walk( Player::CONTROLL controll ) {
@@ -158,6 +160,11 @@ void Player::attack( Player::CONTROLL controll ) {
 	}
 	if ( _attack_loop ) {
 		_attack = ATTACK_LOOP;
+		AnimationPtr anim = getAnimation( );
+		int time = ( int )anim->getAnimTime( );
+		if ( time == ATTACK_TIME ) {
+			onAttack( );
+		}
 	}
 
 	if ( _player_state != PLAYER_STATE_ATTACK && _before_state == PLAYER_STATE_ATTACK ) {
@@ -165,4 +172,13 @@ void Player::attack( Player::CONTROLL controll ) {
 		_attack_end = false;
 		_attack = ATTACK_END;
 	}
+}
+
+void Player::onAttack( ) {
+	Vector pos = getPos( );
+	Vector dir = getDir( );
+
+	AppPtr app = App::getTask( );
+	WeaponPtr weapon = app->getWeapon( );
+	weapon->add( BulletPtr( new BulletFire( pos + BULLET_OFFSET + dir * 2, dir, getStatus( ).power ) ) );
 }

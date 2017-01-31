@@ -26,7 +26,7 @@ void AppController::update( ) {
 	ServerPtr server = Server::getTask( );
 
 	CLIENTDATA data;
-	for ( int i = 0; i < MAX_MACHINE; i++ ) {
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		data.player[ i ].x = device->getDirX( i );
 		data.player[ i ].y = device->getDirY( i );
 		data.player[ i ].button = device->getButton( i );

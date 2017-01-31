@@ -1,7 +1,7 @@
 #include "Animation.h"
 #include "Drawer.h"
 
-Animation::Animation( MOTION mesh, MOTION motion, double anim_speed ) {
+Animation::Animation( MV1 mesh, MV1 motion, double anim_speed ) {
 	DrawerPtr drawer = Drawer::getTask( );//描画ではなくアニメ―ションタイムの取得用
 	_mesh = mesh;
 	_motion = motion;

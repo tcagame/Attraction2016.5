@@ -4,7 +4,6 @@
 #include "Model.h"
 #include "MapType.h"
 
-const char * BOSS_GROUND_NAME = "../Resource/MapModel/floor02.mdl";
 
 GroundModel::ModelData::ModelData( ) :
 polygon_num( 0 ) {
@@ -13,7 +12,6 @@ polygon_num( 0 ) {
 
 GroundModel::GroundModel() {
 	_model_max_idx  = 0;
-	loadBossModel( );
 }
 
 GroundModel::~GroundModel()
@@ -28,96 +26,35 @@ void GroundModel::loadModelData( int x, int y, std::string filename ) {
 
 void GroundModel::loadModelPos( int x, int y, ModelPtr model ) {
 	int polygon_num = model->getPolygonNum( );
-	_model_data_ground[ _model_max_idx ].polygon_num = polygon_num;
+	_model_data_ground.polygon_num = polygon_num;
 	model->translate( Vector( x * Ground::CHIP_WIDTH, y * Ground::CHIP_HEIGHT ) );
 	int num = 0;
-	double max_x = 0;
-	double max_y = 0;
-	double min_x = 10000;
-	double min_y = 10000;
 	for ( int i = 0; i < polygon_num * 3; i++ ) {
 		Vector pos = model->getPoint( i );
-		_model_data_ground[ _model_max_idx ].pos[ num ] = pos;
-		if ( pos.x > max_x ) {
-			max_x = pos.x;
-		}
-		if ( pos.y > max_y ) {
-			max_y = pos.y;
-		}
-		if ( pos.x < min_x ) {
-			min_x = pos.x;
-		}
-		if ( pos.y < min_y ) {
-			min_y = pos.y;
-		}
+		_model_data_ground.pos[ num ] = pos;
 		num++;
 	}
-	_model_data_ground[ _model_max_idx ].max_x = max_x;
-	_model_data_ground[ _model_max_idx ].max_y = max_y;
-	_model_data_ground[ _model_max_idx ].min_x = min_x;
-	_model_data_ground[ _model_max_idx ].min_y = min_y;
-
-	_model_max_idx ++;
 }
 
-bool GroundModel::isCollisionGround( Vector pos ) {
+Vector GroundModel::HitGroundPos( Vector head_pos, Vector foot_pos ) {
 	AppPtr app = App::getTask( );
 	GroundPtr ground = app->getGround( );
 
-	bool ret = false;
-	int x = ( ( int ) pos.x + Ground::BOSS_CHIP_WIDTH ) / Ground::CHIP_WIDTH;
-	int y = ( ( int ) pos.y + Ground::BOSS_CHIP_HEIGHT ) / Ground::CHIP_HEIGHT;
-	if ( x >= Ground::BOSS_X && y >= Ground::BOSS_Y ) {
-		Vector pos_a = pos;
-		Vector pos_b = pos;
-		pos_a.z = 100;
-		pos_b.z = -100;
-		ret = isCollisionModel( _model_data_boss, pos_a, pos_b );
-		return ret;
-	}
-	for ( int i = 0; i < _model_max_idx; i++ ) {
-		if ( _model_data_ground[ i ].max_x < pos.x ) {
-			continue;
-		}  
-		if ( _model_data_ground[ i ].max_y < pos.y ) {
-			continue;
-		}  
-		if ( _model_data_ground[ i ].min_x > pos.x ) {
-			continue;
-		}  
-		if ( _model_data_ground[ i ].min_y > pos.y ) {
-			continue;
-		}  
-		Vector pos_a = pos;
-		Vector pos_b = pos;
-		pos_a.z = 100;
-		pos_b.z = -100;
-		ret = isCollisionModel( _model_data_ground[ i ], pos_a, pos_b );
-		if ( ret ) {
-			return true;
-		}
-	}
-	return false;
-}
-
-
-bool GroundModel::isCollisionModel( ModelData model, Vector pos_a, Vector pos_b ) {
-	
+	Vector ret = Vector( -100, -100, -100 );
 	int polygon_idx = 0;
-	for ( int i = 0; i < model.polygon_num; i++ ) {
+	Vector pos_a = head_pos;
+	Vector pos_b = foot_pos;
+
+	for ( int i = 0; i < _model_data_ground.polygon_num; i++ ) {
 		polygon_idx = i * 3;
-		Vector plane_point_a = model.pos[ polygon_idx ];
-		Vector plane_point_b = model.pos[ polygon_idx + 1 ];
-		Vector plane_point_c = model.pos[ polygon_idx + 2 ];
-		if ( plane_point_a.z < 0 || plane_point_b.z < 0 || plane_point_c.z < 0 ) {
-			continue;
-		}
-		if ( plane_point_a.z > 1 || plane_point_b.z > 1 || plane_point_c.z > 1 ) {
-			continue;
-		}
+		
+		Vector plane_point_a = _model_data_ground.pos[ polygon_idx ];
+		Vector plane_point_b = _model_data_ground.pos[ polygon_idx + 1 ];
+		Vector plane_point_c = _model_data_ground.pos[ polygon_idx + 2 ];
+	
 		Vector normal_plane = ( plane_point_b - plane_point_a ).cross( plane_point_c - plane_point_b );
 		normal_plane = normal_plane.normalize( );
-
+	
 		Vector plane_to_pos_a = plane_point_a - pos_a;
 		Vector plane_to_pos_b = plane_point_a - pos_b;
 		
@@ -148,42 +85,11 @@ bool GroundModel::isCollisionModel( ModelData model, Vector pos_a, Vector pos_b 
 			 bc_cross_ccroos_pos != normal_plane ) {
 			continue;
 		}
-		return true;
-	}
-	return false;
-}
 
+		ret.x = pos_a.x + ( pos_a_to_b.x * ratio );
+		ret.y = pos_a.y + ( pos_a_to_b.y * ratio );
+		ret.z = pos_a.z + ( pos_a_to_b.z * ratio );
 
-void GroundModel::loadBossModel( ) {
-	ModelPtr model = ModelPtr( new Model( ) );
-	model->load( BOSS_GROUND_NAME );
-	int polygon_num = model->getPolygonNum( );
-	_model_data_boss.polygon_num = polygon_num;
-	model->translate( Vector( Ground::BOSS_X * Ground::CHIP_WIDTH, Ground::BOSS_Y * Ground::CHIP_HEIGHT ) );
-	int num = 0;
-	double max_x = 0;
-	double max_y = 0;
-	double min_x = 10000;
-	double min_y = 10000;
-	for ( int i = 0; i < polygon_num * 3; i++ ) {
-		Vector pos = model->getPoint( i );
-		_model_data_boss.pos[ num ] = pos;
-		if ( pos.x > max_x ) {
-			max_x = pos.x;
-		}
-		if ( pos.y > max_y ) {
-			max_y = pos.y;
-		}
-		if ( pos.x < min_x ) {
-			min_x = pos.x;
-		}
-		if ( pos.y < min_y ) {
-			min_y = pos.y;
-		}
-		num++;
 	}
-	_model_data_boss.max_x = max_x;
-	_model_data_boss.max_y = max_y;
-	_model_data_boss.min_x = min_x;
-	_model_data_boss.min_y = min_y;
+	return ret;
 }

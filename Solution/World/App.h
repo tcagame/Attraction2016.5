@@ -42,7 +42,6 @@ public:
 	PlayerPtr getPlayerTarget( const Vector& pos );
 	STATE getState( ) const;
 	int convertCSVtoMap( int type );
-	void loadToGround( );
 private:
 	static const int MAX_MAP_DATA_NUM = 12;
 private:

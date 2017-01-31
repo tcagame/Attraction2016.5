@@ -47,8 +47,13 @@ Viewer::~Viewer( ) {
 
 void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
+<<<<<<< HEAD
 	drawer->loadMDLModel( MODEL_MDL_FLOOR,				"MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER,		"CaracterModel/player/player.mv1" );
+=======
+	drawer->loadMDLModel( MODEL_MDL_FLOOR, "MapModel/floor_collision.mdl", "MapModel/floor01_DM.jpg" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER,			"CaracterModel/player/player.mv1" );
+>>>>>>> 09fc67b1d228f45e0935b1a75a9a6724dc0dba28
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WAIT,	"CaracterModel/player/player_idle.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WALK,	"CaracterModel/player/player_run.mv1" );
 	drawer->loadMV1Model( Animation::MV1_BACK_GROUND,	"MapModel/background.mv1" );
@@ -67,8 +72,13 @@ void Viewer::update( ) {
 	case SCENE_TITLE:
 		drawTitle( );
 		break;
+<<<<<<< HEAD
 	case SCENE_PLAY:
 		//drawGroundModel( );
+=======
+	case App::STATE_PLAY:
+		drawGroundModel( );
+>>>>>>> 09fc67b1d228f45e0935b1a75a9a6724dc0dba28
 		drawPlayer( );
 		drawBackGround( );
 		drawBullet( );
@@ -97,28 +107,6 @@ void Viewer::drawGroundModel( ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	Drawer::ModelMDL model_mdl = Drawer::ModelMDL( Vector( 0, 0, 0 ), MODEL_MDL_FLOOR );
 	drawer->setModelMDL( model_mdl );
-	/*int width = ground->getWidth( );
-	int height = ground->getHeight( );
-	int tex_handle = 0;
-	for ( int i = 0; i < width; i++ ) {
-		for ( int j = 0; j < height; j++ ) {
-			int idx = ground->getIdx( i, j );
-			int csv_type = ground->getGroundData( idx );
-			int type = app->convertCSVtoMap( csv_type );
-			if ( type == MODEL_MDL_NONE ) {
-				continue;
-			}
-			Vector pos =  Vector( i *  Ground::CHIP_WIDTH, j *  Ground::CHIP_HEIGHT, 0 );
-			Vector max_pos = pos + Vector( Ground::CHIP_WIDTH, Ground::CHIP_HEIGHT, 0 );
-			Vector min_pos = pos - Vector( Ground::CHIP_WIDTH, Ground::CHIP_HEIGHT, 0 );
-			CameraPtr camera = Camera::getTask( );
-			if ( !camera->isInScreen( max_pos ) && !camera->isInScreen( min_pos ) ) {
-				continue;
-			}
-			Drawer::ModelMDL model_mdl = Drawer::ModelMDL( Vector(  i *  Ground::CHIP_WIDTH, j *  Ground::CHIP_HEIGHT, 0 ), type );
-			drawer->setModelMDL( model_mdl );
-		}
-	}*/
 }
 
 void Viewer::drawBackGround( ) {
@@ -152,9 +140,7 @@ void Viewer::drawPlayer( ) {
 	int mesh = animation->getMesh( );
 	int time = ( int )animation->getAnimTime( );
 	Vector pos = player->getPos( );
-	double z = pos.y;
-	pos.y = pos.z;
-	pos.z = z;
+
 	Vector dir = player->getDir( );
 
 	double angle = dir.angle( Vector( 0, 1, 0 ) );
@@ -168,7 +154,8 @@ void Viewer::drawPlayer( ) {
 	Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
 	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
 
-	Matrix mat = mat_dir * mat_trans * mat_rot * mat_scale;
+	Matrix mat = mat_dir * mat_rot * mat_scale;
+	mat = mat * mat_trans;
 
 	DrawerPtr drawer = Drawer::getTask( );
 	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );

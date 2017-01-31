@@ -24,9 +24,13 @@ AppPtr App::getTask( ) {
 }
 
 App::App( ) {
+<<<<<<< HEAD
 	_ground = GroundPtr( new Ground( DIRECTORY + "CSV/map.csv" ) );
 	_ground_model = GroundModelPtr( new GroundModel );
 	_ground_model->loadModelData( 0, 0, DIRECTORY + "MapModel/floor01.mdl" );
+=======
+	_state = STATE_PLAY;//デバッグ用
+>>>>>>> 09fc67b1d228f45e0935b1a75a9a6724dc0dba28
 }
 
 App::~App( ) {
@@ -45,6 +49,7 @@ void App::initialize( ) {
 	std::string floor_model_path = DIRECTORY + "MapModel/floor_collision.mdl";
 	_ground_model->loadModelData( 0, 0, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
+
 	
 }
 

@@ -24,9 +24,9 @@ void Character::update( ) {
 	if ( !_expired ) {
 		return;
 	}
-	if ( !camera->isInScreen( getPos( ) ) ) {
+	/*if ( !camera->isInScreen( getPos( ) ) ) {
 		return;
-	}
+	}*/
 	otherUpdate( );
 	_animation->update( );
 }

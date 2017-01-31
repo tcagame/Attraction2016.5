@@ -7,6 +7,7 @@
 
 const char * COM_IP     = "ip";
 const char * COM_DEVICE = "device";
+const char * COM_RESET = "reset";
 
 CommandPtr Command::getTask( ) {
 	ApplicationPtr fw = Application::getInstance( );
@@ -86,6 +87,13 @@ void Command::execute( ) {
 		DevicePtr device = Device::getTask( );
 		device->resetup( );
 		log->send( "deviceの再読み込みをしました。" );
+		return;
+	}
+
+	//リセット
+	if ( _word[ 0 ] == COM_RESET ) {
+
+		log->send( "リセットを発信しました" );
 		return;
 	}
 

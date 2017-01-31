@@ -38,21 +38,6 @@ void GroundModel::loadModelPos( int x, int y, ModelPtr model ) {
 	}
 }
 
-void GroundModel::drawGroundModel( ) {
-	Vector plane_point_a = _model_data_ground.pos[ 0 ];
-	Vector plane_point_b = _model_data_ground.pos[ 1 ];
-	Vector plane_point_c = _model_data_ground.pos[ 2 ];
-	Vector pos1 = plane_point_a;
-	Vector pos2 = plane_point_b;
-	Vector pos3 = plane_point_c;
-	pos1.z += 1;
-	pos2.z += 1;
-	pos3.z += 1;
-	DrawerPtr drawer = Drawer::getTask( );
-	drawer->drawTriangle( pos1, pos2, pos3, true );
-
-}
-
 Vector GroundModel::HitGroundPos( Vector head_pos, Vector foot_pos ) {
 	AppPtr app = App::getTask( );
 	GroundPtr ground = app->getGround( );

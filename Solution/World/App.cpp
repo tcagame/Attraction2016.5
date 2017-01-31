@@ -24,13 +24,9 @@ AppPtr App::getTask( ) {
 }
 
 App::App( ) {
-<<<<<<< HEAD
 	_ground = GroundPtr( new Ground( DIRECTORY + "CSV/map.csv" ) );
 	_ground_model = GroundModelPtr( new GroundModel );
 	_ground_model->loadModelData( 0, 0, DIRECTORY + "MapModel/floor01.mdl" );
-=======
-	_state = STATE_PLAY;//デバッグ用
->>>>>>> 09fc67b1d228f45e0935b1a75a9a6724dc0dba28
 }
 
 App::~App( ) {

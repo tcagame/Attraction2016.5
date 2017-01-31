@@ -9,6 +9,7 @@
 #include "Client.h"
 #include "BulletFire.h"
 #include "Weapon.h"
+const int MOVE_SPEED = 5;
 
 Player::Player( unsigned char player_id, Character::STATUS status ) :
 Character( status ),
@@ -25,6 +26,7 @@ void Player::otherUpdate( ) {
 	CONTROLL controll = makeControll( );
 
 	walk( controll );
+	swicthState( );
 	animationUpdate( );
 	_before_state = _player_state;
 }
@@ -58,9 +60,19 @@ void Player::animationUpdate( ) {
 
 	if ( _player_state == PLAYER_STATE_WAIT ) {
 		if ( animation->getMotion( ) != Animation::MV1_PLAYER_WAIT ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER,Animation::MV1_PLAYER_WAIT ) ) );
+			setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_WAIT ) ) );
 		} else {
 			if( animation->isEndAnimation( ) ) {
+				animation->setAnimationTime( 0 );
+			}
+		}
+	}
+
+	if ( _player_state == PLAYER_STATE_WALK ) {
+		if ( animation->getMotion( ) != Animation::MV1_PLAYER_WALK ) {
+			setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_WALK ) ) );
+		} else {
+			if ( animation->isEndAnimation( ) ) {
 				animation->setAnimationTime( 0 );
 			}
 		}
@@ -69,9 +81,19 @@ void Player::animationUpdate( ) {
 }
 
 void Player::walk( Player::CONTROLL controll ) {
+	_speed = Vector( );
 	if ( controll.move.getLength( ) > 0.0 ) {
 		Vector vec = controll.move.normalize( );
-		move( vec );
+		_speed = vec * MOVE_SPEED;
+		move( _speed );
 		setDir( vec );
+	}
+}
+
+void Player::swicthState( ) {
+	_player_state = PLAYER_STATE_WAIT;
+
+	if ( _speed.getLength( ) > 0.0 ) {
+		_player_state = PLAYER_STATE_WALK;
 	}
 }

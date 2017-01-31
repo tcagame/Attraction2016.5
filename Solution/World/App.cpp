@@ -55,7 +55,7 @@ void App::initialize( ) {
 
 
 void App::reset( ) {
-	_state = STATE_READY;
+	_state = STATE_PLAY;
 	//_state = STATE_PLAY;//デバック用にプレイスタート
 	_push_reset_count = 0;
 	_push_start_count = 0;
@@ -65,8 +65,8 @@ void App::update( ) {
 	updateReset( );
 	switch ( _state ) {
 	case STATE_READY:
-		updateStateReady( );
-		break;
+	//	updateStateReady( );
+	//	break;
 	case STATE_PLAY:
 		updateStatePlay( );
 		break;

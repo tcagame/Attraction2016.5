@@ -68,7 +68,7 @@ Vector Camera::getStartTargetPos( ) const {
 }
 
 bool Camera::isInScreen( Vector pos ) {
-	double length = ( _target - pos ).getLength2( );
+	double length = ( _target - pos ).getLength( );
 	return length < SCREEN_LENGTH;
 }
 

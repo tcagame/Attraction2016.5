@@ -51,6 +51,7 @@ void Viewer::initialize( ) {
 	drawer->loadMDLModel( MODEL_MDL_FLOOR,					"MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER,			"CaracterModel/player/player.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WAIT,	"CaracterModel/player/player_idle.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_WALK,	"CaracterModel/player/player_run.mv1" );
 	drawer->loadMV1Model( Animation::MV1_BACK_GROUND,	"MapModel/background.mv1" );
 	drawer->loadMV1Model( Animation::MV1_GOBLIN_WAIT,	"EnemyModel/goblin/enemy_goblin_wait.mv1" );
 
@@ -68,7 +69,7 @@ void Viewer::update( ) {
 		drawReady( );
 		break;
 	case App::STATE_PLAY:
-		drawGroundModel( );
+		//drawGroundModel( );
 		drawPlayer( );
 		drawBackGround( );
 		drawBullet( );
@@ -152,12 +153,18 @@ void Viewer::drawPlayer( ) {
 	Vector pos = player->getPos( );
 	Vector dir = player->getDir( );
 
-//	Matrix mat_dir = Matrix::makeTransformRotation( Vector( 0.0, 0.0, 1.0 ), );
+	double angle = dir.angle( Vector( 0, 1, 0 ) );
+	Vector axis = dir.cross( Vector( 0, -1, 0 ) );
+	if ( dir == Vector( 0, -1, 0 ) ) {
+		axis = Vector( 0, 0, 1 );
+	}
+
+	Matrix mat_dir = Matrix::makeTransformRotation( axis, angle );
 	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
 	Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
 	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
 
-	Matrix mat = mat_trans * mat_rot * mat_scale;
+	Matrix mat = mat_dir * mat_trans * mat_rot * mat_scale;
 
 	DrawerPtr drawer = Drawer::getTask( );
 	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );

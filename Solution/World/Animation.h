@@ -5,21 +5,22 @@ PTR( Animation );
 
 class Animation {
 public:
-enum MOTION {
-	MOTION_PLAYER,
-	MOTION_PLAYER_WAIT,
-	MOTION_PLAYER_WALK,
-	MOTION_PLAYER_ATTACK_FIRE,
-	MOTION_PLAYER_DEAD,
-	MOTION_GOBLIN_WAIT,
-	MOTION_GOBLIN_WALK,
-	MOTION_GOBLIN_ATTACK,
-	MOTION_GOBLIN_DAMAGE,
-	MOTION_GOBLIN_DEAD,
-	MOTION_MAX
+enum MV1 {
+	MV1_PLAYER,
+	MV1_PLAYER_WAIT,
+	MV1_PLAYER_WALK,
+	MV1_PLAYER_ATTACK_FIRE,
+	MV1_PLAYER_DEAD,
+	MV1_GOBLIN_WAIT,
+	MV1_GOBLIN_WALK,
+	MV1_GOBLIN_ATTACK,
+	MV1_GOBLIN_DAMAGE,
+	MV1_GOBLIN_DEAD,
+	MV1_BACK_GROUND,
+	MV1_MAX
 };
 public:
-	Animation( MOTION mesh = MOTION_MAX, MOTION motion = MOTION_MAX, double anim_speed = 1.0 );
+	Animation( MV1 mesh = MV1_MAX, MV1 motion = MV1_MAX, double anim_speed = 1.0 );
 	virtual ~Animation( );
 public:
 	void update( );
@@ -33,7 +34,7 @@ private:
 	double _anim_time;
 	double _max_anim_time;
 	double _anim_speed;
-	MOTION _motion;
-	MOTION _mesh;
+	MV1 _motion;
+	MV1 _mesh;
 };
 

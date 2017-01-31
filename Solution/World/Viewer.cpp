@@ -48,9 +48,10 @@ Viewer::~Viewer( ) {
 void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
 	drawer->loadMDLModel( MODEL_MDL_FLOOR,					"MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
-	drawer->loadMV1Model( Animation::MOTION_PLAYER,			"CaracterModel/player/player.mv1" );
-	drawer->loadMV1Model( Animation::MOTION_PLAYER_WAIT,	"CaracterModel/player/player_idle.mv1" );
-	drawer->loadMV1Model( Animation::MOTION_GOBLIN_WAIT,	"EnemyModel/goblin/enemy_goblin_wait.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER,			"CaracterModel/player/player.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_WAIT,	"CaracterModel/player/player_idle.mv1" );
+	drawer->loadMV1Model( Animation::MV1_BACK_GROUND,	"MapModel/background.mv1" );
+	drawer->loadMV1Model( Animation::MV1_GOBLIN_WAIT,	"EnemyModel/goblin/enemy_goblin_wait.mv1" );
 
 	drawer->loadGraph( GRAPH_ID_MISSILE,      "Billboard/missile.png" );
 	drawer->loadGraph( GRAPH_ID_READY_BACK,   "Images/ready_back.png" );
@@ -68,7 +69,7 @@ void Viewer::update( ) {
 	case App::STATE_PLAY:
 		drawGroundModel( );
 		drawPlayer( );
-		//drawBackGround( );
+		drawBackGround( );
 		drawBullet( );
 		updateCamera( );
 		break;
@@ -120,8 +121,17 @@ void Viewer::drawGroundModel( ) {
 void Viewer::drawBackGround( ) {
 	AppPtr app = App::getTask( );
 	DrawerPtr drawer = Drawer::getTask( );
-	Drawer::ModelMDL model_mdl = Drawer::ModelMDL( Vector(  0, 0, 0 ), MODEL_MDL_BACK_GROUND );
-	drawer->setModelMDL( model_mdl );
+
+	Vector pos = Vector( 0, 0, 0 );
+//	Matrix mat_dir = Matrix::makeTransformRotation( Vector( 0.0, 0.0, 1.0 ), );
+	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
+	Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
+	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
+
+	Matrix mat = mat_trans * mat_rot * mat_scale;
+
+	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, Animation::MV1_BACK_GROUND, Animation::MV1_BACK_GROUND, 0 );
+	drawer->setModelMV1( model );
 }
 
 void Viewer::drawPlayer( ) {

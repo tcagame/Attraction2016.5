@@ -151,6 +151,9 @@ void Viewer::drawPlayer( ) {
 	int mesh = animation->getMesh( );
 	int time = ( int )animation->getAnimTime( );
 	Vector pos = player->getPos( );
+	double z = pos.y;
+	pos.y = pos.z;
+	pos.z = z;
 	Vector dir = player->getDir( );
 
 	double angle = dir.angle( Vector( 0, 1, 0 ) );

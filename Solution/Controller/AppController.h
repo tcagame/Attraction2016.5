@@ -2,6 +2,7 @@
 #include "Task.h"
 #include "smart_ptr.h"
 #include <string>
+#include "Network.h"
 
 PTR( AppController );
 
@@ -12,9 +13,16 @@ public:
 public:
 	AppController( );
 	virtual ~AppController( );
+private:
+	void updateTitle( );
+	void updatePlay( CLIENTDATA data );
+	void updateClear( );
+	void updateGameOver( );
 public:
 	void initialize( );
 	void update( );
 	void finalize( );
+private:
+	unsigned char _scene;
 };
 

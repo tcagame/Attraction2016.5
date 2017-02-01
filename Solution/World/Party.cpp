@@ -45,3 +45,13 @@ void Party::update( ) {
 PlayerPtr Party::getPlayer( int id ) const {
 	return _party[ id ];
 }
+
+int Party::getPlayerNum( ) const {
+	int num = 0;
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		if ( _party[ i ]->isExpired( ) ) {
+			num++;
+		}
+	}
+	return num;
+}

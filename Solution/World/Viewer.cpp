@@ -79,8 +79,7 @@ void Viewer::update( ) {
 		drawTitle( );
 		break;
 	case SCENE_PLAY:
-		//drawGroundModel( );
-		//drawPlayer( );
+		drawPlayer( );
 		drawBullet( );
 		drawEnemy( );
 		updateCamera( );

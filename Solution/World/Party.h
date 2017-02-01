@@ -12,6 +12,7 @@ public:
 	virtual ~Party( );
 	void update( );
 	PlayerPtr getPlayer( int id ) const;
+	int getPlayerNum( ) const;
 public:
 	std::array< PlayerPtr, PLAYER_NUM > _party;
 };

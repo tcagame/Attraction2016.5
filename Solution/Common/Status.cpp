@@ -10,13 +10,14 @@ Status::Status( ) {
 	form.x = 10;
 	form.y = 10;
 	form.rows = 5;
-	form.cols = 6;
+	form.cols = 7;
 	form.col[ 0 ] = 150;
 	form.col[ 1 ] = 150;
 	form.col[ 2 ] = 100;
 	form.col[ 3 ] = 100;
 	form.col[ 4 ] = 100;
 	form.col[ 5 ] = 150;
+	form.col[ 6 ] = 100;
 	_td = TableDrawerPtr( new TableDrawer( form ) );
 
 	_td->setCell( 0, 0 , "PLAYER_NUM" );
@@ -25,6 +26,7 @@ Status::Status( ) {
 	_td->setCell( 3, 0 , "DIR_X" );
 	_td->setCell( 4, 0 , "DIR_Y" );
 	_td->setCell( 5, 0 , "BUTTON" );
+	_td->setCell( 6, 0 , "EXIST" );
 
 	_td->setCell( 0, 1 , "PLAYER:1" );
 	_td->setCell( 0, 2 , "PLAYER:2" );
@@ -59,6 +61,12 @@ void Status::update( ) {
 		_td->setCell( 3, i + 1, std::to_string( data.player[ i ].x ) );
 		_td->setCell( 4, i + 1, std::to_string( data.player[ i ].y ) );
 		_td->setCell( 5, i + 1, getButtonBinary( data.player[ i ].button ) );
+		if ( data.player[ i ].exist == NOT_EXIST ) {
+			_td->setCell( 6, i + 1, "NOT_EXIST" );
+		} 
+		if ( data.player[ i ].exist == EXIST ) {
+			_td->setCell( 6, i + 1, "EXIST" );
+		}
 	}
 }
 

@@ -178,10 +178,10 @@ void Viewer::drawPlayer( ) {
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		PlayerPtr player = party->getPlayer( i );
 		if ( !player ) {
-			return;
+			continue;
 		}
 		if ( !player->isExpired( ) ) {
-			return;
+			continue;
 		}
 
 		AnimationPtr animation = player->getAnimation( );

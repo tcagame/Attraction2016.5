@@ -106,6 +106,7 @@ void App::initSceneTitle( ) {
 }
 
 void App::initScenePlay( ) {
+	_party->reset( );
 }
 
 void App::initSceneClear( ) {

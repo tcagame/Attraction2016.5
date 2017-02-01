@@ -13,6 +13,7 @@ public:
 	void update( );
 	PlayerPtr getPlayer( int id ) const;
 	int Party::getPlayerNum( ) const;
+	void reset( );
 public:
 	std::array< PlayerPtr, PLAYER_NUM > _party;
 };

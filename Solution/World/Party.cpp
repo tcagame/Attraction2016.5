@@ -36,7 +36,7 @@ void Party::update( ) {
 	ClientPtr client = Client::getTask( );
 	CLIENTDATA data = client->getClientData( );
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		if ( !_party[ i ]->isExpired( ) && data.player[ i ].button > 0 ) {
+		if ( !_party[ i ]->isExpired( ) && data.player[ i ].exist == EXIST ) {
 			_party[ i ]->create( PLAYER_START_POS[ i ] );
 		}
 	}
@@ -54,4 +54,10 @@ int Party::getPlayerNum( ) const {
 		}
 	}
 	return num;
+}
+
+void Party::reset( ) {
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		_party[ i ]->reset( );
+	}
 }

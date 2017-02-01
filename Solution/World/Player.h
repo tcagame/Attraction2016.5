@@ -13,11 +13,6 @@ public:
 		PLAYER_STATE_DAMAGE,
 		PLAYER_STATE_DEAD,
 	};
-public:
-	Player( unsigned char player_id, Character::STATUS status );
-	virtual ~Player( );
-public:
-	void otherUpdate( );
 protected:
 	struct CONTROLL {
 		Vector move;
@@ -33,6 +28,12 @@ private:
 		ATTACK_LOOP,
 		ATTACK_END
 	};
+public:
+	Player( unsigned char player_id, Character::STATUS status );
+	virtual ~Player( );
+public:
+	void otherUpdate( );
+	int getTotaldamage( );
 private:
 	void animationUpdate( );
 	CONTROLL makeControll( );
@@ -48,6 +49,7 @@ private:
 	ATTACK _attack;
 	ATTACK _before_attack;
 
+	int _stack_damage;
 	int _before_hp;
 	bool _attack_loop;
 	bool _attack_end;

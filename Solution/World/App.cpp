@@ -23,7 +23,7 @@ const std::string MODEL_NAME_LIST [] {
 const int RESET_COUNT = 30;
 const int START_COUNT = 60;
 const int STRING_BUF = 256;
-const int SEND_MESSAGE_COUNT_MAX = 60;
+const int SEND_MESSAGE_COUNT_MAX = 10;
 
 AppPtr App::getTask( ) {
 	ApplicationPtr fw = Application::getInstance( );
@@ -148,8 +148,7 @@ void App::decreasePlayerHp( ) {
 		if ( !player->isExpired( ) ) {
 			continue;
 		}
-		int hp = player->getStatus( ).hp;
-		int diff_hp = data.player[ i ].hp - hp;
+		int diff_hp = player->getTotaldamage( );
 		SERVERDATA sever_data;
 		sever_data.command = COMMAND_STATUS_DAMAGE;
 		sever_data.value[ 0 ] = i;

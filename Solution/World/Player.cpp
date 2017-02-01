@@ -23,6 +23,7 @@ _player_id( player_id ) {
 	_attack_end = true;
 	_is_damage = false;
 	_before_hp = status.hp;
+	_stack_damage = 0;
 }
 
 Player::~Player( ) {
@@ -35,6 +36,7 @@ void Player::otherUpdate( ) {
 	CONTROLL controll = makeControll( );
 	ClientPtr client = Client::getTask( );
 	CLIENTDATA data = client->getClientData( );
+	_stack_damage += _before_hp - getStatus( ).hp;
 	setHP( data.player[ _player_id ].hp );
 	swicthState( controll );
 	walk( controll );
@@ -223,4 +225,10 @@ void Player::onAttack( ) {
 	AppPtr app = App::getTask( );
 	WeaponPtr weapon = app->getWeapon( );
 	weapon->add( BulletPtr( new BulletFire( pos + BULLET_OFFSET + dir * 2, dir, getStatus( ).power ) ) );
+}
+
+int Player::getTotaldamage( ) {
+	int result = _stack_damage;
+	_stack_damage = 0;
+	return result;
 }

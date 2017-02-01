@@ -40,7 +40,8 @@ enum GRAPH_ID {
 	GRAPH_ID_GAMEOVER_STRING,
 	GRAPH_ID_TITLE_STRING,
 	GRAPH_ID_UI_WINDOW,
-	GRAPH_ID_UI_LIFE
+	GRAPH_ID_UI_LIFE,
+	GRAPH_ID_UI_LIFE_STRING,
 };
 
 ViewerPtr Viewer::getTask( ) {
@@ -96,6 +97,7 @@ void Viewer::initialize( ) {
 	drawer->loadGraph( GRAPH_ID_TITLE_STRING,	"Images/title.png" );
 	drawer->loadGraph( GRAPH_ID_UI_WINDOW,		"UI/status_window.png" );
 	drawer->loadGraph( GRAPH_ID_UI_LIFE,		"UI/lifenumber.png" );
+	drawer->loadGraph( GRAPH_ID_UI_LIFE_STRING,	"UI/lifewindow.png" );
 }
 
 void Viewer::update( ) {
@@ -385,16 +387,27 @@ void Viewer::drawUI( ) {
 		{//ウィンドウ
 			Drawer::Sprite sprite;
 			sprite.res = GRAPH_ID_UI_WINDOW;
-			sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
 			sprite.trans.sy = sy;
 			sprite.trans.sx = sx;
 			sprite.trans.tw = -1;
 			sprite.blend = Drawer::BLEND_NONE;
 			drawer->setSprite( sprite );
 		}
+
+		{//LIFE
+			Drawer::Sprite sprite;
+			sprite.res = GRAPH_ID_UI_LIFE_STRING;
+			sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
+			sprite.trans.sy = sy + 10;
+			sprite.trans.sx = sx + 32;
+			sprite.trans.tw = -1;
+			sprite.blend = Drawer::BLEND_NONE;
+			drawer->setSprite( sprite );
+		}
+
 		{//HP文字
 			std::string str_num = std::to_string( playre->getStatus( ).hp );
-			int string_y = GRAPH_UI_WINDOW_HEIGHT - 92;
+			int string_y = GRAPH_UI_WINDOW_HEIGHT - 64;
 			int digits = str_num.size( );
 			for ( int i = 0; i < digits; i++ ) {
 				const char num_c = str_num[ i ];
@@ -403,7 +416,7 @@ void Viewer::drawUI( ) {
 				sprite.res = GRAPH_ID_UI_LIFE;
 				sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
 				sprite.trans.sy = sy + string_y;
-				sprite.trans.sx = sx + GRAPH_UI_WINDOW_WIDTH - 32 - 20 * ( digits - i );
+				sprite.trans.sx = sx + GRAPH_UI_WINDOW_WIDTH - 32 - 25 * ( digits - i );
 				sprite.trans.tx = 32 * num;
 				sprite.trans.ty = 0;
 				sprite.trans.th = 64;

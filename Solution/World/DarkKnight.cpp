@@ -5,7 +5,7 @@ const double ATTACK_TIME = 10;
 
 DarkKnight::DarkKnight( ENEMY_TYPE type, double range, Character::STATUS status ):
 Enemy( type, range, status ) {
-
+	_is_dead = false;
 }
 
 
@@ -13,12 +13,17 @@ DarkKnight::~DarkKnight( ) {
 }
 
 
+bool DarkKnight::isDead( ) {
+	return _is_dead;
+}
+
 void DarkKnight::animationUpdate( ) {
 	AnimationPtr animation = getAnimation( );
 	Enemy::ENEMY_STATE state = getState( );
 	if ( animation->getMotion( ) == Animation::MV1_DARKKNIGHT_DEAD ) {
 		if ( animation->isEndAnimation( ) ) {
 			dead( );
+			_is_dead = true;
 		}
 		return;
 	}

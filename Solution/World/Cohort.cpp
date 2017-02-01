@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Ground.h"
 #include "Character.h"
+#include "EnemyMinotaur.h"
 
 Cohort::Cohort( ) {
  
@@ -124,7 +125,8 @@ void Cohort::putBlockEnemy( int idx ) {
 
 void Cohort::putEnemy( const Vector& pos ) {
 	Character::STATUS status = Character::STATUS( 100, 10, 0.01 );
-	EnemyPtr enemy = EnemyPtr( new Enemy( Enemy::ENEMY_TYPE_MINOTAUR, 1.0, status ) );
+
+	EnemyPtr enemy = EnemyPtr( new EnemyMinotaur( Enemy::ENEMY_TYPE_MINOTAUR, 1.0, status ) );
 	add( enemy, pos );
 
 }

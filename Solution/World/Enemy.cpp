@@ -62,6 +62,9 @@ void Enemy::moveToTarget( ) {
 	}
 }
 
+void Enemy::setAttack( bool is_attack ) {
+	_is_attack = is_attack;
+}
 
 void Enemy::switchStatus( ) {
 	_state = ENEMY_STATE_WAIT;
@@ -80,10 +83,10 @@ void Enemy::switchStatus( ) {
 
 	if ( range <= ATTACK_RANGE && _before_state != ENEMY_STATE_ATTACK ) {
 		_state = ENEMY_STATE_ATTACK;
+		setAttack( true );
 	}
-	AnimationPtr animation = getAnimation( );
 	//UŒ‚’†
-	if ( animation->getMotion( ) == Animation::MV1_GOBLIN_ATTACK && !animation->isEndAnimation( ) ) {
+	if ( _is_attack ) {
 		_state = ENEMY_STATE_ATTACK;
 	}
 
@@ -97,61 +100,21 @@ void Enemy::switchStatus( ) {
 }
 
 
-void Enemy::animationUpdate( ) {
-	AnimationPtr animation = getAnimation( );
-	if ( animation->getMotion( ) == Animation::MV1_GOBLIN_DEAD ) {
-		if ( animation->isEndAnimation( ) ) {
-			dead( );
-		}
-		return;
-	}
-	if ( animation->getMotion( ) == Animation::MV1_GOBLIN_DAMAGE && !animation->isEndAnimation( ) ) {
-		_state = ENEMY_STATE_WAIT;
-		return;
-	}
-	if ( _state == ENEMY_STATE_WAIT ) {
-		if ( animation->getMotion( ) != Animation::MV1_GOBLIN_WAIT ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MV1_GOBLIN_WAIT ) ) );
-		} else {
-			if ( animation->isEndAnimation( ) ) {
-				animation->setAnimationTime( 0 );
-			}
-		}
-	}
-	if ( _state == ENEMY_STATE_WALK ) {
-		if ( animation->getMotion( ) != Animation::MV1_GOBLIN_WALK ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MV1_GOBLIN_WALK ) ) );
-		} else {
-			if ( animation->isEndAnimation( ) ) {
-				animation->setAnimationTime( 0 );
-			}
-		}
-	}
-	if ( _state == ENEMY_STATE_ATTACK ) {
-		if ( animation->getMotion( ) != Animation::MV1_GOBLIN_ATTACK ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MV1_GOBLIN_ATTACK ) ) );
-		} else {
-			if ( animation->isEndAnimation( ) ) {
-				animation->setAnimationTime( 0 );
-			}
-			if ( animation->getAnimTime( ) == ATTACK_TIME ) {
-				onAttack( _target.lock( ) );
-			}
-		}
-	}
-	if ( _on_damage ) {
-		if ( animation->getMotion( ) != Animation::MV1_GOBLIN_DAMAGE ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MV1_GOBLIN_DAMAGE ) ) );
-		}
-	}
-	if ( _state == ENEMY_STATE_DEAD ) {
-		if ( animation->getMotion( ) != Animation::MV1_GOBLIN_DEAD ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MV1_GOBLIN_DEAD ) ) );
-		}
-	}
+void Enemy::setState( Enemy::ENEMY_STATE state ) {
+	_state = state;
 }
 
+Enemy::ENEMY_STATE Enemy::getState( ) {
+	return _state;
+}
 
+PlayerWeakPtr Enemy::getTarget( ) {
+	return _target;
+}
+
+bool Enemy::isOnDamage( ) {
+	return _on_damage;
+}
 
 void Enemy::onAttack( PlayerPtr player ) {
 	AppPtr app = App::getTask( );
@@ -162,7 +125,7 @@ void Enemy::onAttack( PlayerPtr player ) {
 	Vector attack_pos = getPos( ) +  dir * 1.0;
 	Vector smash_dis = attack_pos - player_pos;
 
-	if ( smash_dis.getLength( ) < 2.0 ) {
+	if ( smash_dis.getLength( ) < _range ) {
 		player->damage( getStatus( ).power );
 	}
 }

@@ -17,6 +17,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Cohort.cpp" />
+    <ClCompile Include="EnemyMinotaur.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Viewer.h" />
@@ -43,5 +44,6 @@
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyMinotaur.h" />
   </ItemGroup>
 </Project>

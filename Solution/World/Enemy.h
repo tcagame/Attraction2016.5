@@ -22,17 +22,24 @@ public:
 public:
 	ENEMY_TYPE getEnemyType( );
 	void otherUpdate( );
+protected:
+	void setState( ENEMY_STATE state );
+	ENEMY_STATE getState( );
+	PlayerWeakPtr getTarget( );
+	void onAttack( PlayerPtr player );
+	bool isOnDamage( );
+	void setAttack( bool is_attack );
 private:
 	void searchTarget( );
 	void switchStatus( );
 	void moveToTarget( );
-	void animationUpdate( );
-	void onAttack( PlayerPtr player );
+	virtual void animationUpdate( ) = 0;
 private:
 	PlayerWeakPtr _target;
 	ENEMY_STATE _state;
 	ENEMY_STATE _before_state;
 	ENEMY_TYPE _type;
+	bool _is_attack;
 	double _range;
 	bool _on_damage;
 	int _before_hp;

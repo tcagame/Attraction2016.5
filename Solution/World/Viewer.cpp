@@ -56,6 +56,13 @@ void Viewer::initialize( ) {
 	drawer->loadMV1Model( Animation::MV1_PLAYER_ATTACK_END,	  "CaracterModel/player/player_attack_end.mv1" );
 	drawer->loadMV1Model( Animation::MV1_BACK_GROUND,	"MapModel/background.mv1" );
 	drawer->loadMV1Model( Animation::MV1_GOBLIN_WAIT,	"EnemyModel/goblin/enemy_goblin_wait.mv1" );
+	drawer->loadMV1Model( Animation::MV1_MINOTAUR,            "EnemyModel/minotaur/enemy_minotaur.mv1" );
+	drawer->loadMV1Model( Animation::MV1_MINOTAUR_WAIT,       "EnemyModel/minotaur/enemy_minotaur_wait.mv1" );
+	drawer->loadMV1Model( Animation::MV1_MINOTAUR_WALK,	      "EnemyModel/minotaur/enemy_minotaur_walk.mv1" );
+	drawer->loadMV1Model( Animation::MV1_MINOTAUR_SMASH,	  "EnemyModel/minotaur/enemy_minotaur_smash.mv1" );
+	drawer->loadMV1Model( Animation::MV1_MINOTAUR_DAMAGE,	  "EnemyModel/minotaur/enemy_minotaur_damage.mv1" );
+	drawer->loadMV1Model( Animation::MV1_MINOTAUR_DEAD,	      "EnemyModel/minotaur/enemy_minotaur_dead.mv1" );
+
 
 	drawer->loadGraph( GRAPH_ID_MISSILE,		"Billboard/missile.png" );
 	drawer->loadGraph( GRAPH_ID_CLEAR_STRING,	"Images/clear.png" );
@@ -72,8 +79,9 @@ void Viewer::update( ) {
 		break;
 	case SCENE_PLAY:
 		//drawGroundModel( );
-		drawPlayer( );
+		//drawPlayer( );
 		drawBullet( );
+		drawEnemy( );
 		updateCamera( );
 		break;
 	case SCENE_CLEAR:
@@ -115,6 +123,48 @@ void Viewer::drawBackGround( ) {
 
 	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, Animation::MV1_BACK_GROUND, Animation::MV1_BACK_GROUND, 0 );
 	drawer->setModelMV1( model );
+}
+
+void Viewer::drawEnemy( ) {
+	AppPtr app = App::getTask( );
+	CohortPtr cohort = app->getCohort( );
+	if ( !cohort ) {
+		return;
+	}
+	int max_enemy = cohort->getMaxNum( );
+	for ( int i = 0; i < max_enemy; i++ ) {
+		EnemyPtr enemy = cohort->getEnemy( i );
+		if ( !enemy ) {
+			continue;
+		}
+		AnimationPtr animation = enemy->getAnimation( );
+		int motion = animation->getMotion( );
+		int mesh = animation->getMesh( );
+		int time = ( int )animation->getAnimTime( );
+		Vector pos = enemy->getPos( );
+
+		Vector dir = enemy->getDir( );
+
+		double angle = dir.angle( Vector( 0, 1, 0 ) );
+		Vector axis = dir.cross( Vector( 0, -1, 0 ) );
+		if ( dir == Vector( 0, -1, 0 ) ) {
+			axis = Vector( 0, 0, 1 );
+		}
+
+		Matrix mat_dir = Matrix::makeTransformRotation( axis, angle );
+		Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
+		Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
+		Matrix mat_trans = Matrix::makeTransformTranslation( pos );
+
+		Matrix mat = mat_dir * mat_rot * mat_scale;
+		mat = mat * mat_trans;
+
+		DrawerPtr drawer = Drawer::getTask( );
+		Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );
+		drawer->setModelMV1( model );
+	}
+
+	
 }
 
 void Viewer::drawPlayer( ) {

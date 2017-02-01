@@ -23,6 +23,7 @@ public:
 	void drawPlayer( );
 	void drawBullet( );
 	void updateCamera( );
+	void drawEnemy( );
 	//CLEAR
 	void drawClear( );
 	//DEAD

@@ -8,6 +8,8 @@
 #include "Device.h"
 #include "Application.h"
 #include "Client.h"
+#include "Enemy.h"
+#include "EnemyMinotaur.h"
 
 const std::string DIRECTORY = "../Resource/";
 const std::string MODEL_NAME_LIST [] {
@@ -45,7 +47,8 @@ void App::initialize( ) {
 	std::string floor_model_path = DIRECTORY + "MapModel/floor_collision.mdl";
 	_ground_model->loadModelData( 0, 0, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
-
+	EnemyPtr enemy = EnemyPtr( new EnemyMinotaur( Enemy::ENEMY_TYPE_MINOTAUR, 2.0, Character::STATUS( 100, 10, 2 ) ) );
+	_cohort->add( enemy, Vector( 0, 0, 0 ) );
 	
 }
 

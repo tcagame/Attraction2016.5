@@ -131,9 +131,15 @@ void App::decreasePlayerHp( ) {
 	}
 	ClientPtr client = Client::getTask( );
 	CLIENTDATA data = client->getClientData( );
-	int max_player_num = _party->getPlayerNum( );
-	for ( int i = 0; i < max_player_num; i++ ) {
+
+	for ( int i = 0; i < MAX_MACHINE; i++ ) {
 		PlayerPtr player = _party->getPlayer( i );
+		if ( !player ) {
+			continue;
+		}
+		if ( !player->isExpired( ) ) {
+			continue;
+		}
 		int hp = player->getStatus( ).hp;
 		int diff_hp = data.player[ i ].hp - hp;
 		SERVERDATA sever_data;

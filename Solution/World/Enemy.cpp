@@ -42,9 +42,14 @@ void Enemy::searchTarget( ) {
 	Vector pos = getPos( );
 	double length = 1000;
 	PartyPtr party = app->getParty( );
-	int player_max_num = party->getPlayerNum( );
-	for ( int i = 0; i < player_max_num; i++ ) {
+	for ( int i = 0; i < MAX_PLAYER_NUM; i++ ) {
 		PlayerPtr player = party->getPlayer( i );
+		if ( !player ) {
+			continue;
+		}
+		if ( !player->isExpired( ) ) {
+			continue;
+		}
 		if ( ( pos - player->getPos( ) ).getLength( ) < length ) {
 			length = ( pos - player->getPos( ) ).getLength( );
 			_target = player;

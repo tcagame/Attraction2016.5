@@ -94,4 +94,9 @@ void AppController::updatePlay( CLIENTDATA data ) {
 	if ( !is_alive && exist_coiunt > 0 ) {
 		_scene = SCENE_GAMEOVER;
 	}
+	ServerPtr server = Server::getTask( );
+	if ( ( server->getBossData( ) & BOSS_1 > 0 ) && ( server->getBossData( ) & BOSS_2 > 0 ) ) {
+		_scene = SCENE_CLEAR;
+		server->resetBossData( );
+	}
 }

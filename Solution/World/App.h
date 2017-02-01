@@ -12,6 +12,8 @@ PTR( Weapon );
 PTR( Party );
 PTR( Cohort );
 PTR( GroundModel );
+PTR( DarkKnight );
+PTR( DarkMonk )
 
 class App : public Task {
 public:
@@ -29,6 +31,9 @@ public:
 	WeaponPtr getWeapon( ) const;
 	CohortPtr getCohort( ) const;
 	PartyPtr getParty( ) const;
+	DarkKnightPtr getDarkKnight( ) const;
+	DarkMonkPtr getDarkMonk( ) const;
+
 	unsigned char getScene( ) const;
 	int convertCSVtoMap( int type );
 private:
@@ -52,6 +57,8 @@ private:
 	CohortPtr _cohort;
 	WeaponPtr _weapon;
 	PartyPtr _party;
+	DarkKnightPtr _dark_knight;
+	DarkMonkPtr _dark_monk;
 	int _sever_send_message_count;
 	unsigned char _scene;
 	std::array< int, MAX_MAP_DATA_NUM > _map_convert;

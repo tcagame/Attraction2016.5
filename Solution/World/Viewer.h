@@ -24,6 +24,8 @@ public:
 	void drawBullet( );
 	void updateCamera( );
 	void drawEnemy( );
+	void drawDarkKnight( );
+	void drawDarkMonk( );
 	//CLEAR
 	void drawClear( );
 	//DEAD

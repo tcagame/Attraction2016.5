@@ -9,7 +9,7 @@ class Enemy : public Character {
 public:
 	enum ENEMY_MODE {
 		ENEMY_MODE_ENTRY,
-		ENEMY_MODE_COMBAT
+		ENEMY_MODE_COMBAT,
 	};
 	enum ENEMY_STATE {
 		ENEMY_STATE_WAIT,
@@ -19,6 +19,9 @@ public:
 	};
 	enum ENEMY_TYPE {
 		ENEMY_TYPE_MINOTAUR,
+		ENEMY_TYPE_DARKKIGHT,
+		ENEMY_TYPE_DARKMONK,
+
 	};
 public:
 	Enemy( ENEMY_TYPE type, double range, Character::STATUS status );

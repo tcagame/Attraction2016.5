@@ -5,7 +5,7 @@
 #include "Party.h"
 
 const double ATTACK_RANGE = 2.0;
-const double MOVE_RANGE = 7.5;
+const double MOVE_RANGE = 15;
 const double MV1_SPEED = 1.0;
 const double MAX_PLAYER_NUM = 4;
 const double ATTACK_TIME = 10;

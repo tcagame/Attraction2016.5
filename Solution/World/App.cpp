@@ -11,6 +11,9 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "EnemyMinotaur.h"
+#include "DarkKnight.h"
+#include "DarkMonk.h"
+
 
 const std::string DIRECTORY = "../Resource/";
 const std::string MODEL_NAME_LIST [] {
@@ -47,8 +50,10 @@ void App::initialize( ) {
 	std::string floor_model_path = DIRECTORY + "MapModel/floor_collision.mdl";
 	_ground_model->loadModelData( 100, 30, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
-	EnemyPtr enemy = EnemyPtr( new EnemyMinotaur( Enemy::ENEMY_TYPE_MINOTAUR, 2.0, Character::STATUS( 100, 10, 0.1 ) ) );
-	_cohort->add( enemy );
+	_dark_knight = DarkKnightPtr ( new DarkKnight( Enemy::ENEMY_TYPE_DARKKIGHT, 2, Character::STATUS( 1000, 50, 0.3 ) ) );
+	//_dark_knight->create( Vector( 0, 10, 0 ) );
+	_dark_monk = DarkMonkPtr ( new DarkMonk( Enemy::ENEMY_TYPE_DARKKIGHT, 2, Character::STATUS( 1000, 50, 0.3 ) ) );
+	_dark_monk->create( Vector( 0, 10, 0 ) );
 	_sever_send_message_count = 60;
 }
 
@@ -122,6 +127,8 @@ void App::updateScenePlay( ) {
 	_party->update( );
 	_cohort->update( );
 	_weapon->update( );
+	_dark_knight->update( );
+	_dark_monk->update( );
 	decreasePlayerHp( );
 }
 
@@ -190,4 +197,12 @@ CohortPtr App::getCohort( ) const{
 
 PartyPtr App::getParty( ) const {
 	return _party;
+}
+
+DarkKnightPtr App::getDarkKnight( ) const{
+	return _dark_knight;
+}
+
+DarkMonkPtr App::getDarkMonk( ) const{
+	return _dark_monk;
 }

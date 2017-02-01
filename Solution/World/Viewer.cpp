@@ -13,10 +13,13 @@
 #include "Player.h"
 #include "Weapon.h"
 #include "Bullet.h"
+#include "DarkKnight.h"
+#include "DarkMonk.h"
+
 
 const double MODEL_SCALE_2015 = 0.008;
 const double MODEL_SCALE_2016 = 0.015;
-const double MODEL_SCALE_ALL = 1.0;
+const double MODEL_SCALE_ALL = 0.1;
 const double MODEL_BACK_GROUND_SCALE = 0.01;
 
 const int GRAPH_STRING_X = 1024;
@@ -68,6 +71,19 @@ void Viewer::initialize( ) {
 	drawer->loadMV1Model( Animation::MV1_MINOTAUR_DAMAGE,	  "EnemyModel/minotaur/enemy_minotaur_damage.mv1" );
 	drawer->loadMV1Model( Animation::MV1_MINOTAUR_DEAD,	      "EnemyModel/minotaur/enemy_minotaur_dead.mv1" );
 
+	drawer->loadMV1Model( Animation::MV1_DARKKNIGHT,          "EnemyModel/darkknight/enemy_ex01.mv1" );
+	drawer->loadMV1Model( Animation::MV1_DARKKNIGHT_WAIT,     "EnemyModel/darkknight/enemy_ex01_wait.mv1" );
+	drawer->loadMV1Model( Animation::MV1_DARKKNIGHT_WALK,     "EnemyModel/darkknight/enemy_ex01_run.mv1" );
+	drawer->loadMV1Model( Animation::MV1_DARKKNIGHT_ATTACK,   "EnemyModel/darkknight/enemy_ex01_attack.mv1" );
+	drawer->loadMV1Model( Animation::MV1_DARKKNIGHT_DAMAGE,	  "EnemyModel/darkknight/enemy_ex01_damage.mv1" );
+	drawer->loadMV1Model( Animation::MV1_DARKKNIGHT_DEAD,     "EnemyModel/darkknight/enemy_ex01_death.mv1" );
+
+	drawer->loadMV1Model( Animation::MV1_DARKMONK,          "EnemyModel/darkmonk/enemy_ex02.mv1" );
+	drawer->loadMV1Model( Animation::MV1_DARKMONK_WAIT,     "EnemyModel/darkmonk/enemy_ex02_wait.mv1" );
+	drawer->loadMV1Model( Animation::MV1_DARKMONK_WALK,     "EnemyModel/darkmonk/enemy_ex02_run.mv1" );
+	drawer->loadMV1Model( Animation::MV1_DARKMONK_ATTACK,   "EnemyModel/darkmonk/enemy_ex02_attack.mv1" );
+	drawer->loadMV1Model( Animation::MV1_DARKMONK_DAMAGE,	"EnemyModel/darkmonk/enemy_ex02_damage.mv1" );
+	drawer->loadMV1Model( Animation::MV1_DARKMONK_DEAD,     "EnemyModel/darkmonk/enemy_ex02_death.mv1" );
 
 	drawer->loadGraph( GRAPH_ID_MISSILE,		"Billboard/missile.png" );
 	drawer->loadGraph( GRAPH_ID_CLEAR_STRING,	"Images/clear.png" );
@@ -87,6 +103,8 @@ void Viewer::update( ) {
 		drawPlayer( );
 		drawBullet( );
 		drawEnemy( );
+		drawDarkKnight( );
+		drawDarkMonk( );
 		updateCamera( );
 		break;
 	case SCENE_CLEAR:
@@ -112,6 +130,84 @@ void Viewer::drawGroundModel( ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	Drawer::ModelMDL model_mdl = Drawer::ModelMDL( Vector( 100, 30, 0 ), MODEL_MDL_FLOOR );
 	drawer->setModelMDL( model_mdl );
+}
+
+void Viewer::drawDarkKnight( ) {
+	AppPtr app = App::getTask( );
+	DarkKnightPtr dark_knight = app->getDarkKnight( );
+	if ( !dark_knight ) {
+		return;
+	}
+	if ( !dark_knight->isExpired( ) ) {
+		return;
+	}
+
+	AnimationPtr animation = dark_knight->getAnimation( );
+	int motion = animation->getMotion( );
+	int mesh = animation->getMesh( );
+	int time = ( int )animation->getAnimTime( );
+	Vector pos = dark_knight->getPos( );
+
+	Vector dir = dark_knight->getDir( );
+
+	double angle = dir.angle( Vector( 0, 1, 0 ) );
+	Vector axis = dir.cross( Vector( 0, -1, 0 ) );
+	if ( dir == Vector( 0, -1, 0 ) ) {
+		axis = Vector( 0, 0, 1 );
+	}
+
+	Matrix mat_dir = Matrix::makeTransformRotation( axis, angle );
+	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
+	Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_SCALE_ALL, MODEL_SCALE_ALL, MODEL_SCALE_ALL ) );
+	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
+
+	Matrix mat = mat_dir * mat_rot * mat_scale;
+	mat = mat * mat_trans;
+
+	DrawerPtr drawer = Drawer::getTask( );
+	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );
+	drawer->setModelMV1( model );
+
+	
+}
+
+void Viewer::drawDarkMonk( ) {
+	AppPtr app = App::getTask( );
+	DarkMonkPtr dark_monk = app->getDarkMonk( );
+	if ( !dark_monk ) {
+		return;
+	}
+	if ( !dark_monk->isExpired( ) ) {
+		return;
+	}
+
+	AnimationPtr animation = dark_monk->getAnimation( );
+	int motion = animation->getMotion( );
+	int mesh = animation->getMesh( );
+	int time = ( int )animation->getAnimTime( );
+	Vector pos = dark_monk->getPos( );
+
+	Vector dir = dark_monk->getDir( );
+
+	double angle = dir.angle( Vector( 0, 1, 0 ) );
+	Vector axis = dir.cross( Vector( 0, -1, 0 ) );
+	if ( dir == Vector( 0, -1, 0 ) ) {
+		axis = Vector( 0, 0, 1 );
+	}
+
+	Matrix mat_dir = Matrix::makeTransformRotation( axis, angle );
+	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
+	Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_SCALE_ALL, MODEL_SCALE_ALL, MODEL_SCALE_ALL ) );
+	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
+
+	Matrix mat = mat_dir * mat_rot * mat_scale;
+	mat = mat * mat_trans;
+
+	DrawerPtr drawer = Drawer::getTask( );
+	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );
+	drawer->setModelMV1( model );
+
+	
 }
 
 void Viewer::drawBackGround( ) {
@@ -200,7 +296,7 @@ void Viewer::drawPlayer( ) {
 
 		Matrix mat_dir = Matrix::makeTransformRotation( axis, angle );
 		Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
-		Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
+		Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_SCALE_ALL, MODEL_SCALE_ALL, MODEL_SCALE_ALL ) );
 		Matrix mat_trans = Matrix::makeTransformTranslation( pos );
 
 		Matrix mat = mat_dir * mat_rot * mat_scale;

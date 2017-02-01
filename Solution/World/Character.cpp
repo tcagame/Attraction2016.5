@@ -47,18 +47,33 @@ bool Character::move( const Vector& vec ) {
 	}
 	AppPtr app = App::getTask( );
 	GroundModelPtr ground_model = app->getGroundModel( );
+	FieldPtr field = app->getField( );
+	field->delTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
 	Vector store = _pos;
 	Vector move_pos = _pos + vec.normalize( ) * _status.speed;
 	Vector head_pos = move_pos;
 	Vector foot_pos = move_pos;
 	head_pos.z += CHARACTER_HEIGHT / 2;
 	foot_pos.z -= CHARACTER_HEIGHT / 2;
-	Vector ground_pos = ground_model->HitGroundPos( head_pos, foot_pos );
-	if ( ground_pos.y < -50 ) {
-		return false;
+	Vector ground_pos;
+
+	ObjectPtr object = field->getTarget( ( int )move_pos.x, ( int )move_pos.y );
+	if ( !object ) {
+		GroundModelPtr ground_model = app->getGroundModel( );
+		ground_pos = ground_model->HitGroundPos( head_pos, foot_pos );//’n–Ê‚Æ‚Ì”»’è
+		if ( ground_pos.y < -50 ) {
+			ground_pos = _pos;
+		}
+	} else {
+		ground_pos = _pos;
 	}
+
 	_pos = ground_pos;
-	return true;
+	field->setTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
+
+	return
+		( int )_pos.x == ( int )store.x &&
+		( int )_pos.y == ( int )store.y;   
 }
 
 void Character::create( const Vector& pos ) {

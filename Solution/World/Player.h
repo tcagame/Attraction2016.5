@@ -9,7 +9,8 @@ public:
 	enum PLAYER_STATE {
 		PLAYER_STATE_WAIT,
 		PLAYER_STATE_WALK,
-		PLAYER_STATE_ATTACK
+		PLAYER_STATE_ATTACK,
+		PLAYER_STATE_DAMAGE
 	};
 public:
 	Player( unsigned char player_id, Character::STATUS status );
@@ -46,6 +47,8 @@ private:
 	ATTACK _attack;
 	ATTACK _before_attack;
 
+	int _before_hp;
 	bool _attack_loop;
 	bool _attack_end;
+	bool _is_damage;
 };

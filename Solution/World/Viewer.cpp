@@ -55,6 +55,10 @@ void Viewer::initialize( ) {
 	drawer->loadMV1Model( Animation::MV1_PLAYER_ATTACK_BEGIN, "CaracterModel/player/player_attack_begin.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_ATTACK_LOOP,  "CaracterModel/player/player_attack_loop.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_ATTACK_END,	  "CaracterModel/player/player_attack_end.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_DAMAGE,	      "CaracterModel/player/player_damage.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_DEAD,	      "CaracterModel/player/player_dead.mv1" );
+
+
 	drawer->loadMV1Model( Animation::MV1_BACK_GROUND,	"MapModel/background.mv1" );
 	drawer->loadMV1Model( Animation::MV1_GOBLIN_WAIT,	"EnemyModel/goblin/enemy_goblin_wait.mv1" );
 	drawer->loadMV1Model( Animation::MV1_MINOTAUR,            "EnemyModel/minotaur/enemy_minotaur.mv1" );

@@ -1,7 +1,7 @@
 #include "EnemyMinotaur.h"
 #include "Animation.h"
 
-const double ATTACK_TIME = 10;
+const double ATTACK_TIME = 50;
 
 EnemyMinotaur::EnemyMinotaur( ENEMY_TYPE type, double range, Character::STATUS status ) :
 Enemy( type, range, status ) {

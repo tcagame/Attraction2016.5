@@ -21,6 +21,8 @@ _player_id( player_id ) {
 	setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER_WAIT ) ) );
 	_attack_loop = false;
 	_attack_end = true;
+	_is_damage = false;
+	_before_hp = status.hp;
 }
 
 Player::~Player( ) {
@@ -38,6 +40,7 @@ void Player::otherUpdate( ) {
 	animationUpdate( );
 	_before_state = _player_state;
 	_before_attack = _attack;
+	_before_hp = getStatus( ).hp;
 }
 
 Player::CONTROLL Player::makeControll( ) {
@@ -119,8 +122,20 @@ void Player::animationUpdate( ) {
 				}
 			break;
 		}
-
+		
 	}
+	if ( _player_state == PLAYER_STATE_DAMAGE ) {
+		if ( animation->getMotion( ) != Animation::MV1_PLAYER_DAMAGE ) {
+			setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_DAMAGE ) ) );
+		} else {
+			if ( animation->isEndAnimation( ) ) {
+				_is_damage = false;
+				animation->setAnimationTime( 0 );
+
+			}
+		}
+	}
+
 }
 
 void Player::walk( Player::CONTROLL controll ) {
@@ -139,12 +154,20 @@ void Player::walk( Player::CONTROLL controll ) {
 
 void Player::swicthState( Player::CONTROLL controll ) {
 	_player_state = PLAYER_STATE_WAIT;
-
+	
 	if ( controll.move.getLength( ) > 0.0 ) {
 		_player_state = PLAYER_STATE_WALK;
 	}
 	if ( controll.action == CONTROLL::ATTACK ) {
 		_player_state = PLAYER_STATE_ATTACK;
+	}
+	int now_hp = getStatus( ).hp;
+	if ( _before_hp > now_hp ) {
+		_player_state = PLAYER_STATE_DAMAGE;
+		_is_damage = true;
+	}
+	if ( _is_damage ) {
+		_player_state = PLAYER_STATE_DAMAGE;
 	}
 }
 

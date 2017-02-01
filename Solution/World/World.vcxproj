@@ -97,6 +97,7 @@
     <ClCompile Include="GroundModel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Party.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Viewer.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="GroundModel.h" />
     <ClInclude Include="MapType.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Party.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Viewer.h" />
     <ClInclude Include="Weapon.h" />

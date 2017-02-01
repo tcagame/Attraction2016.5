@@ -35,6 +35,7 @@ void Enemy::otherUpdate( ) {
 void Enemy::searchTarget( ) {
 	AppPtr app = App::getTask( );
 	Vector pos = getPos( );
+	/*
 	PlayerPtr player = app->getPlayerTarget( pos );
 	if ( !player ) {
 		_target.reset( );
@@ -43,6 +44,8 @@ void Enemy::searchTarget( ) {
 	} else {
 		_target.reset( );
 	}
+	*/
+	_target.reset( );
 }
 
 

@@ -26,6 +26,7 @@ public:
 	void drawEnemy( );
 	void drawDarkKnight( );
 	void drawDarkMonk( );
+	void drawUI( );
 	//CLEAR
 	void drawClear( );
 	//DEAD

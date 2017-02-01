@@ -25,6 +25,9 @@ const double MODEL_BACK_GROUND_SCALE = 0.01;
 const int GRAPH_STRING_X = 1024;
 const int GRAPH_STRING_Y = 1024;
 
+const int GRAPH_UI_WINDOW_WIDTH = 160;
+const int GRAPH_UI_WINDOW_HEIGHT = 120;
+
 enum MODEL_MDL {
 	MODEL_MDL_NONE,
 	MODEL_MDL_FLOOR,
@@ -36,6 +39,8 @@ enum GRAPH_ID {
 	GRAPH_ID_CLEAR_STRING,
 	GRAPH_ID_GAMEOVER_STRING,
 	GRAPH_ID_TITLE_STRING,
+	GRAPH_ID_UI_WINDOW,
+	GRAPH_ID_UI_LIFE
 };
 
 ViewerPtr Viewer::getTask( ) {
@@ -89,6 +94,8 @@ void Viewer::initialize( ) {
 	drawer->loadGraph( GRAPH_ID_CLEAR_STRING,	"Images/clear.png" );
 	drawer->loadGraph( GRAPH_ID_GAMEOVER_STRING,"Images/dead.png" );
 	drawer->loadGraph( GRAPH_ID_TITLE_STRING,	"Images/title.png" );
+	drawer->loadGraph( GRAPH_ID_UI_WINDOW,		"UI/status_window.png" );
+	drawer->loadGraph( GRAPH_ID_UI_LIFE,		"UI/lifenumber.png" );
 }
 
 void Viewer::update( ) {
@@ -105,6 +112,7 @@ void Viewer::update( ) {
 		drawEnemy( );
 		drawDarkKnight( );
 		drawDarkMonk( );
+		drawUI( );
 		updateCamera( );
 		break;
 	case SCENE_CLEAR:
@@ -362,4 +370,48 @@ void Viewer::drawGameover( ) {
 	sprite.trans.tw = -1;
 	sprite.blend = Drawer::BLEND_NONE;
 	drawer->setSprite( sprite );
+}
+
+void Viewer::drawUI( ) {
+	ApplicationPtr app = Application::getInstance( );
+	AppPtr app_p = App::getTask( );
+	PartyPtr party = app_p->getParty( );
+	DrawerPtr drawer = Drawer::getTask( );
+	int pitch = ( app->getWindowWidth( ) - GRAPH_UI_WINDOW_WIDTH * 4 ) / 5;
+	int sy = app->getWindowHeight( ) - GRAPH_UI_WINDOW_HEIGHT;
+	int sx = pitch;
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		PlayerPtr playre = party->getPlayer( i );
+		{//ウィンドウ
+			Drawer::Sprite sprite;
+			sprite.res = GRAPH_ID_UI_WINDOW;
+			sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
+			sprite.trans.sy = sy;
+			sprite.trans.sx = sx;
+			sprite.trans.tw = -1;
+			sprite.blend = Drawer::BLEND_NONE;
+			drawer->setSprite( sprite );
+		}
+		{//HP文字
+			std::string str_num = std::to_string( playre->getStatus( ).hp );
+			int string_y = GRAPH_UI_WINDOW_HEIGHT - 92;
+			int digits = str_num.size( );
+			for ( int i = 0; i < digits; i++ ) {
+				const char num_c = str_num[ i ];
+				int num = std::atoi( &num_c );
+				Drawer::Sprite sprite;
+				sprite.res = GRAPH_ID_UI_LIFE;
+				sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
+				sprite.trans.sy = sy + string_y;
+				sprite.trans.sx = sx + GRAPH_UI_WINDOW_WIDTH - 32 - 20 * ( digits - i );
+				sprite.trans.tx = 32 * num;
+				sprite.trans.ty = 0;
+				sprite.trans.th = 64;
+				sprite.trans.tw = 32;
+				sprite.blend = Drawer::BLEND_NONE;
+				drawer->setSprite( sprite );
+			}
+		}
+		sx += GRAPH_UI_WINDOW_WIDTH + pitch;
+	}
 }

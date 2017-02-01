@@ -73,6 +73,12 @@ void Player::animationUpdate( ) {
 		_attack_end = true;
 	}
 
+	if ( _player_state == PLAYER_STATE_DEAD ) {
+		if ( animation->isEndAnimation( ) ) {
+			dead( );
+		}
+		return;
+	}
 	if ( _player_state == PLAYER_STATE_WAIT && _attack_end ) {
 		if ( animation->getMotion( ) != Animation::MV1_PLAYER_WAIT ) {
 			setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_WAIT ) ) );
@@ -135,7 +141,15 @@ void Player::animationUpdate( ) {
 			}
 		}
 	}
-
+	if ( _player_state == PLAYER_STATE_DEAD ) {
+		if ( animation->getMotion( ) != Animation::MV1_PLAYER_DEAD ) {
+			setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_DEAD ) ) );
+		} else {
+			if ( animation->isEndAnimation( ) ) {
+				animation->setAnimationTime( 0 );
+			}
+		}
+	}
 }
 
 void Player::walk( Player::CONTROLL controll ) {
@@ -168,6 +182,9 @@ void Player::swicthState( Player::CONTROLL controll ) {
 	}
 	if ( _is_damage ) {
 		_player_state = PLAYER_STATE_DAMAGE;
+	}
+	if ( now_hp <= 0 ) {
+		_player_state = PLAYER_STATE_DEAD;
 	}
 }
 

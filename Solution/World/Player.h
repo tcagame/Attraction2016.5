@@ -10,7 +10,8 @@ public:
 		PLAYER_STATE_WAIT,
 		PLAYER_STATE_WALK,
 		PLAYER_STATE_ATTACK,
-		PLAYER_STATE_DAMAGE
+		PLAYER_STATE_DAMAGE,
+		PLAYER_STATE_DEAD,
 	};
 public:
 	Player( unsigned char player_id, Character::STATUS status );

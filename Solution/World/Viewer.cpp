@@ -48,7 +48,7 @@ Viewer::~Viewer( ) {
 
 void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
-	drawer->loadMDLModel( MODEL_MDL_FLOOR,					  "MapModel/floor.mdl", "MapModel/floor01_DM.jpg" );
+	drawer->loadMDLModel( MODEL_MDL_FLOOR,					  "MapModel/floor_collision.mdl", "MapModel/floor01_DM.jpg" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER,			  "CaracterModel/player/player.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WAIT,	      "CaracterModel/player/player_idle.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WALK,	      "CaracterModel/player/player_run.mv1" );
@@ -79,7 +79,7 @@ void Viewer::update( ) {
 		drawTitle( );
 		break;
 	case SCENE_PLAY:
-		//drawGroundModel( );
+		drawGroundModel( );
 		drawPlayer( );
 		drawBullet( );
 		drawEnemy( );

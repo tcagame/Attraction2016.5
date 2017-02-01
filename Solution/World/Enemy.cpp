@@ -74,7 +74,7 @@ void Enemy::moveToTarget( ) {
 	Vector distance = target_pos - getPos( );
 	double length = distance.getLength( );
 	if ( _state == ENEMY_STATE_WALK ) {
-		move( distance * getStatus( ).speed );
+		move( distance );
 	}
 }
 

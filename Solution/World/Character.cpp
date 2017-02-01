@@ -48,7 +48,7 @@ bool Character::move( const Vector& vec ) {
 	AppPtr app = App::getTask( );
 	GroundModelPtr ground_model = app->getGroundModel( );
 	Vector store = _pos;
-	Vector move_pos = _pos + vec.normalize( ) ;//* _status.speed;
+	Vector move_pos = _pos + vec.normalize( ) * _status.speed;
 	Vector head_pos = move_pos;
 	Vector foot_pos = move_pos;
 	head_pos.z += CHARACTER_HEIGHT / 2;

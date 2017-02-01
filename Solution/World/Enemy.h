@@ -7,6 +7,10 @@ PTR( Player );
 
 class Enemy : public Character {
 public:
+	enum ENEMY_MODE {
+		ENEMY_MODE_ENTRY,
+		ENEMY_MODE_COMBAT
+	};
 	enum ENEMY_STATE {
 		ENEMY_STATE_WAIT,
 		ENEMY_STATE_WALK,
@@ -30,6 +34,7 @@ protected:
 	bool isOnDamage( );
 	void setAttack( bool is_attack );
 private:
+	void moveToEntryTarget( );
 	void searchTarget( );
 	void switchStatus( );
 	void moveToTarget( );
@@ -38,9 +43,11 @@ private:
 	PlayerWeakPtr _target;
 	ENEMY_STATE _state;
 	ENEMY_STATE _before_state;
+	ENEMY_MODE _enemy_mode;
 	ENEMY_TYPE _type;
 	bool _is_attack;
 	double _range;
 	bool _on_damage;
 	int _before_hp;
+	int _entry_target_num;
 };

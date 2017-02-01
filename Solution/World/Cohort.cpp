@@ -6,12 +6,15 @@
 #include "Character.h"
 #include "EnemyMinotaur.h"
 
+const Vector ENEMY_POT_POS = Vector( 0, 10, 0 );
+
 Cohort::Cohort( ) {
  
 }
 
 Cohort::~Cohort( ) {
 }
+
 
 void Cohort::init( ) {
 	_enemy_max = 0;
@@ -55,12 +58,12 @@ void Cohort::update( ) {
 	}
 }
 
-void Cohort::add( EnemyPtr enemy, const Vector& pos ) {
+void Cohort::add( EnemyPtr enemy ) {
 	for ( int i = 0; i < MAX_NUM; i++ ) {
 		EnemyPtr check = _enemy[ i ];
 		if ( !check ) {
 			_enemy[ i ] = enemy;
-			_enemy[ i ] ->create( pos );
+			_enemy[ i ] ->create( ENEMY_POT_POS );
 			_enemy_max++;
 			break;
 		}
@@ -128,6 +131,6 @@ void Cohort::putEnemy( const Vector& pos ) {
 	Character::STATUS status = Character::STATUS( 100, 10, 0.01 );
 
 	EnemyPtr enemy = EnemyPtr( new EnemyMinotaur( Enemy::ENEMY_TYPE_MINOTAUR, 1.0, status ) );
-	add( enemy, pos );
+	add( enemy );
 
 }

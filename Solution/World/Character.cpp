@@ -41,7 +41,7 @@ void Character::reset( ){
 	field->delTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
 }
 
-bool Character::move( const Vector& vec ) {
+bool Character::move( const Vector& vec, bool is_entry_mode ) {
 	if ( vec.getLength( ) > 0 ) {
 		_dir = vec.normalize( );
 	}
@@ -51,26 +51,28 @@ bool Character::move( const Vector& vec ) {
 	field->delTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
 	Vector store = _pos;
 	Vector move_pos = _pos + vec.normalize( ) * _status.speed;
-	Vector head_pos = move_pos;
-	Vector foot_pos = move_pos;
-	head_pos.z += CHARACTER_HEIGHT / 2;
-	foot_pos.z -= CHARACTER_HEIGHT / 2;
-	Vector ground_pos;
-
-	ObjectPtr object = field->getTarget( ( int )move_pos.x, ( int )move_pos.y );
-	if ( !object ) {
-		GroundModelPtr ground_model = app->getGroundModel( );
-		ground_pos = ground_model->HitGroundPos( head_pos, foot_pos );//’n–Ê‚Æ‚Ì”»’è
-		if ( ground_pos.y < -50 ) {
+	if ( !is_entry_mode ) {
+		Vector head_pos = move_pos;
+		Vector foot_pos = move_pos;
+		head_pos.z += CHARACTER_HEIGHT / 2;
+		foot_pos.z -= CHARACTER_HEIGHT / 2;
+		Vector ground_pos;
+		ObjectPtr object = field->getTarget( ( int )move_pos.x, ( int )move_pos.y );
+		if ( !object ) {
+			GroundModelPtr ground_model = app->getGroundModel( );
+			ground_pos = ground_model->HitGroundPos( head_pos, foot_pos );//’n–Ê‚Æ‚Ì”»’è
+			if ( ground_pos.y < -50 ) {
+				ground_pos = _pos;
+			}
+		} else {
 			ground_pos = _pos;
 		}
+
+		_pos = ground_pos;
+		field->setTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
 	} else {
-		ground_pos = _pos;
+		_pos = move_pos;
 	}
-
-	_pos = ground_pos;
-	field->setTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
-
 	return
 		( int )_pos.x == ( int )store.x &&
 		( int )_pos.y == ( int )store.y;   

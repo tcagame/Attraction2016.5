@@ -4,8 +4,8 @@
 #include "Drawer.h"
 #include "Application.h"
 
-const Vector START_CAMERA_POS = Vector( 0, 100, 10 );
-const Vector START_TARGET_POS = Vector( 0, 0, 0 );
+const Vector START_CAMERA_POS = Vector( 160, 30, 1000 );
+const Vector START_TARGET_POS = Vector( 100, 30, 0 );
 
 const double SCREEN_LENGTH = 800.0;
 

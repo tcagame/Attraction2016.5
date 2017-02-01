@@ -30,7 +30,7 @@ public:
 	virtual void update( );
 	EnemyConstPtr getEnemy( int index ) const;
 	EnemyPtr getEnemy( int index );
-	void add( EnemyPtr enemy, const Vector& pos );
+	void add( EnemyPtr enemy );
 	int getMaxNum( );
 	void loadBlockEnemyData( int idx, std::string filepath );
 private:

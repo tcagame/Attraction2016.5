@@ -48,7 +48,7 @@ public:
 
 	AnimationPtr getAnimation( ) const;
 protected:
-	bool move( const Vector& vec );
+	bool move( const Vector& vec, bool is_entry_mode = false );
 	void setAnimation( AnimationPtr animation );
 	void setDir( Vector dir );
 	void setHP( unsigned int hp );

@@ -110,7 +110,7 @@ void Viewer::drawGroundModel( ) {
 	//AppPtr app = App::getTask( );
 	//GroundPtr ground = app->getGround( );
 	DrawerPtr drawer = Drawer::getTask( );
-	Drawer::ModelMDL model_mdl = Drawer::ModelMDL( Vector( 0, 0, 0 ), MODEL_MDL_FLOOR );
+	Drawer::ModelMDL model_mdl = Drawer::ModelMDL( Vector( 100, 30, 0 ), MODEL_MDL_FLOOR );
 	drawer->setModelMDL( model_mdl );
 }
 

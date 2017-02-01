@@ -28,7 +28,7 @@ void GroundModel::loadModelData( int x, int y, std::string filename ) {
 void GroundModel::loadModelPos( int x, int y, ModelPtr model ) {
 	int polygon_num = model->getPolygonNum( );
 	_model_data_ground.polygon_num = polygon_num;
-	model->translate( Vector( x * Ground::CHIP_WIDTH, y * Ground::CHIP_HEIGHT ) );
+	model->translate( Vector( x , y ) );
 	int num = 0;
 	
 	for ( int i = 0; i < polygon_num * 3; i++ ) {

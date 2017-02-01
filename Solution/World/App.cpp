@@ -45,10 +45,10 @@ void App::initialize( ) {
 	_weapon = WeaponPtr( new Weapon( ) );
 	_party = PartyPtr( new Party( ) );
 	std::string floor_model_path = DIRECTORY + "MapModel/floor_collision.mdl";
-	_ground_model->loadModelData( 0, 0, floor_model_path );
+	_ground_model->loadModelData( 100, 30, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
 	EnemyPtr enemy = EnemyPtr( new EnemyMinotaur( Enemy::ENEMY_TYPE_MINOTAUR, 2.0, Character::STATUS( 100, 10, 0.1 ) ) );
-	_cohort->add( enemy, Vector( 5, 0, 0 ) );
+	_cohort->add( enemy );
 	_sever_send_message_count = 60;
 }
 

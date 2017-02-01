@@ -6,10 +6,10 @@ const int POWER = 10;
 const double SPEED = 0.5;
 
 const Vector PLAYER_START_POS [ PLAYER_NUM ] = {
-	Vector( 0, 0 ),
-	Vector( 0, 0 ),
-	Vector( 0, 0 ),
-	Vector( 0, 0 )
+	Vector( 100, 30 ),
+	Vector( 100, 30 ),
+	Vector( 100, 30 ),
+	Vector( 100, 30 )
 };
 
 Party::Party( ) {

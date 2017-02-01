@@ -9,7 +9,11 @@ const double MOVE_RANGE = 7.5;
 const double MV1_SPEED = 1.0;
 const double MAX_PLAYER_NUM = 4;
 const double ATTACK_TIME = 10;
-
+const Vector ENEMY_ENTRY_TARGET_POS[ ] = {
+	Vector( 0, 30, 0 ),
+	Vector( 25, 30, 0 )
+};
+const int ENEMY_ENTRY_TARGET_NUM = 2;
 
 Enemy::Enemy( ENEMY_TYPE type, double range, Character::STATUS status ) :
 _type( type ),
@@ -20,6 +24,8 @@ Character( status ) {
 	setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_GOBLIN_WAIT, MV1_SPEED ) ) );
 	_on_damage = false;
 	_before_hp = status.hp;
+	_enemy_mode = Enemy::ENEMY_MODE_ENTRY;
+	_entry_target_num = 0;
 }
 
 Enemy::~Enemy( ) {
@@ -27,12 +33,36 @@ Enemy::~Enemy( ) {
 }
 
 void Enemy::otherUpdate( ) {
-	searchTarget( );
-	moveToTarget( );
-	switchStatus( );
-	animationUpdate( );
-	_before_state = _state;
-	_before_hp = getStatus( ).hp;
+	switch ( _enemy_mode ) {
+	case ENEMY_MODE_ENTRY:
+		moveToEntryTarget( );
+		animationUpdate( );
+		break;
+	case ENEMY_MODE_COMBAT:
+		searchTarget( );
+		moveToTarget( );
+		animationUpdate( );
+		switchStatus( );
+		_before_state = _state;
+		_before_hp = getStatus( ).hp;
+		break;
+	default:
+		break;
+	}
+
+	
+}
+
+void Enemy::moveToEntryTarget( ) {
+	Vector distance = ENEMY_ENTRY_TARGET_POS[ _entry_target_num ] - getPos( );
+	move( distance, true );
+	_state = ENEMY_STATE_WALK;
+	if ( distance.getLength( ) < 2 ) {
+		_entry_target_num++;
+	}
+	if ( _entry_target_num >= ENEMY_ENTRY_TARGET_NUM ) {
+		_enemy_mode = ENEMY_MODE_COMBAT;
+	}
 }
 
 

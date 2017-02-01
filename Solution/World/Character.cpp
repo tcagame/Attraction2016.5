@@ -118,3 +118,7 @@ void Character::setAnimation( AnimationPtr animation ) {
 void Character::setDir( Vector dir ) {
 	_dir = dir;
 }
+
+void Character::setHP( unsigned int hp ) {
+	_status.hp = hp;
+}

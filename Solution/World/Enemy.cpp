@@ -64,6 +64,7 @@ void Enemy::moveToEntryTarget( ) {
 	}
 	if ( _entry_target_num >= ENEMY_ENTRY_TARGET_NUM ) {
 		_enemy_mode = ENEMY_MODE_COMBAT;
+		_entry_target_num = 0;
 	}
 }
 
@@ -163,6 +164,10 @@ Enemy::ENEMY_STATE Enemy::getState( ) {
 
 PlayerWeakPtr Enemy::getTarget( ) {
 	return _target;
+}
+
+void Enemy::setMode( Enemy::ENEMY_MODE mode ) {
+	_enemy_mode = mode;
 }
 
 bool Enemy::isOnDamage( ) {

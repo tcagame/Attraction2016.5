@@ -52,12 +52,16 @@ void App::initialize( ) {
 	_ground_model->loadModelData( 100, 30, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
 	_dark_knight = DarkKnightPtr ( new DarkKnight( Enemy::ENEMY_TYPE_DARKKIGHT, 2, Character::STATUS( 10, 50, 0.3 ) ) );
-	_dark_knight->create( Vector( 0, 10, 0 ) );
 	_dark_monk = DarkMonkPtr ( new DarkMonk( Enemy::ENEMY_TYPE_DARKKIGHT, 2, Character::STATUS( 10, 50, 0.4 ) ) );
+
+
 	_dark_monk->create( Vector( 0, 10, 0 ) );
-	EnemyPtr enemy = EnemyPtr( new EnemyGoblin( Enemy::ENEMY_TYPE_GOBLIN, 2, Character::STATUS( 10, 10, 0.4 ) ) );
-	_cohort->add( enemy );
-	_sever_send_message_count = 60;
+	_dark_knight->create( Vector( 0, 10, 0 ) );
+	_dark_knight->resetDeadFlag( );
+	_dark_monk->resetDeadFlag( );
+	//EnemyPtr enemy = EnemyPtr( new EnemyGoblin( Enemy::ENEMY_TYPE_GOBLIN, 2, Character::STATUS( 10, 10, 0.4 ) ) );
+	//_cohort->add( enemy );
+
 }
 
 void App::update( ) {
@@ -110,7 +114,20 @@ void App::changeScene( ) {
 }
 
 void App::initSceneTitle( ) {
-	// だめ！！initialize( );
+	// だめ！！initialize( );]
+
+
+	_dark_knight->reset( );
+	_dark_monk->reset( );
+	_dark_monk->create( Vector( 0, 10, 0 ) );
+	_dark_knight->create( Vector( 0, 10, 0 ) );
+	_dark_knight->resetDeadFlag( );
+	_dark_monk->resetDeadFlag( );
+	
+	_is_send_dark_knight_dead_data = false;
+	_is_send_dark_monk_dead_data = false;
+
+	_sever_send_message_count = 60;
 }
 
 void App::initScenePlay( ) {
@@ -137,7 +154,23 @@ void App::updateScenePlay( ) {
 }
 
 void App::sendBossDeadMessage( ) {
+	if ( _dark_knight->isDead( ) && !_is_send_dark_knight_dead_data ) {
+		ClientPtr client = Client::getTask( );
+		SERVERDATA sever_data;
+		sever_data.command = COMMAND_BOSS_DEAD;
+		sever_data.value[ 0 ] = BOSS_1;
+		client->send( sever_data );
+		_is_send_dark_knight_dead_data = true;
+	}
+	if ( _dark_monk->isDead( ) && !_is_send_dark_monk_dead_data ) {
+		ClientPtr client = Client::getTask( );
+		SERVERDATA sever_data;
+		sever_data.command = COMMAND_BOSS_DEAD;
+		sever_data.value[ 0 ] = BOSS_2;
+		client->send( sever_data );
+		_is_send_dark_monk_dead_data = true;
 
+	}
 }
 
 void App::decreasePlayerHp( ) {

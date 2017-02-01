@@ -60,6 +60,9 @@ private:
 	PartyPtr _party;
 	DarkKnightPtr _dark_knight;
 	DarkMonkPtr _dark_monk;
+	bool _is_send_dark_knight_dead_data;
+	bool _is_send_dark_monk_dead_data;
+
 	int _sever_send_message_count;
 	unsigned char _scene;
 	std::array< int, MAX_MAP_DATA_NUM > _map_convert;

@@ -1,5 +1,5 @@
 #include "App.h"
-#include "Player.h"
+#include "Party.h"
 #include "Cohort.h"
 #include "Ground.h"
 #include "GroundModel.h"
@@ -41,9 +41,7 @@ void App::initialize( ) {
 	_ground_model = GroundModelPtr( new GroundModel( ) );
 	_field = FieldPtr( new Field( ) );
 	_weapon = WeaponPtr( new Weapon( ) );
-	Character::STATUS status = Character::STATUS( 100000, 100, 0.5 );
-	_player = PlayerPtr( new Player( 0, status ) );
-	_player->create( Vector( 0, 0 ) );
+	_party = PartyPtr( new Party( ) );
 	std::string floor_model_path = DIRECTORY + "MapModel/floor_collision.mdl";
 	_ground_model->loadModelData( 0, 0, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
@@ -118,7 +116,7 @@ void App::updateSceneTitle( ) {
 }
 
 void App::updateScenePlay( ) {
-	_player->update( );
+	_party->update( );
 	_cohort->update( );
 	_weapon->update( );
 }
@@ -136,22 +134,6 @@ GroundPtr App::getGround( ) const {
 GroundModelPtr App::getGroundModel( ) const {
 	return _ground_model;
 }
-
-PlayerPtr App::getPlayerTarget( const Vector& pos ){
-	PlayerPtr target;
-
-	double min = 1000;
-	if ( !_player->isExpired( ) ) {
-		return target;
-	}
-	Vector vec = _player->getPos( ) - pos;
-	double length = vec.getLength( );
-	if ( length < min ) {
-		target = _player;
-	}
-	return target;	
-}
-
 
 
 int App::convertCSVtoMap( int type ) {
@@ -174,6 +156,6 @@ CohortPtr App::getCohort( ) const{
 	return _cohort;
 }
 
-PlayerPtr App::getPlayer( ) const {
-	return _player;
+PartyPtr App::getParty( ) const {
+	return _party;
 }

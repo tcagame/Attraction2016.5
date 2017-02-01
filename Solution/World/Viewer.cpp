@@ -9,6 +9,7 @@
 #include "Drawer.h"
 #include "Application.h"
 #include "Animation.h"
+#include "Party.h"
 #include "Player.h"
 #include "Weapon.h"
 #include "Bullet.h"
@@ -169,39 +170,42 @@ void Viewer::drawEnemy( ) {
 
 void Viewer::drawPlayer( ) {
 	AppPtr app = App::getTask( );
-	PlayerPtr player = app->getPlayer( );
-	if ( !player ) {
-		return;
+	PartyPtr party = app->getParty( );
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		PlayerPtr player = party->getPlayer( i );
+		if ( !player ) {
+			return;
+		}
+		if ( !player->isExpired( ) ) {
+			return;
+		}
+
+		AnimationPtr animation = player->getAnimation( );
+		int motion = animation->getMotion( );
+		int mesh = animation->getMesh( );
+		int time = ( int )animation->getAnimTime( );
+		Vector pos = player->getPos( );
+
+		Vector dir = player->getDir( );
+
+		double angle = dir.angle( Vector( 0, 1, 0 ) );
+		Vector axis = dir.cross( Vector( 0, -1, 0 ) );
+		if ( dir == Vector( 0, -1, 0 ) ) {
+			axis = Vector( 0, 0, 1 );
+		}
+
+		Matrix mat_dir = Matrix::makeTransformRotation( axis, angle );
+		Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
+		Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
+		Matrix mat_trans = Matrix::makeTransformTranslation( pos );
+
+		Matrix mat = mat_dir * mat_rot * mat_scale;
+		mat = mat * mat_trans;
+
+		DrawerPtr drawer = Drawer::getTask( );
+		Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );
+		drawer->setModelMV1( model );
 	}
-	if ( !player->isExpired( ) ) {
-		return;
-	}
-
-	AnimationPtr animation = player->getAnimation( );
-	int motion = animation->getMotion( );
-	int mesh = animation->getMesh( );
-	int time = ( int )animation->getAnimTime( );
-	Vector pos = player->getPos( );
-
-	Vector dir = player->getDir( );
-
-	double angle = dir.angle( Vector( 0, 1, 0 ) );
-	Vector axis = dir.cross( Vector( 0, -1, 0 ) );
-	if ( dir == Vector( 0, -1, 0 ) ) {
-		axis = Vector( 0, 0, 1 );
-	}
-
-	Matrix mat_dir = Matrix::makeTransformRotation( axis, angle );
-	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
-	Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
-	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
-
-	Matrix mat = mat_dir * mat_rot * mat_scale;
-	mat = mat * mat_trans;
-
-	DrawerPtr drawer = Drawer::getTask( );
-	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );
-	drawer->setModelMV1( model );
 }
 
 void Viewer::drawBullet( ) {

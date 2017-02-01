@@ -17,7 +17,11 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Cohort.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="EnemyMinotaur.cpp" />
+=======
+    <ClCompile Include="Party.cpp" />
+>>>>>>> feature/#2471
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Viewer.h" />
@@ -44,6 +48,10 @@
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
+<<<<<<< HEAD
     <ClInclude Include="EnemyMinotaur.h" />
+=======
+    <ClInclude Include="Party.h" />
+>>>>>>> feature/#2471
   </ItemGroup>
 </Project>

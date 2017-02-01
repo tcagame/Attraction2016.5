@@ -9,7 +9,7 @@ PTR( App );
 PTR( Ground );
 PTR( Field );
 PTR( Weapon );
-PTR( Player );
+PTR( Party );
 PTR( Cohort );
 PTR( GroundModel );
 
@@ -28,9 +28,7 @@ public:
 	FieldPtr getField( ) const;
 	WeaponPtr getWeapon( ) const;
 	CohortPtr getCohort( ) const;
-
-	PlayerPtr getPlayer( ) const;
-	PlayerPtr getPlayerTarget( const Vector& pos );
+	PartyPtr getParty( ) const;
 	unsigned char getScene( ) const;
 	int convertCSVtoMap( int type );
 private:
@@ -52,7 +50,7 @@ private:
 	FieldPtr _field;
 	CohortPtr _cohort;
 	WeaponPtr _weapon;
-	PlayerPtr _player;
+	PartyPtr _party;
 	unsigned char _scene;
 	std::array< int, MAX_MAP_DATA_NUM > _map_convert;
 };

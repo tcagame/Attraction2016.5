@@ -48,6 +48,7 @@ void Cohort::update( ) {
 			continue;
 		}
 		if ( !enemy->isExpired( ) ) {
+			_enemy[ i ].reset( );
 			continue;
 		}
 		enemy->update( );

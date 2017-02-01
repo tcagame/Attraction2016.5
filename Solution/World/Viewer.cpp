@@ -15,7 +15,7 @@
 #include "Bullet.h"
 
 const double MODEL_SCALE_2015 = 0.008;
-const double MODEL_SCALE_2016 = 0.06;
+const double MODEL_SCALE_2016 = 0.015;
 const double MODEL_SCALE_ALL = 1.0;
 const double MODEL_BACK_GROUND_SCALE = 0.01;
 
@@ -79,6 +79,7 @@ void Viewer::update( ) {
 		drawTitle( );
 		break;
 	case SCENE_PLAY:
+		//drawGroundModel( );
 		drawPlayer( );
 		drawBullet( );
 		drawEnemy( );
@@ -153,7 +154,7 @@ void Viewer::drawEnemy( ) {
 
 		Matrix mat_dir = Matrix::makeTransformRotation( axis, angle );
 		Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
-		Matrix mat_scale = Matrix::makeTransformScaling( Vector( 0.1, 0.1, 0.1 ) );
+		Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_SCALE_2016, MODEL_SCALE_2016, MODEL_SCALE_2016 ) );
 		Matrix mat_trans = Matrix::makeTransformTranslation( pos );
 
 		Matrix mat = mat_dir * mat_rot * mat_scale;
@@ -162,8 +163,8 @@ void Viewer::drawEnemy( ) {
 		DrawerPtr drawer = Drawer::getTask( );
 		Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );
 		drawer->setModelMV1( model );
+		drawer->drawString( 0, i * 10, "Hp:%d", enemy->getStatus( ).hp );
 	}
-
 	
 }
 

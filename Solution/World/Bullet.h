@@ -22,7 +22,7 @@ public:
 	Vector getPos( ) const;
 	Vector getDir( ) const;
 protected:
-	void attackEnemy( const Vector& pos, int power );
+	bool attackEnemy( const Vector& pos, int power );
 	void attackPlayer( const Vector& pos, int power );
 private:
 	bool isDeathBlow( );

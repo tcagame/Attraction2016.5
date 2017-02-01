@@ -26,14 +26,15 @@ Vector Bullet::getDir( ) const {
 	return _dir;
 }
 
-void Bullet::attackEnemy( const Vector& pos, int power ) {
+bool Bullet::attackEnemy( const Vector& pos, int power ) {
 	AppPtr app = App::getTask( );
 	FieldPtr field = app->getField( );
 	ObjectPtr object = field->getTarget( ( int )pos.x, ( int )pos.y );
 	EnemyPtr enemy = std::dynamic_pointer_cast< Enemy >( object );
 	if ( !enemy ) {
-		return;
+		return false;
 	}
 	Character::STATUS status = enemy->getStatus();
 	enemy->damage( power );
+	return true;
 }

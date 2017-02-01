@@ -22,7 +22,7 @@ void Weapon::update( ) {
 			continue;
 		}
 
-		if ( !bullet->update( ) ) {
+		if ( bullet->update( ) ) {
 			it = _list_bullet.erase( it );
 		} else {
 			it++;

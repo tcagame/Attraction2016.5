@@ -32,6 +32,8 @@ Enemy::~Enemy( ) {
 
 }
 
+
+
 void Enemy::otherUpdate( ) {
 	switch ( _enemy_mode ) {
 	case ENEMY_MODE_ENTRY:
@@ -165,6 +167,10 @@ PlayerWeakPtr Enemy::getTarget( ) {
 
 bool Enemy::isOnDamage( ) {
 	return _on_damage;
+}
+
+Enemy::ENEMY_TYPE Enemy::getEnemyType( ) {
+	return _type;
 }
 
 void Enemy::onAttack( PlayerPtr player ) {

@@ -117,14 +117,14 @@ void Cohort::putBlockEnemy( int idx ) {
 	for ( int i = 0; i < max_block_data; i++ ) {
 		ENEMY_DATA enemy_data = block_enemy_data[ i ];
 		Vector put_pos = pos + Vector( enemy_data.x, enemy_data.y);
-		putEnemy( put_pos, enemy_data.name );
+		putEnemy( put_pos );
 	}
 
 }
 
-void Cohort::putEnemy( const Vector& pos, std::string enemy_name ) {
+void Cohort::putEnemy( const Vector& pos ) {
 	Character::STATUS status = Character::STATUS( 100, 10, 0.01 );
-	EnemyPtr enemy = EnemyPtr( new Enemy( status ) );
+	EnemyPtr enemy = EnemyPtr( new Enemy( Enemy::ENEMY_TYPE_MINOTAUR, 1.0, status ) );
 	add( enemy, pos );
 
 }

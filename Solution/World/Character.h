@@ -41,7 +41,6 @@ public:
 
 	Vector getPos( ) const;
 	Vector getDir( ) const;
-	std::string getCharacterName( ) const;
 	bool isExpired( ) const;
 
 	STATUS getStatus( ) const;
@@ -56,7 +55,6 @@ protected:
 private:
 	Vector _pos;
 	Vector _dir;
-	std::string _character_name;
 	bool _expired;
 
 	STATUS _status;

@@ -35,7 +35,7 @@ public:
 	void loadBlockEnemyData( int idx, std::string filepath );
 private:
 	void putBlockEnemy( int idx );
-	void putEnemy( const Vector& pos, std::string enemy_name );
+	void putEnemy( const Vector& pos );
 private:
 	std::array< EnemyPtr, MAX_NUM > _enemy;
 	EnemyPtr _boss;

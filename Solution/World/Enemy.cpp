@@ -9,7 +9,9 @@ const double MV1_SPEED = 1.0;
 const double ATTACK_TIME = 10;
 
 
-Enemy::Enemy( Character::STATUS status ) :
+Enemy::Enemy( ENEMY_TYPE type, double range, Character::STATUS status ) :
+_type( type ),
+_range( range ),
 Character( status ) {
 	_state = ENEMY_STATE_WAIT;
 	_before_state = ENEMY_STATE_WAIT;

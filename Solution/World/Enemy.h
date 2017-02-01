@@ -13,10 +13,14 @@ public:
 		ENEMY_STATE_ATTACK,
 		ENEMY_STATE_DEAD,
 	};
+	enum ENEMY_TYPE {
+		ENEMY_TYPE_MINOTAUR,
+	};
 public:
-	Enemy( Character::STATUS status );
+	Enemy( ENEMY_TYPE type, double range, Character::STATUS status );
 	virtual ~Enemy( );
 public:
+	ENEMY_TYPE getEnemyType( );
 	void otherUpdate( );
 private:
 	void searchTarget( );
@@ -28,6 +32,8 @@ private:
 	PlayerWeakPtr _target;
 	ENEMY_STATE _state;
 	ENEMY_STATE _before_state;
+	ENEMY_TYPE _type;
+	double _range;
 	bool _on_damage;
 	int _before_hp;
 };

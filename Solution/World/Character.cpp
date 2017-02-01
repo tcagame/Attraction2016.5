@@ -97,10 +97,6 @@ AnimationPtr Character::getAnimation( ) const {
 	return _animation;
 }
 
-std::string Character::getCharacterName( ) const {
-	return _character_name;
-}
-
 bool Character::isExpired( ) const {
 	return _expired;
 }

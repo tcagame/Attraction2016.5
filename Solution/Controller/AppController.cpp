@@ -95,7 +95,9 @@ void AppController::updatePlay( CLIENTDATA data ) {
 		_scene = SCENE_GAMEOVER;
 	}
 	ServerPtr server = Server::getTask( );
-	if ( ( server->getBossData( ) & BOSS_1 > 0 ) && ( server->getBossData( ) & BOSS_2 > 0 ) ) {
+	bool kill_boss1 = ( server->getBossData( ) & BOSS_1 ) > 0;
+	bool kill_boss2 = ( server->getBossData( ) & BOSS_2 ) > 0;
+	if ( kill_boss1 && kill_boss2 ) {
 		_scene = SCENE_CLEAR;
 		server->resetBossData( );
 	}

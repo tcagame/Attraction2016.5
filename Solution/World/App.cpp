@@ -8,6 +8,7 @@
 #include "Device.h"
 #include "Application.h"
 #include "Client.h"
+#include "Player.h"
 #include "Enemy.h"
 #include "EnemyMinotaur.h"
 
@@ -19,6 +20,7 @@ const std::string MODEL_NAME_LIST [] {
 const int RESET_COUNT = 30;
 const int START_COUNT = 60;
 const int STRING_BUF = 256;
+const int SEND_MESSAGE_COUNT_MAX = 60;
 
 AppPtr App::getTask( ) {
 	ApplicationPtr fw = Application::getInstance( );
@@ -47,7 +49,7 @@ void App::initialize( ) {
 	_cohort = CohortPtr( new Cohort( ) );
 	EnemyPtr enemy = EnemyPtr( new EnemyMinotaur( Enemy::ENEMY_TYPE_MINOTAUR, 2.0, Character::STATUS( 100, 10, 0.1 ) ) );
 	_cohort->add( enemy, Vector( 5, 0, 0 ) );
-	
+	_sever_send_message_count = 60;
 }
 
 void App::update( ) {
@@ -119,6 +121,29 @@ void App::updateScenePlay( ) {
 	_party->update( );
 	_cohort->update( );
 	_weapon->update( );
+	decreasePlayerHp( );
+}
+
+void App::decreasePlayerHp( ) {
+	_sever_send_message_count++;
+	if ( _sever_send_message_count < SEND_MESSAGE_COUNT_MAX ) {
+		return;
+	}
+	ClientPtr client = Client::getTask( );
+	CLIENTDATA data = client->getClientData( );
+	int max_player_num = _party->getPlayerNum( );
+	for ( int i = 0; i < max_player_num; i++ ) {
+		PlayerPtr player = _party->getPlayer( i );
+		int hp = player->getStatus( ).hp;
+		int diff_hp = data.player[ i ].hp - hp;
+		SERVERDATA sever_data;
+		sever_data.command = COMMAND_STATUS_DAMAGE;
+		sever_data.value[ 0 ] = i;
+		sever_data.value[ 1 ] = diff_hp;
+		sever_data.value[ 2 ] = 1;
+		client->send( sever_data );
+	}
+	_sever_send_message_count = 0;
 }
 
 void App::updateSceneClear( ) {

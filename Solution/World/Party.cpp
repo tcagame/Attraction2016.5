@@ -16,7 +16,7 @@ Party::Party( ) {
 	ClientPtr client = Client::getTask( );
 	CLIENTDATA data = client->getClientData( );
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		Character::STATUS status = Character::STATUS( data.player[ i ].hp, POWER, SPEED );
+		Character::STATUS status = Character::STATUS( 1000, POWER, SPEED );
 		_party[ i ] = PlayerPtr( new Player( i, status ) );
 	}
 }

@@ -44,6 +44,7 @@ private:
 	void updateScenePlay( );
 	void updateSceneClear( );
 	void updateSceneGameover( );
+	void decreasePlayerHp( );
 private:
 	GroundPtr _ground;
 	GroundModelPtr _ground_model;
@@ -51,6 +52,7 @@ private:
 	CohortPtr _cohort;
 	WeaponPtr _weapon;
 	PartyPtr _party;
+	int _sever_send_message_count;
 	unsigned char _scene;
 	std::array< int, MAX_MAP_DATA_NUM > _map_convert;
 };

@@ -21,7 +21,7 @@ public:
 		ENEMY_TYPE_MINOTAUR,
 		ENEMY_TYPE_DARKKIGHT,
 		ENEMY_TYPE_DARKMONK,
-
+		ENEMY_TYPE_GOBLIN,
 	};
 public:
 	Enemy( ENEMY_TYPE type, double range, Character::STATUS status );

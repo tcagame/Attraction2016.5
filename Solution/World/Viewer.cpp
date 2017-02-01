@@ -69,7 +69,14 @@ void Viewer::initialize( ) {
 
 
 	drawer->loadMV1Model( Animation::MV1_BACK_GROUND,	"MapModel/background.mv1" );
-	drawer->loadMV1Model( Animation::MV1_GOBLIN_WAIT,	"EnemyModel/goblin/enemy_goblin_wait.mv1" );
+
+	drawer->loadMV1Model( Animation::MV1_GOBLIN,            "EnemyModel/goblin/enemy_goblin.mv1" );
+	drawer->loadMV1Model( Animation::MV1_GOBLIN_WAIT,       "EnemyModel/goblin/enemy_goblin_wait.mv1" );
+	drawer->loadMV1Model( Animation::MV1_GOBLIN_WALK,	    "EnemyModel/goblin/enemy_goblin_walk.mv1" );
+	drawer->loadMV1Model( Animation::MV1_GOBLIN_ATTACK,	    "EnemyModel/goblin/enemy_goblin_attack.mv1" );
+	drawer->loadMV1Model( Animation::MV1_GOBLIN_DAMAGE,	    "EnemyModel/goblin/enemy_goblin_damage.mv1" );
+	drawer->loadMV1Model( Animation::MV1_GOBLIN_DEAD,	    "EnemyModel/goblin/enemy_goblin_dead.mv1" );
+
 	drawer->loadMV1Model( Animation::MV1_MINOTAUR,            "EnemyModel/minotaur/enemy_minotaur.mv1" );
 	drawer->loadMV1Model( Animation::MV1_MINOTAUR_WAIT,       "EnemyModel/minotaur/enemy_minotaur_wait.mv1" );
 	drawer->loadMV1Model( Animation::MV1_MINOTAUR_WALK,	      "EnemyModel/minotaur/enemy_minotaur_walk.mv1" );
@@ -264,7 +271,21 @@ void Viewer::drawEnemy( ) {
 
 		Matrix mat_dir = Matrix::makeTransformRotation( axis, angle );
 		Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
-		Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_SCALE_2016, MODEL_SCALE_2016, MODEL_SCALE_2016 ) );
+		Matrix mat_scale;
+		if ( enemy->getEnemyType( ) == Enemy::ENEMY_TYPE_MINOTAUR) {
+			mat_scale = Matrix::makeTransformScaling( Vector( MODEL_SCALE_2016, MODEL_SCALE_2016, MODEL_SCALE_2016 ) );
+		}
+		switch( enemy->getEnemyType( ) ){
+		case Enemy::ENEMY_TYPE_MINOTAUR:
+			mat_scale = Matrix::makeTransformScaling( Vector( MODEL_SCALE_2016, MODEL_SCALE_2016, MODEL_SCALE_2016 ) );
+			break;
+		case Enemy::ENEMY_TYPE_GOBLIN:
+			mat_scale = Matrix::makeTransformScaling( Vector( MODEL_SCALE_ALL, MODEL_SCALE_ALL, MODEL_SCALE_ALL ) );
+			break;
+		default:
+			break;
+		}
+		
 		Matrix mat_trans = Matrix::makeTransformTranslation( pos );
 
 		Matrix mat = mat_dir * mat_rot * mat_scale;

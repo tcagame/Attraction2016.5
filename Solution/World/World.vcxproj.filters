@@ -21,6 +21,7 @@
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="DarkKnight.cpp" />
     <ClCompile Include="DarkMonk.cpp" />
+    <ClCompile Include="EnemyGoblin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -43,5 +44,6 @@
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="DarkKnight.h" />
     <ClInclude Include="DarkMonk.h" />
+    <ClInclude Include="EnemyGoblin.h" />
   </ItemGroup>
 </Project>

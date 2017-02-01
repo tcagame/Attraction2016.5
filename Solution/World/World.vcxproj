@@ -94,6 +94,7 @@
     <ClCompile Include="DarkKnight.cpp" />
     <ClCompile Include="DarkMonk.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyGoblin.cpp" />
     <ClCompile Include="EnemyMinotaur.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="DarkKnight.h" />
     <ClInclude Include="DarkMonk.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyGoblin.h" />
     <ClInclude Include="EnemyMinotaur.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Ground.h" />

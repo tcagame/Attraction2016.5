@@ -17,6 +17,15 @@ bool DarkKnight::isDead( ) {
 	return _is_dead;
 }
 
+
+void DarkKnight::resetDeadFlag( ) {
+	_is_dead = false;
+	setState( ENEMY_STATE_WAIT );
+	setMode( ENEMY_MODE_ENTRY );
+
+	setAnimation( AnimationPtr( new Animation( Animation::MV1_DARKKNIGHT, Animation::MV1_DARKKNIGHT_WAIT ) ) );
+}
+
 void DarkKnight::animationUpdate( ) {
 	AnimationPtr animation = getAnimation( );
 	Enemy::ENEMY_STATE state = getState( );

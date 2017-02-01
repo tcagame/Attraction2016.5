@@ -9,6 +9,8 @@ public:
 	virtual ~DarkMonk( );
 public:
 	bool isDead( );
+	void resetDeadFlag( );
+	
 private:
 	virtual void animationUpdate( );
 private:

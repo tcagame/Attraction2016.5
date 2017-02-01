@@ -32,6 +32,7 @@ public:
 protected:
 	void setState( ENEMY_STATE state );
 	ENEMY_STATE getState( );
+	void setMode( ENEMY_MODE mode );
 	PlayerWeakPtr getTarget( );
 	void onAttack( PlayerPtr player );
 	bool isOnDamage( );

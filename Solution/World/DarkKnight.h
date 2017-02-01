@@ -10,6 +10,7 @@ public:
 	virtual ~DarkKnight();
 public:
 	bool isDead( );
+	void resetDeadFlag( );
 private:
 	virtual void animationUpdate( );
 private:

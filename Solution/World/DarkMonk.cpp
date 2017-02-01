@@ -16,6 +16,13 @@ bool DarkMonk::isDead( ) {
 	return _is_dead;
 }
 
+void DarkMonk::resetDeadFlag( ) {
+	_is_dead = false;
+	setState( ENEMY_STATE_WAIT );
+	setMode( ENEMY_MODE_ENTRY );
+	setAnimation( AnimationPtr( new Animation( Animation::MV1_DARKMONK, Animation::MV1_DARKMONK_WAIT ) ) );
+}
+
 void DarkMonk::animationUpdate( ) {
 	AnimationPtr animation = getAnimation( );
 	Enemy::ENEMY_STATE state = getState( );

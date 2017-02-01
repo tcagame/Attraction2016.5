@@ -33,7 +33,9 @@ void Player::otherUpdate( ) {
 	_attack = ATTACK_NONE;
 	
 	CONTROLL controll = makeControll( );
-
+	ClientPtr client = Client::getTask( );
+	CLIENTDATA data = client->getClientData( );
+	setHP( data.player[ _player_id ].hp );
 	swicthState( controll );
 	walk( controll );
 	attack( controll );

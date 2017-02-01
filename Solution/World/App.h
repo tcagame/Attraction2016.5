@@ -50,6 +50,7 @@ private:
 	void updateSceneClear( );
 	void updateSceneGameover( );
 	void decreasePlayerHp( );
+	void sendBossDeadMessage( );
 private:
 	GroundPtr _ground;
 	GroundModelPtr _ground_model;

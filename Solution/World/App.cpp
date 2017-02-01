@@ -52,9 +52,9 @@ void App::initialize( ) {
 	_ground_model->loadModelData( 100, 30, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
 	_dark_knight = DarkKnightPtr ( new DarkKnight( Enemy::ENEMY_TYPE_DARKKIGHT, 2, Character::STATUS( 10, 50, 0.3 ) ) );
-	//_dark_knight->create( Vector( 0, 10, 0 ) );
+	_dark_knight->create( Vector( 0, 10, 0 ) );
 	_dark_monk = DarkMonkPtr ( new DarkMonk( Enemy::ENEMY_TYPE_DARKKIGHT, 2, Character::STATUS( 10, 50, 0.4 ) ) );
-	//_dark_monk->create( Vector( 0, 10, 0 ) );
+	_dark_monk->create( Vector( 0, 10, 0 ) );
 	EnemyPtr enemy = EnemyPtr( new EnemyGoblin( Enemy::ENEMY_TYPE_GOBLIN, 2, Character::STATUS( 10, 10, 0.4 ) ) );
 	_cohort->add( enemy );
 	_sever_send_message_count = 60;
@@ -132,7 +132,12 @@ void App::updateScenePlay( ) {
 	_weapon->update( );
 	_dark_knight->update( );
 	_dark_monk->update( );
+	sendBossDeadMessage( );
 	decreasePlayerHp( );
+}
+
+void App::sendBossDeadMessage( ) {
+
 }
 
 void App::decreasePlayerHp( ) {

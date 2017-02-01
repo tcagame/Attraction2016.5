@@ -5,13 +5,16 @@ const double ATTACK_TIME = 10;
 
 DarkMonk::DarkMonk( ENEMY_TYPE type, double range, Character::STATUS status ):
 Enemy( type, range, status ) {
-
+	_is_dead = false;
 }
 
 
 DarkMonk::~DarkMonk( ) {
 }
 
+bool DarkMonk::isDead( ) {
+	return _is_dead;
+}
 
 void DarkMonk::animationUpdate( ) {
 	AnimationPtr animation = getAnimation( );
@@ -19,6 +22,7 @@ void DarkMonk::animationUpdate( ) {
 	if ( animation->getMotion( ) == Animation::MV1_DARKMONK_DEAD ) {
 		if ( animation->isEndAnimation( ) ) {
 			dead( );
+			_is_dead = true;
 		}
 		return;
 	}

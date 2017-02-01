@@ -10,7 +10,7 @@ BulletFire::BulletFire( const Vector& pos, const Vector& dir, int power )
 : Bullet( Bullet::TYPE_FIRE ) {
 	_pos = pos + Vector( 0, 0, 0.1 ) * Bullet::BULLET_SCALE;
 	_dir = dir.normalize( );
-	_power = POWER * power;
+	_power = power;
 	_speed = SPEED;
 	_exist_time = 0;
 }
@@ -26,6 +26,5 @@ bool BulletFire::update( ) {
 		return false;
 	}
 	_pos += _dir * _speed;
-	attackEnemy( _pos, _power );
-	return true;
+	return attackEnemy( _pos, _power );;
 }

@@ -131,7 +131,7 @@ void Player::walk( Player::CONTROLL controll ) {
 	Vector speed = Vector( );
 	if ( controll.move.getLength( ) > 0.0 ) {
 		Vector vec = controll.move.normalize( );
-		speed = vec * MOVE_SPEED;
+		speed = vec;
 		move( speed );
 		setDir( vec );
 	}

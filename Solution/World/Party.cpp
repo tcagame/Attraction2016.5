@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Client.h"
 
-const int POWER = 100000;
+const int POWER = 10;
 const double SPEED = 0.5;
 
 const Vector PLAYER_START_POS [ PLAYER_NUM ] = {

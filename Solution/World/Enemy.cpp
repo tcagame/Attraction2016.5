@@ -2,10 +2,12 @@
 #include "App.h"
 #include "Player.h"
 #include "Animation.h"
+#include "Party.h"
 
 const double ATTACK_RANGE = 2.0;
 const double MOVE_RANGE = 7.5;
 const double MV1_SPEED = 1.0;
+const double MAX_PLAYER_NUM = 4;
 const double ATTACK_TIME = 10;
 
 
@@ -35,8 +37,21 @@ void Enemy::otherUpdate( ) {
 
 
 void Enemy::searchTarget( ) {
+	_target.reset( );
 	AppPtr app = App::getTask( );
 	Vector pos = getPos( );
+	double length = 1000;
+	PartyPtr party = app->getParty( );
+	for ( int i = 0; i < MAX_PLAYER_NUM; i++ ) {
+		PlayerPtr player = party->getPlayer( i );
+		if ( !player->isExpired( ) ) {
+			continue;
+		}
+		if ( ( pos - player->getPos( ) ).getLength( ) < length ) {
+			length = ( pos - player->getPos( ) ).getLength( );
+			_target = player;
+		}
+	}
 	/*
 	PlayerPtr player = app->getPlayerTarget( pos );
 	if ( !player ) {
@@ -47,7 +62,7 @@ void Enemy::searchTarget( ) {
 		_target.reset( );
 	}
 	*/
-	_target.reset( );
+	
 }
 
 

@@ -2,9 +2,11 @@
 #include "Animation.h"
 
 const double ATTACK_TIME = 10;
+const Character::STATUS DARKKNIGHT_STATUS = Character::STATUS( 500, 10, 0.1 );
+const double DARKKNIGHT_RANGE = 1;
 
-DarkKnight::DarkKnight( ENEMY_TYPE type, double range, Character::STATUS status ):
-Enemy( type, range, status ) {
+DarkKnight::DarkKnight( ):
+Enemy( ENEMY_TYPE_DARKKIGHT, DARKKNIGHT_RANGE, DARKKNIGHT_STATUS ) {
 	_is_dead = false;
 }
 

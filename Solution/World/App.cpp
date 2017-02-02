@@ -51,8 +51,8 @@ void App::initialize( ) {
 	std::string floor_model_path = DIRECTORY + "MapModel/floor_collision.mdl";
 	_ground_model->loadModelData( 100, 30, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
-	_dark_knight = DarkKnightPtr ( new DarkKnight( Enemy::ENEMY_TYPE_DARKKIGHT, 2, Character::STATUS( 10, 50, 0.3 ) ) );
-	_dark_monk = DarkMonkPtr ( new DarkMonk( Enemy::ENEMY_TYPE_DARKKIGHT, 2, Character::STATUS( 10, 50, 0.4 ) ) );
+	_dark_knight = DarkKnightPtr ( new DarkKnight( ) );
+	_dark_monk = DarkMonkPtr ( new DarkMonk( ) );
 
 
 	_dark_monk->create( Vector( 0, 10, 0 ) );

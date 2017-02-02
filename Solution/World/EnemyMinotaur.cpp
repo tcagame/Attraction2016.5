@@ -2,9 +2,11 @@
 #include "Animation.h"
 
 const double ATTACK_TIME = 50;
+const Character::STATUS MINOTAUR_STATUS = Character::STATUS( 100, 10, 0.1 );
+const double MINOTAUR_RANGE = 1;
 
-EnemyMinotaur::EnemyMinotaur( ENEMY_TYPE type, double range, Character::STATUS status ) :
-Enemy( type, range, status ) {
+EnemyMinotaur::EnemyMinotaur( ) :
+Enemy( ENEMY_TYPE_MINOTAUR, MINOTAUR_RANGE, MINOTAUR_STATUS ) {
 }
 
 

@@ -5,7 +5,7 @@
 PTR( DarkMonk );
 class DarkMonk : public Enemy {
 public:
-	DarkMonk( ENEMY_TYPE type, double range, Character::STATUS status );
+	DarkMonk( );
 	virtual ~DarkMonk( );
 public:
 	bool isDead( );

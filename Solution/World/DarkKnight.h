@@ -6,7 +6,7 @@ PTR( DarkKnight );
 
 class DarkKnight : public Enemy{
 public:
-	DarkKnight( ENEMY_TYPE type, double range, Character::STATUS status );
+	DarkKnight( );
 	virtual ~DarkKnight();
 public:
 	bool isDead( );

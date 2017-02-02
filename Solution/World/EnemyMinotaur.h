@@ -2,7 +2,7 @@
 #include "Enemy.h"
 class EnemyMinotaur : public Enemy {
 public:
-	EnemyMinotaur( ENEMY_TYPE type, double range, Character::STATUS status );
+	EnemyMinotaur( );
 	virtual ~EnemyMinotaur( );
 private:
 	virtual void animationUpdate( );

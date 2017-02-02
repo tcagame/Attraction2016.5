@@ -23,8 +23,8 @@ bool BulletFire::update( ) {
 	// ˆÚ“®
 	_exist_time++;
 	if ( _exist_time >= VANISH_TIME  ) {
-		return false;
+		return true;
 	}
 	_pos += _dir * _speed;
-	return attackEnemy( _pos, _power );;
+	return attackEnemy( _pos, _power );
 }

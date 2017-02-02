@@ -189,6 +189,7 @@ void Player::swicthState( Player::CONTROLL controll ) {
 	
 	if ( controll.move.getLength( ) > 0.0 ) {
 		_player_state = PLAYER_STATE_WALK;
+		_attack_end = true;
 	}
 	if ( controll.action == CONTROLL::ATTACK ) {
 		_player_state = PLAYER_STATE_ATTACK;

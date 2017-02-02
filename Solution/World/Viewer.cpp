@@ -196,9 +196,8 @@ void Viewer::drawField( ) {
 		pos3.x += 1;
 		pos3.y += 1;
 
-		drawer->drawTriangle( pos2, pos1, pos3 );
+		//drawer->drawTriangle( pos2, pos1, pos3 );
 	}
-	
 }
 
 void Viewer::drawDarkKnight( ) {

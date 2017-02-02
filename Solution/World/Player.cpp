@@ -22,7 +22,6 @@ _player_id( player_id ) {
 	_attack_loop = false;
 	_attack_end = true;
 	_is_damage = false;
-	_before_hp = status.hp;
 	_stack_damage = 0;
 }
 
@@ -36,7 +35,7 @@ void Player::otherUpdate( ) {
 	CONTROLL controll = makeControll( );
 	ClientPtr client = Client::getTask( );
 	CLIENTDATA data = client->getClientData( );
-	_stack_damage += _before_hp - getStatus( ).hp;
+	_stack_damage += getBeforeHp( ) - getStatus( ).hp;
 	setHP( data.player[ _player_id ].hp );
 	swicthState( controll );
 	walk( controll );
@@ -44,7 +43,6 @@ void Player::otherUpdate( ) {
 	animationUpdate( );
 	_before_state = _player_state;
 	_before_attack = _attack;
-	_before_hp = getStatus( ).hp;
 }
 
 Player::CONTROLL Player::makeControll( ) {
@@ -180,7 +178,7 @@ void Player::swicthState( Player::CONTROLL controll ) {
 		_player_state = PLAYER_STATE_ATTACK;
 	}
 	int now_hp = getStatus( ).hp;
-	if ( _before_hp > now_hp ) {
+	if ( getBeforeHp( ) > now_hp ) {
 		_player_state = PLAYER_STATE_DAMAGE;
 		_is_damage = true;
 	}

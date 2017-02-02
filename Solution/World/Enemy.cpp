@@ -23,7 +23,6 @@ Character( status ) {
 	_before_state = ENEMY_STATE_WAIT;
 	setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_GOBLIN_WAIT, MV1_SPEED ) ) );
 	_on_damage = false;
-	_before_hp = status.hp;
 	_enemy_mode = Enemy::ENEMY_MODE_ENTRY;
 	_entry_target_num = 0;
 }
@@ -46,7 +45,6 @@ void Enemy::otherUpdate( ) {
 		animationUpdate( );
 		switchStatus( );
 		_before_state = _state;
-		_before_hp = getStatus( ).hp;
 		break;
 	default:
 		break;
@@ -88,16 +86,6 @@ void Enemy::searchTarget( ) {
 			_target = player;
 		}
 	}
-	/*
-	PlayerPtr player = app->getPlayerTarget( pos );
-	if ( !player ) {
-		_target.reset( );
-	} else if ( player->isExpired( ) ) {
-		_target = player;
-	} else {
-		_target.reset( );
-	}
-	*/
 	
 }
 
@@ -144,7 +132,7 @@ void Enemy::switchStatus( ) {
 		_state = ENEMY_STATE_ATTACK;
 	}
 
-	if ( _before_hp > getStatus( ).hp ) {
+	if ( getBeforeHp( ) > getStatus( ).hp ) {
 		_on_damage = true;
 	}
 

@@ -50,7 +50,6 @@ private:
 	ATTACK _before_attack;
 
 	int _stack_damage;
-	int _before_hp;
 	bool _attack_loop;
 	bool _attack_end;
 	bool _is_damage;

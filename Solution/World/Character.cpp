@@ -14,6 +14,7 @@ _origin_status( status ) {
 	_status = status;
 	_expired = false;
 	_max_hp = status.hp;
+	_before_hp = _max_hp;
 }
 
 Character::~Character( ) {
@@ -29,6 +30,7 @@ void Character::update( ) {
 		return;
 	}*/
 	otherUpdate( );
+	_before_hp = _status.hp;
 	_animation->update( );
 }
 
@@ -36,6 +38,7 @@ void Character::update( ) {
 void Character::reset( ){
 	_status = _origin_status;
 	_expired = false;
+	_before_hp = _max_hp;
 	AppPtr app = App::getTask( );
 	FieldPtr field = app->getField( );
 	field->delTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
@@ -116,6 +119,10 @@ AnimationPtr Character::getAnimation( ) const {
 
 bool Character::isExpired( ) const {
 	return _expired;
+}
+
+int Character::getBeforeHp( ) {
+	return _before_hp;
 }
 
 void Character::dead( ) {

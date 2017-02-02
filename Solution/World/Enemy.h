@@ -52,6 +52,5 @@ private:
 	bool _is_attack;
 	double _range;
 	bool _on_damage;
-	int _before_hp;
 	int _entry_target_num;
 };

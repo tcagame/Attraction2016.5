@@ -52,6 +52,7 @@ protected:
 	void setAnimation( AnimationPtr animation );
 	void setDir( Vector dir );
 	void setHP( unsigned int hp );
+	int getBeforeHp( );
 	virtual void otherUpdate( ) = 0;
 private:
 	Vector _pos;
@@ -61,6 +62,7 @@ private:
 	STATUS _status;
 	const STATUS _origin_status;
 	int _max_hp;
+	int _before_hp;
 
 	AnimationPtr _animation;
 };

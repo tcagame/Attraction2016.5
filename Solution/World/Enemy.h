@@ -18,6 +18,7 @@ public:
 		ENEMY_STATE_DEAD,
 	};
 	enum ENEMY_TYPE {
+		ENEMY_TYPE_NONE,
 		ENEMY_TYPE_MINOTAUR,
 		ENEMY_TYPE_DARKKIGHT,
 		ENEMY_TYPE_DARKMONK,
@@ -49,6 +50,7 @@ private:
 	ENEMY_STATE _before_state;
 	ENEMY_MODE _enemy_mode;
 	ENEMY_TYPE _type;
+	int _enemy_id;
 	bool _is_attack;
 	double _range;
 	bool _on_damage;

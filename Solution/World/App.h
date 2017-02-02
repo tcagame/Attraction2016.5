@@ -13,7 +13,8 @@ PTR( Party );
 PTR( Cohort );
 PTR( GroundModel );
 PTR( DarkKnight );
-PTR( DarkMonk )
+PTR( DarkMonk );
+PTR( Schedule );
 
 class App : public Task {
 public:
@@ -31,8 +32,6 @@ public:
 	WeaponPtr getWeapon( ) const;
 	CohortPtr getCohort( ) const;
 	PartyPtr getParty( ) const;
-	DarkKnightPtr getDarkKnight( ) const;
-	DarkMonkPtr getDarkMonk( ) const;
 
 	unsigned char getScene( ) const;
 	int convertCSVtoMap( int type );
@@ -58,8 +57,7 @@ private:
 	CohortPtr _cohort;
 	WeaponPtr _weapon;
 	PartyPtr _party;
-	DarkKnightPtr _dark_knight;
-	DarkMonkPtr _dark_monk;
+	SchedulePtr _schedule;
 	bool _is_send_dark_knight_dead_data;
 	bool _is_send_dark_monk_dead_data;
 

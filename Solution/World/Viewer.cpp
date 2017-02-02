@@ -15,6 +15,7 @@
 #include "Bullet.h"
 #include "DarkKnight.h"
 #include "DarkMonk.h"
+#include "Field.h"
 
 
 const double MODEL_SCALE_2015 = 0.008;
@@ -60,7 +61,11 @@ void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
 	drawer->loadMDLModel( MODEL_MDL_FLOOR,		  "MapModel/floor_collision.mdl", "MapModel/floor01_DM.jpg" );
 	drawer->loadMV1Model( Animation::MV1_FLOOR,			      "MapModel/floor.mv1" );
-	drawer->loadMV1Model( Animation::MV1_PLAYER,			  "CaracterModel/player/player.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_RED,			  "CaracterModel/player/player.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_BULE,			  "CaracterModel/player/player02.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_ORENGE,			  "CaracterModel/player/player03.mv1" );
+	drawer->loadMV1Model( Animation::MV1_PLAYER_YELLOW,			  "CaracterModel/player/player04.mv1" );
+
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WAIT,	      "CaracterModel/player/player_idle.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WALK,	      "CaracterModel/player/player_run.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_ATTACK_BEGIN, "CaracterModel/player/player_attack_begin.mv1" );
@@ -123,7 +128,9 @@ void Viewer::update( ) {
 		drawEnemy( );
 		drawDarkKnight( );
 		drawDarkMonk( );
+		drawBackGround( );
 		drawUI( );
+		//drawField( );
 		updateCamera( );
 		break;
 	case SCENE_CLEAR:
@@ -163,9 +170,41 @@ void Viewer::drawGroundModel( ) {
 	drawer->setModelMV1( model );
 }
 
+void Viewer::drawField( ) {
+	AppPtr app = App::getTask( );
+	FieldPtr field = app->getField(  );
+	for ( int i = 0; i < Field::MAX_MAP_CHIP_NUM; i++ ) {
+		ObjectPtr obj = field->getTarget( i );
+		
+		CharacterPtr character = std::dynamic_pointer_cast< Character >( obj );
+
+		if ( !character ) {
+			continue;
+		}
+		
+		DrawerPtr drawer = Drawer::getTask( );
+		Vector pos = character->getPos( );
+		Vector pos1 = pos;
+		Vector pos2 = pos;
+		Vector pos3 = pos;
+		pos1.z += 1;
+		pos2.z += 1;
+		pos3.z += 1;
+
+		pos1.x += 1;
+		pos2.y += 1;
+		pos3.x += 1;
+		pos3.y += 1;
+
+		drawer->drawTriangle( pos2, pos1, pos3 );
+	}
+	
+}
+
 void Viewer::drawDarkKnight( ) {
 	AppPtr app = App::getTask( );
-	DarkKnightPtr dark_knight = app->getDarkKnight( );
+	CohortPtr cohort = app->getCohort( );
+	DarkKnightPtr dark_knight = cohort->getDarkKnight( );
 	if ( !dark_knight ) {
 		return;
 	}
@@ -204,7 +243,8 @@ void Viewer::drawDarkKnight( ) {
 
 void Viewer::drawDarkMonk( ) {
 	AppPtr app = App::getTask( );
-	DarkMonkPtr dark_monk = app->getDarkMonk( );
+	CohortPtr cohort = app->getCohort( );
+	DarkMonkPtr dark_monk = cohort->getDarkMonk( );
 	if ( !dark_monk ) {
 		return;
 	}
@@ -245,14 +285,14 @@ void Viewer::drawBackGround( ) {
 	AppPtr app = App::getTask( );
 	DrawerPtr drawer = Drawer::getTask( );
 
-	Vector pos = Vector( 0, 0, 0 );
+	Vector pos = Vector( -10, 90, 0 );
 //	Matrix mat_dir = Matrix::makeTransformRotation( Vector( 0.0, 0.0, 1.0 ), );
 	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
-	Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_BACK_GROUND_SCALE, MODEL_BACK_GROUND_SCALE, MODEL_BACK_GROUND_SCALE ) );
+	Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_FLOOR_SCALE, MODEL_FLOOR_SCALE, MODEL_FLOOR_SCALE ) );
 	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
 
-	Matrix mat = mat_trans * mat_rot * mat_scale;
-
+	Matrix mat = mat_rot * mat_scale;
+	mat = mat * mat_trans;
 	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, Animation::MV1_BACK_GROUND, Animation::MV1_BACK_GROUND, 0 );
 	drawer->setModelMV1( model );
 }

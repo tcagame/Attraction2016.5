@@ -2,7 +2,7 @@
 #include "Animation.h"
 
 const double ATTACK_TIME = 10;
-const Character::STATUS DARKMONK_STATUS = Character::STATUS( 500, 10, 0.1 );
+const Character::STATUS DARKMONK_STATUS = Character::STATUS( 300, 20, 0.2 );
 const double DARKMONK_RANGE = 1;
 
 DarkMonk::DarkMonk( ):

@@ -103,6 +103,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Party.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Schedule.cpp" />
     <ClCompile Include="Viewer.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -134,6 +135,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Party.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Schedule.h" />
     <ClInclude Include="Viewer.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

@@ -8,6 +8,8 @@
 
 PTR( Cohort );
 PTR( Enemy );
+PTR( DarkKnight );
+PTR( DarkMonk );
 PTR( Character );
 
 class Cohort {
@@ -28,9 +30,12 @@ public:
 	void init( );
 	void reset( );
 	virtual void update( );
+	DarkKnightPtr getDarkKnight( );
+	DarkMonkPtr getDarkMonk( );
+
 	EnemyConstPtr getEnemy( int index ) const;
 	EnemyPtr getEnemy( int index );
-	void add( EnemyPtr enemy );
+	void add( int type );
 	int getMaxNum( );
 	void loadBlockEnemyData( int idx, std::string filepath );
 private:
@@ -38,7 +43,9 @@ private:
 	void putEnemy( const Vector& pos );
 private:
 	std::array< EnemyPtr, MAX_NUM > _enemy;
-	EnemyPtr _boss;
+	DarkKnightPtr _dark_knight;
+	DarkMonkPtr _dark_monk;
+
 	std::array< BLOCK_ENEMY_DATA, MAX_BLOCK_NUM > _enemy_data;
 	int _enemy_max;
 };

@@ -21,7 +21,7 @@ _range( range ),
 Character( status ) {
 	_state = ENEMY_STATE_WAIT;
 	_before_state = ENEMY_STATE_WAIT;
-	setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_GOBLIN_WAIT, MV1_SPEED ) ) );
+	setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER_RED, Animation::MV1_GOBLIN_WAIT, MV1_SPEED ) ) );
 	_on_damage = false;
 	_enemy_mode = Enemy::ENEMY_MODE_ENTRY;
 	_entry_target_num = 0;
@@ -60,6 +60,7 @@ void Enemy::moveToEntryTarget( ) {
 	if ( distance.getLength( ) < 2 ) {
 		_entry_target_num++;
 	}
+
 	if ( _entry_target_num >= ENEMY_ENTRY_TARGET_NUM ) {
 		_enemy_mode = ENEMY_MODE_COMBAT;
 		_entry_target_num = 0;

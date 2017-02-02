@@ -63,7 +63,9 @@ Vector GroundModel::HitGroundPos( Vector head_pos, Vector foot_pos ) {
 		double dot_a = normal_plane.dot( plane_to_pos_a );
 		double dot_b = normal_plane.dot( plane_to_pos_b );
 		
-		
+		if ( normal_plane.z != 1 ) {
+			int a = 0;	
+		}
 		if( dot_a == 0 && dot_b == 0 ) {
 			continue;
 		} 
@@ -72,7 +74,9 @@ Vector GroundModel::HitGroundPos( Vector head_pos, Vector foot_pos ) {
 			continue;
 
 		} 
-
+		if ( normal_plane.z != 1 ) {
+			int a = 0;
+		}
 		Vector pos_a_to_b = pos_b - pos_a;
 		double ratio =  abs( dot_a ) / ( abs( dot_a ) + abs( dot_b ) );
 		Vector cross_pos = pos_a + ( pos_a_to_b * ratio );

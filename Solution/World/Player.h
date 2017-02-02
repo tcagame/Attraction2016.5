@@ -2,6 +2,7 @@
 #include "Character.h"
 #include "smart_ptr.h"
 
+
 PTR( Player );
 
 class Player : public Character {
@@ -45,7 +46,7 @@ private:
 	const int _player_id;
 	PLAYER_STATE _player_state;
 	PLAYER_STATE _before_state;
-
+	int _mesh;
 	ATTACK _attack;
 	ATTACK _before_attack;
 

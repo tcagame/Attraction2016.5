@@ -39,6 +39,11 @@ ObjectPtr Field::getTarget( int x, int y ) {
 	return _target_board[ idx ].lock( );
 }
 
+ObjectPtr Field::getTarget( int idx ) {
+	return _target_board[ idx ].lock( );
+}
+
+
 int Field::getIndexTargetBoard( int x, int y ) {
 	int ret = 0;
 	int map_x = x; 

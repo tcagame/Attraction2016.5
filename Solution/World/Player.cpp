@@ -18,6 +18,22 @@ const Vector BULLET_OFFSET = Vector( 0.0, 0.0, 1.7 );
 Player::Player( unsigned char player_id, Character::STATUS status ) :
 Character( status ),
 _player_id( player_id ) {
+	switch ( player_id ) {
+	case 0:
+		_mesh = Animation::MV1_PLAYER_RED;
+		break;
+	case 1:
+		_mesh = Animation::MV1_PLAYER_BULE;
+		break;
+	case 2:
+		_mesh = Animation::MV1_PLAYER_ORENGE;
+		break;
+	case 3:
+		_mesh = Animation::MV1_PLAYER_YELLOW;
+		break;
+	default:
+		break;
+	}
 	setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER_WAIT ) ) );
 	_attack_loop = false;
 	_attack_end = true;
@@ -83,7 +99,7 @@ void Player::animationUpdate( ) {
 	}
 	if ( _player_state == PLAYER_STATE_WAIT && _attack_end ) {
 		if ( animation->getMotion( ) != Animation::MV1_PLAYER_WAIT ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_WAIT ) ) );
+			setAnimation( AnimationPtr( new Animation(  ( Animation::MV1 ) _mesh, Animation::MV1_PLAYER_WAIT ) ) );
 		} else {
 			if( animation->isEndAnimation( ) ) {
 				animation->setAnimationTime( 0 );
@@ -92,7 +108,7 @@ void Player::animationUpdate( ) {
 	}
 	if ( _player_state == PLAYER_STATE_WALK ) {
 		if ( animation->getMotion( ) != Animation::MV1_PLAYER_WALK ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_WALK ) ) );
+			setAnimation( AnimationPtr( new Animation( ( Animation::MV1 ) _mesh, Animation::MV1_PLAYER_WALK ) ) );
 		} else {
 			if ( animation->isEndAnimation( ) ) {
 				animation->setAnimationTime( 0 );
@@ -104,7 +120,7 @@ void Player::animationUpdate( ) {
 		switch( _attack ) {
 			case ATTACK_BRGIN:
 				if ( animation->getMotion( ) != Animation::MV1_PLAYER_ATTACK_BEGIN ) {
-					setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_ATTACK_BEGIN ) ) );
+					setAnimation( AnimationPtr( new Animation( ( Animation::MV1 ) _mesh, Animation::MV1_PLAYER_ATTACK_BEGIN ) ) );
 				} else {
 					if ( animation->isEndAnimation( ) ) {
 						animation->setAnimationTime( 0 );
@@ -113,7 +129,7 @@ void Player::animationUpdate( ) {
 			break;
 			case ATTACK_LOOP:
 				if ( animation->getMotion( ) != Animation::MV1_PLAYER_ATTACK_LOOP ) {
-					setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_ATTACK_LOOP ) ) );
+					setAnimation( AnimationPtr( new Animation( ( Animation::MV1 ) _mesh, Animation::MV1_PLAYER_ATTACK_LOOP ) ) );
 				} else {
 					if ( animation->isEndAnimation( ) ) {
 						animation->setAnimationTime( 0 );
@@ -122,7 +138,7 @@ void Player::animationUpdate( ) {
 			break;
 			case ATTACK_END:
 				if ( animation->getMotion( ) != Animation::MV1_PLAYER_ATTACK_END ) {
-					setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_ATTACK_END ) ) );
+					setAnimation( AnimationPtr( new Animation( ( Animation::MV1 ) _mesh, Animation::MV1_PLAYER_ATTACK_END ) ) );
 				} else {
 					if ( animation->isEndAnimation( ) ) {
 						animation->setAnimationTime( 0 );
@@ -134,7 +150,7 @@ void Player::animationUpdate( ) {
 	}
 	if ( _player_state == PLAYER_STATE_DAMAGE ) {
 		if ( animation->getMotion( ) != Animation::MV1_PLAYER_DAMAGE ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_DAMAGE ) ) );
+			setAnimation( AnimationPtr( new Animation( ( Animation::MV1 ) _mesh, Animation::MV1_PLAYER_DAMAGE ) ) );
 		} else {
 			if ( animation->isEndAnimation( ) ) {
 				_is_damage = false;
@@ -145,7 +161,7 @@ void Player::animationUpdate( ) {
 	}
 	if ( _player_state == PLAYER_STATE_DEAD ) {
 		if ( animation->getMotion( ) != Animation::MV1_PLAYER_DEAD ) {
-			setAnimation( AnimationPtr( new Animation( Animation::MV1_PLAYER, Animation::MV1_PLAYER_DEAD ) ) );
+			setAnimation( AnimationPtr( new Animation( ( Animation::MV1 ) _mesh, Animation::MV1_PLAYER_DEAD ) ) );
 		} else {
 			if ( animation->isEndAnimation( ) ) {
 				animation->setAnimationTime( 0 );

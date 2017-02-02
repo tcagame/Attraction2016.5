@@ -14,6 +14,7 @@
 #include "EnemyGoblin.h"
 #include "DarkKnight.h"
 #include "DarkMonk.h"
+#include "Schedule.h"
 
 
 const std::string DIRECTORY = "../Resource/";
@@ -51,14 +52,9 @@ void App::initialize( ) {
 	std::string floor_model_path = DIRECTORY + "MapModel/floor_collision.mdl";
 	_ground_model->loadModelData( 100, 30, floor_model_path );
 	_cohort = CohortPtr( new Cohort( ) );
-	_dark_knight = DarkKnightPtr ( new DarkKnight( ) );
-	_dark_monk = DarkMonkPtr ( new DarkMonk( ) );
+	_schedule = SchedulePtr( new Schedule( ) );
 
 
-	_dark_monk->create( Vector( 0, 10, 0 ) );
-	_dark_knight->create( Vector( 0, 10, 0 ) );
-	_dark_knight->resetDeadFlag( );
-	_dark_monk->resetDeadFlag( );
 	//EnemyPtr enemy = EnemyPtr( new EnemyGoblin( Enemy::ENEMY_TYPE_GOBLIN, 2, Character::STATUS( 10, 10, 0.4 ) ) );
 	//_cohort->add( enemy );
 
@@ -117,13 +113,7 @@ void App::initSceneTitle( ) {
 	// ‚¾‚ßIIinitialize( );]
 
 
-	_dark_knight->reset( );
-	_dark_monk->reset( );
-	_dark_monk->create( Vector( 0, 10, 0 ) );
-	_dark_knight->create( Vector( 0, 10, 0 ) );
-	_dark_knight->resetDeadFlag( );
-	_dark_monk->resetDeadFlag( );
-	
+	_cohort->reset( );
 	_is_send_dark_knight_dead_data = false;
 	_is_send_dark_monk_dead_data = false;
 
@@ -144,17 +134,20 @@ void App::updateSceneTitle( ) {
 }
 
 void App::updateScenePlay( ) {
+	_schedule->update( _cohort );
 	_party->update( );
 	_cohort->update( );
 	_weapon->update( );
-	_dark_knight->update( );
-	_dark_monk->update( );
 	sendBossDeadMessage( );
 	decreasePlayerHp( );
 }
 
 void App::sendBossDeadMessage( ) {
-	if ( _dark_knight->isDead( ) && !_is_send_dark_knight_dead_data ) {
+	DarkKnightPtr dark_knight = _cohort->getDarkKnight( );
+	DarkMonkPtr dark_monk = _cohort->getDarkMonk( );
+
+
+	if ( dark_knight && dark_knight->isDead( ) && !_is_send_dark_knight_dead_data ) {
 		ClientPtr client = Client::getTask( );
 		SERVERDATA sever_data;
 		sever_data.command = COMMAND_BOSS_DEAD;
@@ -162,7 +155,7 @@ void App::sendBossDeadMessage( ) {
 		client->send( sever_data );
 		_is_send_dark_knight_dead_data = true;
 	}
-	if ( _dark_monk->isDead( ) && !_is_send_dark_monk_dead_data ) {
+	if ( dark_monk && dark_monk->isDead( ) && !_is_send_dark_monk_dead_data ) {
 		ClientPtr client = Client::getTask( );
 		SERVERDATA sever_data;
 		sever_data.command = COMMAND_BOSS_DEAD;
@@ -239,10 +232,3 @@ PartyPtr App::getParty( ) const {
 	return _party;
 }
 
-DarkKnightPtr App::getDarkKnight( ) const{
-	return _dark_knight;
-}
-
-DarkMonkPtr App::getDarkMonk( ) const{
-	return _dark_monk;
-}

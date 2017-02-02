@@ -2,7 +2,7 @@
 #include "Animation.h"
 
 const double ATTACK_TIME = 30;
-const Character::STATUS GOBLIN_STATUS = Character::STATUS( 100, 10, 0.1 );
+const Character::STATUS GOBLIN_STATUS = Character::STATUS( 50, 10, 0.1 );
 const double GOBLIN_RANGE = 1;
 
 EnemyGoblin::EnemyGoblin( ) :

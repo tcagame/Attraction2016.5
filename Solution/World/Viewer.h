@@ -27,6 +27,7 @@ public:
 	void drawDarkKnight( );
 	void drawDarkMonk( );
 	void drawUI( );
+	void drawField( );
 	//CLEAR
 	void drawClear( );
 	//DEAD

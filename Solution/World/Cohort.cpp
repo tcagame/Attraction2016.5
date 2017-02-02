@@ -5,6 +5,9 @@
 #include "Ground.h"
 #include "Character.h"
 #include "EnemyMinotaur.h"
+#include "EnemyGoblin.h"
+#include "DarkKnight.h"
+#include "DarkMonk.h"
 
 const Vector ENEMY_POT_POS = Vector( 0, 10, 0 );
 
@@ -18,6 +21,8 @@ Cohort::~Cohort( ) {
 
 void Cohort::init( ) {
 	_enemy_max = 0;
+
+
 	int _enemy_data_max = _enemy_data.size( );
 	for ( int i = 0; i < MAX_NUM; i++ ) {
 		EnemyPtr enemy = _enemy[ i ];
@@ -31,6 +36,11 @@ void Cohort::init( ) {
 
 void Cohort::reset( ) {
 	_enemy_max = 0;
+	_dark_knight->reset( );
+	_dark_monk->reset( );
+	_dark_knight->resetDeadFlag( );
+	_dark_monk->resetDeadFlag( );
+
 	int _enemy_data_max = _enemy_data.size( );
 	for (int i = 0; i < MAX_NUM; i++) {
 		if ( !_enemy[ i ] ) {
@@ -56,15 +66,41 @@ void Cohort::update( ) {
 		}
 		enemy->update( );
 	}
+
+	if ( _dark_knight && _dark_knight->isExpired( ) ) {
+		_dark_knight->update( );
+	}
+	if ( _dark_monk && _dark_monk->isExpired( ) ) {
+		_dark_monk->update( );
+	}
 }
 
-void Cohort::add( EnemyPtr enemy ) {
+void Cohort::add( int type ) {
 	for ( int i = 0; i < MAX_NUM; i++ ) {
 		EnemyPtr check = _enemy[ i ];
 		if ( !check ) {
-			_enemy[ i ] = enemy;
-			_enemy[ i ] ->create( ENEMY_POT_POS );
-			_enemy_max++;
+			switch ( type ) {
+			case Enemy::ENEMY_TYPE_GOBLIN:
+				_enemy[ i ] = EnemyPtr( new EnemyGoblin(  ) );
+				_enemy[ i ] ->create( ENEMY_POT_POS );
+				_enemy_max++;
+				break;
+			case Enemy::ENEMY_TYPE_MINOTAUR:
+				_enemy[ i ] = EnemyPtr( new EnemyMinotaur(  ) );
+				_enemy[ i ] ->create( ENEMY_POT_POS );
+				_enemy_max++;
+				break;
+			case Enemy::ENEMY_TYPE_DARKKIGHT:
+				_dark_knight = DarkKnightPtr( new DarkKnight( ) );
+				_dark_knight->create( ENEMY_POT_POS );
+				break;
+			case Enemy::ENEMY_TYPE_DARKMONK:
+				_dark_monk = DarkMonkPtr( new DarkMonk( ) );
+				_dark_monk->create( ENEMY_POT_POS );
+				break;
+			default:
+				break;
+			}
 			break;
 		}
 	}
@@ -81,6 +117,14 @@ EnemyPtr Cohort::getEnemy( int index ) {
 
 int Cohort::getMaxNum( ) {
 	return _enemy_max;
+}
+
+DarkKnightPtr Cohort::getDarkKnight( ) {
+	return _dark_knight;
+}
+
+DarkMonkPtr Cohort::getDarkMonk( ) {
+	return _dark_monk;
 }
 
 void Cohort::loadBlockEnemyData( int idx, std::string filepath ) {
@@ -128,8 +172,5 @@ void Cohort::putBlockEnemy( int idx ) {
 }
 
 void Cohort::putEnemy( const Vector& pos ) {
-
-	EnemyPtr enemy = EnemyPtr( new EnemyMinotaur( ) );
-	add( enemy );
 
 }

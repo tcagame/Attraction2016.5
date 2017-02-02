@@ -2,7 +2,7 @@
 #include "Animation.h"
 
 const double ATTACK_TIME = 10;
-const Character::STATUS DARKKNIGHT_STATUS = Character::STATUS( 500, 10, 0.1 );
+const Character::STATUS DARKKNIGHT_STATUS = Character::STATUS( 400, 50, 0.15 );
 const double DARKKNIGHT_RANGE = 1;
 
 DarkKnight::DarkKnight( ):

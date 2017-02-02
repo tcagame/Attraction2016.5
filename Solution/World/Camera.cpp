@@ -4,9 +4,14 @@
 #include "Drawer.h"
 #include "Application.h"
 
-const Vector START_CAMERA_POS = Vector( 160, 30, 800 );
-const Vector START_TARGET_POS = Vector( 50, 30, 0 );
+const Vector START_CAMERA_POS = Vector( 230, 30, 20 );
+const Vector START_TARGET_POS = Vector( 0, 30, 0 );
 
+const Vector BATTRL_CAMERA_POS = Vector( 230, 30, 20 );
+const Vector BATTRL_TARGET_POS = Vector( 0, 30, 0 );
+
+const Vector ENEMY_ENTRY_CAMERA_POS = Vector(  );
+const Vector ENEMY_ENTRY_TARGET_POS = Vector(  );
 const double SCREEN_LENGTH = 800.0;
 
 const int MAX_LENGTH = 40;
@@ -32,19 +37,16 @@ void Camera::initialize( ) {
 }
 
 void Camera::update( ) {
-	/*Vector vec = _pos - _target;
-	vec.z = 0;
-
-	if( vec.getLength( ) > MAX_LENGTH ) {
-		vec = vec.normalize( ) * MAX_LENGTH;
+	switch ( _camera_view_phase ) {
+	case CAMERA_VIEW_PHASE_TITLE:
+		break;
+	case CAMERA_VIEW_PHASE_ENEMY:
+		break;
+	case CAMERA_VIEW_PHASE_BATTLE:
+		break;
+	default:
+		break;
 	}
-	if ( vec.getLength( ) < MIN_LENGTH ) {
-		vec = vec.normalize( ) * MIN_LENGTH;
-	}
-	vec.z = 15;
-
-	// _camera_pos‚ð•ÏX
-	_pos = _target + vec;*/
 }
 
 Vector Camera::getPos( ) const {

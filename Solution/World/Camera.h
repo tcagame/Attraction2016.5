@@ -9,6 +9,12 @@ PTR( Camera );
 
 class Camera : public Task {
 public:
+	enum CAMERA_VIEW_PHASE {
+		CAMERA_VIEW_PHASE_TITLE,
+		CAMERA_VIEW_PHASE_ENEMY,
+		CAMERA_VIEW_PHASE_BATTLE,
+	};
+public:
 	static std::string getTag( ) { return "CAMERA"; }
 	static CameraPtr getTask( );
 public:
@@ -27,6 +33,7 @@ protected:
 	Vector getStartTargetPos( ) const;
 protected:
 	Vector _pos;
+	CAMERA_VIEW_PHASE _camera_view_phase;
 	Vector _target;
 };
 

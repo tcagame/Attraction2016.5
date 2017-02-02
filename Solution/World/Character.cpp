@@ -54,7 +54,7 @@ bool Character::move( const Vector& vec, bool is_entry_mode ) {
 	if ( !is_entry_mode ) {
 		Vector head_pos = move_pos;
 		Vector foot_pos = move_pos;
-		head_pos.z += CHARACTER_HEIGHT / 2;
+		head_pos.z += CHARACTER_HEIGHT * 3;
 		foot_pos.z -= CHARACTER_HEIGHT / 2;
 		Vector ground_pos;
 		ObjectPtr object = field->getTarget( ( int )move_pos.x, ( int )move_pos.y );

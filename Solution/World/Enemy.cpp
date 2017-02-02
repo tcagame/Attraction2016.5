@@ -11,7 +11,7 @@ const double MAX_PLAYER_NUM = 4;
 const double ATTACK_TIME = 10;
 const Vector ENEMY_ENTRY_TARGET_POS[ ] = {
 	Vector( 0, 30, 0 ),
-	Vector( 25, 30, 0 )
+	Vector( 10, 30, 0 )
 };
 const int ENEMY_ENTRY_TARGET_NUM = 2;
 

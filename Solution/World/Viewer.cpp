@@ -20,6 +20,7 @@
 const double MODEL_SCALE_2015 = 0.008;
 const double MODEL_SCALE_2016 = 0.015;
 const double MODEL_SCALE_ALL = 0.1;
+const double MODEL_FLOOR_SCALE = 0.05;
 const double MODEL_BACK_GROUND_SCALE = 0.01;
 
 const int GRAPH_STRING_X = 1024;
@@ -57,7 +58,8 @@ Viewer::~Viewer( ) {
 
 void Viewer::initialize( ) {
 	DrawerPtr drawer =Drawer::getTask( );
-	drawer->loadMDLModel( MODEL_MDL_FLOOR,					  "MapModel/floor_collision.mdl", "MapModel/floor01_DM.jpg" );
+	drawer->loadMDLModel( MODEL_MDL_FLOOR,		  "MapModel/floor_collision.mdl", "MapModel/floor01_DM.jpg" );
+	drawer->loadMV1Model( Animation::MV1_FLOOR,			      "MapModel/floor.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER,			  "CaracterModel/player/player.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WAIT,	      "CaracterModel/player/player_idle.mv1" );
 	drawer->loadMV1Model( Animation::MV1_PLAYER_WALK,	      "CaracterModel/player/player_run.mv1" );
@@ -142,11 +144,23 @@ void Viewer::updateCamera( ) {
 }
 
 void Viewer::drawGroundModel( ) {
-	//AppPtr app = App::getTask( );
-	//GroundPtr ground = app->getGround( );
+	AppPtr app = App::getTask( );
 	DrawerPtr drawer = Drawer::getTask( );
-	Drawer::ModelMDL model_mdl = Drawer::ModelMDL( Vector( 100, 30, 0 ), MODEL_MDL_FLOOR );
-	drawer->setModelMDL( model_mdl );
+
+	Vector pos = Vector( 100, 30, 0 );
+	/*Drawer::ModelMDL model_collision = Drawer::ModelMDL( pos, MODEL_MDL_FLOOR );
+	drawer->setModelMDL( model_collision );*/
+	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
+	Matrix mat_rot2 = Matrix::makeTransformRotation( Vector( 0.0, -1.0, 0.0 ), PI / 2 );
+
+	Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_FLOOR_SCALE, MODEL_FLOOR_SCALE, MODEL_FLOOR_SCALE ) );
+	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
+
+	Matrix mat =  mat_rot * mat_rot2 * mat_scale;
+	mat = mat * mat_trans;
+
+	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, Animation::MV1_FLOOR, Animation::MV1_FLOOR, 0 );
+	drawer->setModelMV1( model );
 }
 
 void Viewer::drawDarkKnight( ) {

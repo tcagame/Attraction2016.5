@@ -87,7 +87,10 @@ Vector GroundModel::HitGroundPos( Vector head_pos, Vector foot_pos ) {
 			 bc_cross_ccroos_pos != normal_plane ) {
 			continue;
 		}
-		ret = cross_pos;
+		
+		if ( ( cross_pos - head_pos ).getLength( ) < ( ret - head_pos ).getLength( ) ) {
+			ret = cross_pos;
+		}
 	}
 	return ret;
 }

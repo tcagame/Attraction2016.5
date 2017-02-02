@@ -120,9 +120,7 @@ void Enemy::switchStatus( ) {
 	Vector target_pos = player->getPos( );
 	Vector stance = target_pos - getPos( );
 	double range = stance.getLength( );
-	if ( range <= MOVE_RANGE ) {
-		_state = ENEMY_STATE_WALK;
-	}
+	_state = ENEMY_STATE_WALK;
 
 	if ( range <= ATTACK_RANGE && _before_state != ENEMY_STATE_ATTACK ) {
 		_state = ENEMY_STATE_ATTACK;

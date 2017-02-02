@@ -347,7 +347,6 @@ void Viewer::drawEnemy( ) {
 		DrawerPtr drawer = Drawer::getTask( );
 		Drawer::ModelMV1 model = Drawer::ModelMV1( mat, mesh, motion, time );
 		drawer->setModelMV1( model );
-		drawer->drawString( 0, i * 10, "Hp:%d", enemy->getStatus( ).hp );
 	}
 	
 }

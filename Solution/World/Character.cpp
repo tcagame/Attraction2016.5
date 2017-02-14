@@ -5,6 +5,7 @@
 #include "GroundModel.h"
 #include "Camera.h"
 #include "Animation.h"
+#include "Ground.h"
 
 const Vector START_DIR = Vector( 0, 1, 0 );
 const double CHARACTER_HEIGHT = 2.0;
@@ -75,6 +76,19 @@ bool Character::move( const Vector& vec, bool is_entry_mode ) {
 		field->setTarget( ( int )_pos.x, ( int )_pos.y, getThis( ) );
 	} else {
 		_pos = move_pos;
+	}
+	GroundPtr ground = app->getGround( );
+	if ( _pos.x > ground->getWidth( ) * ground->CHIP_WIDTH ) {
+		_pos.x = ground->getWidth( ) * ground->CHIP_WIDTH;
+	}
+	if ( _pos.y > ground->getHeight( ) * ground->CHIP_HEIGHT ) {
+		_pos.y = ground->getHeight( ) * ground->CHIP_HEIGHT;
+	}
+	if ( _pos.x < 0 ) {
+		_pos.x = 0;
+	}
+	if ( _pos.y < 0 ) {
+		_pos.y = 0;
 	}
 	return
 		( int )_pos.x == ( int )store.x &&

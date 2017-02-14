@@ -1,5 +1,6 @@
 #include "BulletFire.h"
 #include "App.h"
+#include "Ground.h"
 
 const int VANISH_TIME = 60;
 const int POWER = 100;
@@ -26,5 +27,13 @@ bool BulletFire::update( ) {
 		return true;
 	}
 	_pos += _dir * _speed;
+
+	AppPtr app = App::getTask( );
+	GroundPtr ground = app->getGround( );
+	if ( _pos.x < 0 || _pos.y < 0 ||
+		 _pos.x > ground->getWidth( ) * ground->CHIP_WIDTH ||
+		 _pos.y > ground->getHeight( ) * ground->CHIP_HEIGHT ) {
+		return true;
+	}
 	return attackEnemy( _pos, _power );
 }

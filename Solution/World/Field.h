@@ -10,7 +10,7 @@ public:
 	Field( );
 	virtual ~Field( );
 public:
-	static const int MAX_MAP_CHIP_NUM = 3000;
+	static const int MAX_MAP_CHIP_NUM = 10000;
 public:
 	void initialize( );
 	void reset( );

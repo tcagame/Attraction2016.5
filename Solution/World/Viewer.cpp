@@ -168,6 +168,18 @@ void Viewer::drawGroundModel( ) {
 
 	Drawer::ModelMV1 model = Drawer::ModelMV1( mat, Animation::MV1_FLOOR, Animation::MV1_FLOOR, 0 );
 	drawer->setModelMV1( model );
+
+#if _DEBUG
+	GroundPtr ground = app->getGround( );
+	int height = ground->getHeight( ) * ground->CHIP_HEIGHT;
+	int width = ground->getWidth( ) * ground->CHIP_WIDTH;
+
+	//drawer->drawString( 0, 0, "›" );
+	drawer->drawLine( Vector( ), Vector( 0, height, 0 ) );
+	drawer->drawLine( Vector( ), Vector( width, 0, 0 ) );
+	drawer->drawLine( Vector( 0, height, 0 ), Vector( width, height, 0 ) );
+	drawer->drawLine( Vector( width, 0, 0 ), Vector( width, height, 0 ) );
+#endif
 }
 
 void Viewer::drawField( ) {

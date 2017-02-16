@@ -36,10 +36,14 @@ void Cohort::init( ) {
 
 void Cohort::reset( ) {
 	_enemy_max = 0;
-	_dark_knight->reset( );
-	_dark_monk->reset( );
-	_dark_knight->resetDeadFlag( );
-	_dark_monk->resetDeadFlag( );
+	if ( _dark_knight ) {
+		_dark_knight->reset( );
+		_dark_knight->resetDeadFlag( );
+	}
+	if ( _dark_monk ) {
+		_dark_monk->reset( );
+		_dark_monk->resetDeadFlag( );
+	}
 
 	int _enemy_data_max = _enemy_data.size( );
 	for (int i = 0; i < MAX_NUM; i++) {

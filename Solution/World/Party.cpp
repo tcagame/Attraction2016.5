@@ -61,5 +61,6 @@ int Party::getPlayerNum( ) const {
 void Party::reset( ) {
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		_party[ i ]->reset( );
+		_creating[ i ] = true;
 	}
 }

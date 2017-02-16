@@ -482,7 +482,6 @@ void Viewer::drawUI( ) {
 		{//LIFE
 			Drawer::Sprite sprite;
 			sprite.res = GRAPH_ID_UI_LIFE_STRING;
-			sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
 			sprite.trans.sy = sy + 10;
 			sprite.trans.sx = sx + 32;
 			sprite.trans.tw = -1;
@@ -499,13 +498,14 @@ void Viewer::drawUI( ) {
 				int num = std::atoi( &num_c );
 				Drawer::Sprite sprite;
 				sprite.res = GRAPH_ID_UI_LIFE;
-				sprite.trans.sx = app->getWindowWidth( ) / 2 - GRAPH_STRING_X / 2;
 				sprite.trans.sy = sy + string_y;
 				sprite.trans.sx = sx + GRAPH_UI_WINDOW_WIDTH - 32 - 25 * ( digits - i );
 				sprite.trans.tx = 32 * num;
 				sprite.trans.ty = 0;
 				sprite.trans.th = 64;
 				sprite.trans.tw = 32;
+				sprite.trans.sx2 = -1;
+				sprite.trans.sy2 = -1;
 				sprite.blend = Drawer::BLEND_NONE;
 				drawer->setSprite( sprite );
 			}

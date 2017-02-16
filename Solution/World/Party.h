@@ -16,4 +16,5 @@ public:
 	void reset( );
 public:
 	std::array< PlayerPtr, PLAYER_NUM > _party;
+	std::array< bool, PLAYER_NUM > _creating;
 };

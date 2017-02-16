@@ -18,6 +18,7 @@ Party::Party( ) {
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		Character::STATUS status = Character::STATUS( 1000, POWER, SPEED );
 		_party[ i ] = PlayerPtr( new Player( i, status ) );
+		_creating[ i ] = true;
 	}
 }
 
@@ -36,8 +37,9 @@ void Party::update( ) {
 	ClientPtr client = Client::getTask( );
 	CLIENTDATA data = client->getClientData( );
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		if ( !_party[ i ]->isExpired( ) && data.player[ i ].exist == EXIST ) {
+		if ( !_party[ i ]->isExpired( ) && data.player[ i ].exist == EXIST && _creating[ i ] ) {
 			_party[ i ]->create( PLAYER_START_POS[ i ] );
+			_creating[ i ] = false;
 		}
 	}
 }

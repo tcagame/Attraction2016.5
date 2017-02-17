@@ -3,8 +3,9 @@
 #include "Enemy.h"
 #include "mathmatics.h"
 #include "Player.h"
-#include "Field.h"
+#include "Cohort.h"
 
+const double BULLET_HIT_LENGTH = 3.0;
 const double Bullet::BULLET_SCALE( 0.1 );//ƒ‚ƒfƒ‹‚Ì‘å‚«‚³‚É‡‚í‚¹‚éB
 
 Bullet::Bullet( TYPE type )
@@ -28,13 +29,20 @@ Vector Bullet::getDir( ) const {
 
 bool Bullet::attackEnemy( const Vector& pos, int power ) {
 	AppPtr app = App::getTask( );
-	FieldPtr field = app->getField( );
-	ObjectPtr object = field->getTarget( ( int )pos.x, ( int )pos.y );
-	EnemyPtr enemy = std::dynamic_pointer_cast< Enemy >( object );
-	if ( !enemy ) {
-		return false;
+	CohortPtr cohort = app->getCohort( );
+	int enemy_max_num = cohort->getMaxNum( );
+	for ( int i = 0; i < enemy_max_num; i++ ) {
+		EnemyPtr enemy = cohort->getEnemy( i );
+		if ( !enemy ) {
+			continue;
+		}
+		Vector enemy_pos = enemy->getPos( );
+		Vector dist = pos - enemy_pos;
+		double length = dist.getLength( );
+		if ( length < BULLET_HIT_LENGTH ) {
+			enemy->damage( power );
+			return true;
+		}
 	}
-	Character::STATUS status = enemy->getStatus();
-	enemy->damage( power );
-	return true;
+	return false;
 }

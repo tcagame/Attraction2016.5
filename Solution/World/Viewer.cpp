@@ -28,7 +28,7 @@ const int GRAPH_STRING_X = 1024;
 const int GRAPH_STRING_Y = 1024;
 
 const int GRAPH_UI_WINDOW_WIDTH = 160;
-const int GRAPH_UI_WINDOW_HEIGHT = 120;
+const int GRAPH_UI_WINDOW_HEIGHT = 770;
 
 enum MODEL_MDL {
 	MODEL_MDL_NONE,
@@ -41,7 +41,10 @@ enum GRAPH_ID {
 	GRAPH_ID_CLEAR_STRING,
 	GRAPH_ID_GAMEOVER_STRING,
 	GRAPH_ID_TITLE_STRING,
-	GRAPH_ID_UI_WINDOW,
+	GRAPH_ID_UI_WINDOW_RED,
+	GRAPH_ID_UI_WINDOW_BLUE,
+	GRAPH_ID_UI_WINDOW_GREEN,
+	GRAPH_ID_UI_WINDOW_YELLOW,
 	GRAPH_ID_UI_LIFE,
 	GRAPH_ID_UI_LIFE_STRING,
 };
@@ -105,13 +108,16 @@ void Viewer::initialize( ) {
 	drawer->loadMV1Model( Animation::MV1_DARKMONK_DAMAGE,	"EnemyModel/darkmonk/enemy_ex02_damage.mv1" );
 	drawer->loadMV1Model( Animation::MV1_DARKMONK_DEAD,     "EnemyModel/darkmonk/enemy_ex02_death.mv1" );
 
-	drawer->loadGraph( GRAPH_ID_MISSILE,		"Billboard/missile.png" );
-	drawer->loadGraph( GRAPH_ID_CLEAR_STRING,	"Images/clear.png" );
-	drawer->loadGraph( GRAPH_ID_GAMEOVER_STRING,"Images/dead.png" );
-	drawer->loadGraph( GRAPH_ID_TITLE_STRING,	"Images/title.png" );
-	drawer->loadGraph( GRAPH_ID_UI_WINDOW,		"UI/status_window.png" );
-	drawer->loadGraph( GRAPH_ID_UI_LIFE,		"UI/lifenumber.png" );
-	drawer->loadGraph( GRAPH_ID_UI_LIFE_STRING,	"UI/lifewindow.png" );
+	drawer->loadGraph( GRAPH_ID_MISSILE,			"Billboard/missile.png" );
+	drawer->loadGraph( GRAPH_ID_CLEAR_STRING,		"Images/clear.png" );
+	drawer->loadGraph( GRAPH_ID_GAMEOVER_STRING,	"Images/dead.png" );
+	drawer->loadGraph( GRAPH_ID_TITLE_STRING,		"Images/title.png" );
+	drawer->loadGraph( GRAPH_ID_UI_WINDOW_RED,		"UI/status_window_00.png" );
+	drawer->loadGraph( GRAPH_ID_UI_WINDOW_BLUE,		"UI/status_window_01.png" );
+	drawer->loadGraph( GRAPH_ID_UI_WINDOW_GREEN,	"UI/status_window_02.png" );
+	drawer->loadGraph( GRAPH_ID_UI_WINDOW_YELLOW,	"UI/status_window_03.png" );
+	drawer->loadGraph( GRAPH_ID_UI_LIFE,			"UI/lifenumber.png" );
+	drawer->loadGraph( GRAPH_ID_UI_LIFE_STRING,		"UI/lifewindow.png" );
 }
 
 void Viewer::update( ) {
@@ -471,7 +477,7 @@ void Viewer::drawUI( ) {
 		PlayerPtr playre = party->getPlayer( i );
 		{//ウィンドウ
 			Drawer::Sprite sprite;
-			sprite.res = GRAPH_ID_UI_WINDOW;
+			sprite.res = GRAPH_ID_UI_WINDOW_RED + i;
 			sprite.trans.sy = sy;
 			sprite.trans.sx = sx;
 			sprite.trans.tw = -1;
@@ -498,7 +504,7 @@ void Viewer::drawUI( ) {
 				int num = std::atoi( &num_c );
 				Drawer::Sprite sprite;
 				sprite.res = GRAPH_ID_UI_LIFE;
-				sprite.trans.sy = sy + string_y;
+				sprite.trans.sy = sy + 57;//+ string_y;
 				sprite.trans.sx = sx + GRAPH_UI_WINDOW_WIDTH - 32 - 25 * ( digits - i );
 				sprite.trans.tx = 32 * num;
 				sprite.trans.ty = 0;

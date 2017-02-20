@@ -137,6 +137,9 @@ void Viewer::update( ) {
 		drawBackGround( );
 		drawUI( );
 		//drawField( );
+#if _DEBUG
+		drawDebugMessage( );
+#endif
 		updateCamera( );
 		break;
 	case SCENE_CLEAR:
@@ -216,6 +219,17 @@ void Viewer::drawField( ) {
 
 		//drawer->drawTriangle( pos2, pos1, pos3 );
 	}
+}
+
+void Viewer::drawDebugMessage( ){
+	AppPtr app = App::getTask( );
+	PartyPtr party = app->getParty( );
+	PlayerPtr player = party->getPlayer( 0 );
+	Vector pos = player->getPos( );
+
+	DrawerPtr drawer = Drawer::getTask( );
+	drawer->drawString( 10, 750, "player_pos x: %d  y: %d  z: %d", ( int )pos.x, ( int )pos.y, ( int )pos.z );
+
 }
 
 void Viewer::drawDarkKnight( ) {

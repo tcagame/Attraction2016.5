@@ -28,6 +28,7 @@ public:
 	void drawDarkMonk( );
 	void drawUI( );
 	void drawField( );
+	void drawDebugMessage( );
 	//CLEAR
 	void drawClear( );
 	//DEAD

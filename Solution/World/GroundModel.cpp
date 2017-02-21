@@ -30,10 +30,28 @@ void GroundModel::loadModelPos( int x, int y, ModelPtr model ) {
 	_model_data_ground.polygon_num = polygon_num;
 	model->translate( Vector( x , y ) );
 	int num = 0;
+	
 	for ( int i = 0; i < polygon_num * 3; i++ ) {
 		Vector pos = model->getPoint( i );
 		_model_data_ground.pos[ num ] = pos;
 		num++;
+	}
+	
+	{
+		const Vector pos[ 4 ] = {
+			Vector( 13, 34, 0 ),
+			Vector( 13, 25, 0 ),
+			Vector( 18, 34, 0 ),
+			Vector( 18, 25, 0 ),
+		};
+		_model_data_ground.pos[ _model_data_ground.polygon_num * 3 + 0 ] = pos[ 0 ];
+		_model_data_ground.pos[ _model_data_ground.polygon_num * 3 + 1 ] = pos[ 1 ];
+		_model_data_ground.pos[ _model_data_ground.polygon_num * 3 + 2 ] = pos[ 2 ];
+		_model_data_ground.polygon_num++;
+		_model_data_ground.pos[ _model_data_ground.polygon_num * 3 + 0 ] = pos[ 1 ];
+		_model_data_ground.pos[ _model_data_ground.polygon_num * 3 + 1 ] = pos[ 3 ];
+		_model_data_ground.pos[ _model_data_ground.polygon_num * 3 + 2 ] = pos[ 2 ];
+		_model_data_ground.polygon_num++;
 	}
 }
 

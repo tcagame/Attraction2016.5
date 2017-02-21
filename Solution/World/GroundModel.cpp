@@ -30,7 +30,6 @@ void GroundModel::loadModelPos( int x, int y, ModelPtr model ) {
 	_model_data_ground.polygon_num = polygon_num;
 	model->translate( Vector( x , y ) );
 	int num = 0;
-	
 	for ( int i = 0; i < polygon_num * 3; i++ ) {
 		Vector pos = model->getPoint( i );
 		_model_data_ground.pos[ num ] = pos;
@@ -97,4 +96,17 @@ Vector GroundModel::HitGroundPos( Vector head_pos, Vector foot_pos ) {
 		}
 	}
 	return ret;
+}
+
+void GroundModel::draw( ) {
+	DrawerPtr drawer = Drawer::getTask( );
+
+	for ( int i = 0; i < _model_data_ground.polygon_num; i++ ) {
+		Vector pos0 = _model_data_ground.pos[ i * 3 + 0 ];
+		Vector pos1 = _model_data_ground.pos[ i * 3 + 1 ];
+		Vector pos2 = _model_data_ground.pos[ i * 3 + 2 ];
+		drawer->drawLine( pos0, pos1 );
+		drawer->drawLine( pos1, pos2 );
+		drawer->drawLine( pos2, pos0 );
+	}
 }

@@ -14,6 +14,7 @@ public:
 	void loadModelData( int x, int y, std::string filename );
 	void update( );
 	Vector HitGroundPos( Vector head_pos, Vector foot_pos );
+	void draw( );
 private:
 	static const int MAX_POLYGON_NUM = 6000;
 	static const int MAX_MODEL_NUM = 900;

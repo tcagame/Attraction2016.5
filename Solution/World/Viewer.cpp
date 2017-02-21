@@ -16,6 +16,7 @@
 #include "DarkKnight.h"
 #include "DarkMonk.h"
 #include "Field.h"
+#include "GroundModel.h"
 
 
 const double MODEL_SCALE_2015 = 0.008;
@@ -192,6 +193,9 @@ void Viewer::drawGroundModel( ) {
 	drawer->drawLine( Vector( ), Vector( width, 0, 0 ) );
 	drawer->drawLine( Vector( 0, height, 0 ), Vector( width, height, 0 ) );
 	drawer->drawLine( Vector( width, 0, 0 ), Vector( width, height, 0 ) );
+
+	GroundModelPtr ground_model = app->getGroundModel( );
+	ground_model->draw( );
 #endif
 }
 

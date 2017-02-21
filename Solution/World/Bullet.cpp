@@ -5,8 +5,8 @@
 #include "Player.h"
 #include "Cohort.h"
 
-const double BULLET_HIT_LENGTH = 3.0;
-const double Bullet::BULLET_SCALE( 0.1 );//モデルの大きさに合わせる。
+const double BULLET_HIT_LENGTH = 1.5;
+const double Bullet::BULLET_SCALE( 0.05 );//モデルの大きさに合わせる。
 
 Bullet::Bullet( TYPE type )
 : _type( type ) {

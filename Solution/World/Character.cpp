@@ -8,7 +8,7 @@
 #include "Ground.h"
 
 const Vector START_DIR = Vector( 0, 1, 0 );
-const double CHARACTER_HEIGHT = 2.0;
+const double CHARACTER_HEIGHT = 1.0;
 
 Character::Character( Character::STATUS status ) :
 _origin_status( status ) {

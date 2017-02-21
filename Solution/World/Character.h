@@ -21,7 +21,7 @@ public:
 			speed = 0;
 			width = 0.5;
 		}
-		STATUS( int hp_, unsigned int power_, double speed_, double width_ = 0.5 ) {
+		STATUS( int hp_, unsigned int power_, double speed_, double width_ = 0.25 ) {
 			hp = hp_;
 			power = power_;
 			speed = speed_;

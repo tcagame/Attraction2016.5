@@ -4,7 +4,7 @@
 #include "Drawer.h"
 #include "Application.h"
 
-const Vector START_CAMERA_POS = Vector( 330, 30, 60 );
+const Vector START_CAMERA_POS = Vector( 270, 30, 50 );
 const Vector START_TARGET_POS = Vector( 0, 30, 0 );
 
 const Vector BATTRL_CAMERA_POS = Vector( 230, 30, 20 );

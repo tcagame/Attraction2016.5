@@ -118,6 +118,10 @@ void Viewer::initialize( ) {
 	drawer->loadGraph( GRAPH_ID_UI_WINDOW_YELLOW,	"UI/status_window_03.png" );
 	drawer->loadGraph( GRAPH_ID_UI_LIFE,			"UI/lifenumber.png" );
 	drawer->loadGraph( GRAPH_ID_UI_LIFE_STRING,		"UI/lifewindow.png" );
+
+	drawer->loadEffect( 0, "Effect/Attack_effect_01.efk" );
+	drawer->loadEffect( 1, "Effect/AttackHit_effect_01.efk" );
+
 }
 
 void Viewer::update( ) {

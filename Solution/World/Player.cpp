@@ -13,7 +13,7 @@
 const int MOVE_SPEED = 1;
 const int ATTACK_TIME = 1;
 
-const Vector BULLET_OFFSET = Vector( 0.0, 0.0, 1.7 );
+const Vector BULLET_OFFSET = Vector( 0.0, 0.0, 0.85 );
 
 Player::Player( unsigned char player_id, Character::STATUS status ) :
 Character( status ),
@@ -236,7 +236,7 @@ void Player::attack( Player::CONTROLL controll ) {
 void Player::onAttack( ) {
 	Vector pos = getPos( );
 	Vector dir = getDir( );
-
+	dir = Vector( dir.x / 2, dir.y / 2, dir.z / 2 );
 	AppPtr app = App::getTask( );
 	WeaponPtr weapon = app->getWeapon( );
 	weapon->add( BulletPtr( new BulletFire( pos + BULLET_OFFSET + dir * 2, dir, getStatus( ).power ) ) );

@@ -5,8 +5,8 @@
 
 const int VANISH_TIME = 60;
 const int POWER = 100;
-const double SPEED = 1.0;
-const double EFFECT_SCALE = 0.3;
+const double SPEED = 0.5;
+const double EFFECT_SCALE = 0.15;
 
 BulletFire::BulletFire( const Vector& pos, const Vector& dir, int power )
 : Bullet( Bullet::TYPE_FIRE ) {
@@ -17,7 +17,7 @@ BulletFire::BulletFire( const Vector& pos, const Vector& dir, int power )
 	_exist_time = 0;
 
 	DrawerPtr drawer = Drawer::getTask( );
-	Drawer::Effect effect( 0, pos );
+	Drawer::Effect effect( 0, pos, 0.5 );
 	drawer->setEffect( effect );
 }
 
@@ -43,7 +43,7 @@ bool BulletFire::update( ) {
 	bool attack_enemy = attackEnemy( _pos, _power );
 	if ( attack_enemy ) {
 		DrawerPtr drawer = Drawer::getTask( );
-		Drawer::Effect effect( 1, _pos );
+		Drawer::Effect effect( 1, _pos, 0.5 );
 		drawer->setEffect( effect );
 	}
 	return attack_enemy;

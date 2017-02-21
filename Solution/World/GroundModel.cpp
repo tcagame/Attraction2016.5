@@ -32,7 +32,7 @@ void GroundModel::loadModelPos( int x, int y, ModelPtr model ) {
 	int num = 0;
 	for ( int i = 0; i < polygon_num * 3; i++ ) {
 		Vector pos = model->getPoint( i );
-		_model_data_ground.pos[ num ] = pos;
+		_model_data_ground.pos[ num ] = Vector( pos.x / 2, pos.y / 2, pos.z / 2 );
 		num++;
 	}
 }

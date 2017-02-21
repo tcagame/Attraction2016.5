@@ -21,8 +21,8 @@
 
 const double MODEL_SCALE_2015 = 0.008;
 const double MODEL_SCALE_2016 = 0.015;
-const double MODEL_SCALE_ALL = 0.1;
-const double MODEL_FLOOR_SCALE = 0.05;
+const double MODEL_SCALE_ALL = 0.05;
+const double MODEL_FLOOR_SCALE = 0.025;
 const double MODEL_BACK_GROUND_SCALE = 0.01;
 
 const int GRAPH_STRING_X = 1024;
@@ -168,7 +168,7 @@ void Viewer::drawGroundModel( ) {
 	AppPtr app = App::getTask( );
 	DrawerPtr drawer = Drawer::getTask( );
 
-	Vector pos = Vector( 100, 30, 0 );
+	Vector pos = Vector( 50, 15, 0 );
 	/*Drawer::ModelMDL model_collision = Drawer::ModelMDL( pos, MODEL_MDL_FLOOR );
 	drawer->setModelMDL( model_collision );*/
 	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
@@ -324,7 +324,7 @@ void Viewer::drawBackGround( ) {
 	AppPtr app = App::getTask( );
 	DrawerPtr drawer = Drawer::getTask( );
 
-	Vector pos = Vector( -10, 90, 0 );
+	Vector pos = Vector( 0, 40, 0 );
 //	Matrix mat_dir = Matrix::makeTransformRotation( Vector( 0.0, 0.0, 1.0 ), );
 	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
 	Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_FLOOR_SCALE, MODEL_FLOOR_SCALE, MODEL_FLOOR_SCALE ) );
@@ -441,7 +441,7 @@ void Viewer::drawBullet( ) {
 		Drawer::Billboard billboad;
 		billboad.res = type;
 		billboad.pos = bullet->getPos( );
-		billboad.size = 1.0;
+		billboad.size = 0.5;
 		billboad.blend = Drawer::BLEND_NONE;
 		billboad.ratio = 0;
 		drawer->setBillboard( billboad );

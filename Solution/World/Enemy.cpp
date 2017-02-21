@@ -10,8 +10,8 @@ const double MV1_SPEED = 1.0;
 const double MAX_PLAYER_NUM = 4;
 const double ATTACK_TIME = 10;
 const Vector ENEMY_ENTRY_TARGET_POS[ ] = {
-	Vector( 0, 30, 0 ),
-	Vector( 10, 30, 0 )
+	Vector( 0, 15, 0 ),
+	Vector( 5, 15, 0 )
 };
 const int ENEMY_ENTRY_TARGET_NUM = 2;
 

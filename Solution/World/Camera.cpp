@@ -18,6 +18,8 @@ const double SCREEN_LENGTH = 800.0;
 const int MAX_LENGTH = 40;
 const int MIN_LENGTH = 35;
 
+const int CAMERA_MOVE_SPEED = 1;
+
 CameraPtr Camera::getTask( ) {
 	ApplicationPtr fw = Application::getInstance( );
 	return std::dynamic_pointer_cast< Camera >( fw->getTask( Camera::getTag( ) ) );
@@ -108,8 +110,14 @@ Camera::CAMERA_VIEW_PHASE Camera::checkPhase( ) {
 
 
 void Camera::updatePhaseEnemy( ) {
-	_pos = ENEMY_ENTRY_CAMERA_POS;
-	_target = ENEMY_ENTRY_TARGET_POS;
+	Vector vec_pos = ENEMY_ENTRY_CAMERA_POS - _pos;
+	Vector vec_target = ENEMY_ENTRY_TARGET_POS - _target;
+	if ( vec_pos.getLength( ) > CAMERA_MOVE_SPEED ) {
+		vec_pos = vec_pos.normalize( ) * CAMERA_MOVE_SPEED;
+		vec_target = vec_target.normalize( ) * CAMERA_MOVE_SPEED;
+	}
+	_pos += vec_pos;
+	_target += vec_target;
 }
 
 void Camera::updatePhaseBattle( ) {
@@ -117,6 +125,12 @@ void Camera::updatePhaseBattle( ) {
 }
 
 void Camera::updatePhaseNormal( ) {
-	_pos = START_CAMERA_POS;
-	_target = START_TARGET_POS;
+	Vector vec_pos = START_CAMERA_POS - _pos;
+	Vector vec_target = START_TARGET_POS - _target;
+	if ( vec_pos.getLength( ) > CAMERA_MOVE_SPEED ) {
+		vec_pos = vec_pos.normalize( ) * CAMERA_MOVE_SPEED;
+		vec_target = vec_target.normalize( ) * CAMERA_MOVE_SPEED;
+	}
+	_pos += vec_pos;
+	_target += vec_target;
 }

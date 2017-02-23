@@ -5,14 +5,14 @@
 #include "Application.h"
 #include "Field.h"
 
-const Vector START_CAMERA_POS = Vector( 100, 15, 4 );
-const Vector START_TARGET_POS = Vector( 0, 15, 0 );
+const Vector START_CAMERA_POS = Vector( 95, 15, 0 );
+const Vector START_TARGET_POS = Vector( 0, 15, 10 );
 
 const Vector BATTRL_CAMERA_POS = Vector( 230, 30, 20 );
 const Vector BATTRL_TARGET_POS = Vector( 0, 30, 0 );
 
-const Vector ENEMY_ENTRY_CAMERA_POS = Vector( 20, 15, 43 );
-const Vector ENEMY_ENTRY_TARGET_POS = Vector( 5, 15, 0 );
+const Vector ENEMY_ENTRY_CAMERA_POS = Vector( 103, 15, 20 );
+const Vector ENEMY_ENTRY_TARGET_POS = Vector( 40, 15, 0 );
 const double SCREEN_LENGTH = 800.0;
 
 const int MAX_LENGTH = 40;

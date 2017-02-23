@@ -23,7 +23,7 @@ const double MODEL_SCALE_2015 = 0.008;
 const double MODEL_SCALE_2016 = 0.015;
 const double MODEL_SCALE_ALL = 0.05;
 const double MODEL_FLOOR_SCALE = 0.025;
-const double MODEL_BACK_GROUND_SCALE = 0.01;
+const double MODEL_BACK_GROUND_SCALE = 0.04;
 
 const int GRAPH_STRING_X = 1024;
 const int GRAPH_STRING_Y = 1024;
@@ -328,7 +328,7 @@ void Viewer::drawBackGround( ) {
 	Vector pos = Vector( 0, 40, 0 );
 //	Matrix mat_dir = Matrix::makeTransformRotation( Vector( 0.0, 0.0, 1.0 ), );
 	Matrix mat_rot = Matrix::makeTransformRotation( Vector( 1.0, 0.0, 0.0 ), PI / 2 );
-	Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_FLOOR_SCALE, MODEL_FLOOR_SCALE, MODEL_FLOOR_SCALE ) );
+	Matrix mat_scale = Matrix::makeTransformScaling( Vector( MODEL_BACK_GROUND_SCALE, MODEL_BACK_GROUND_SCALE, MODEL_BACK_GROUND_SCALE ) );
 	Matrix mat_trans = Matrix::makeTransformTranslation( pos );
 
 	Matrix mat = mat_rot * mat_scale;

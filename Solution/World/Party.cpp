@@ -7,9 +7,9 @@ const double SPEED = 0.25;
 
 const Vector PLAYER_START_POS [ PLAYER_NUM ] = {
 	Vector( 50, 15 ),
-	Vector( 100, 30 ),
-	Vector( 100, 30 ),
-	Vector( 100, 30 )
+	Vector( 50, 15 ),
+	Vector( 50, 15 ),
+	Vector( 50, 15 )
 };
 
 Party::Party( ) {

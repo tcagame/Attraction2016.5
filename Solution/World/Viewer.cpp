@@ -29,7 +29,7 @@ const int GRAPH_STRING_X = 1024;
 const int GRAPH_STRING_Y = 1024;
 
 const int GRAPH_UI_WINDOW_WIDTH = 160;
-const int GRAPH_UI_WINDOW_HEIGHT = 770;
+const int GRAPH_UI_WINDOW_HEIGHT = 20;
 
 enum MODEL_MDL {
 	MODEL_MDL_NONE,
@@ -494,7 +494,7 @@ void Viewer::drawUI( ) {
 	PartyPtr party = app_p->getParty( );
 	DrawerPtr drawer = Drawer::getTask( );
 	int pitch = ( app->getWindowWidth( ) - GRAPH_UI_WINDOW_WIDTH * 4 ) / 5;
-	int sy = app->getWindowHeight( ) - GRAPH_UI_WINDOW_HEIGHT;
+	int sy = GRAPH_UI_WINDOW_HEIGHT;
 	int sx = pitch;
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		PlayerPtr playre = party->getPlayer( i );

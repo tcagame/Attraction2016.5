@@ -158,6 +158,7 @@ void Viewer::update( ) {
 
 void Viewer::updateCamera( ) {
 	CameraPtr camera = Camera::getTask( );
+	camera->update( );
 	Vector camera_pos = camera->getPos( );
 	Vector camera_target = camera->getTarget( );
 	DrawerPtr drawer = Drawer::getTask( );

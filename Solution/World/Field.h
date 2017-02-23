@@ -18,6 +18,7 @@ public:
 	void delTarget( int x, int y, ObjectPtr object );
 	ObjectPtr getTarget( int x, int y );
 	ObjectPtr getTarget( int idx );
+	bool isExistenceEnemy( );
 private:
 	int getIndexTargetBoard( int x, int y );
 private:

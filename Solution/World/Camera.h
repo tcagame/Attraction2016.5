@@ -11,6 +11,7 @@ class Camera : public Task {
 public:
 	enum CAMERA_VIEW_PHASE {
 		CAMERA_VIEW_PHASE_TITLE,
+		CAMERA_VIEW_PHASE_NORMAL,
 		CAMERA_VIEW_PHASE_ENEMY,
 		CAMERA_VIEW_PHASE_BATTLE,
 	};
@@ -31,9 +32,12 @@ public:
 protected:
 	Vector getStartPos( ) const;
 	Vector getStartTargetPos( ) const;
+	CAMERA_VIEW_PHASE checkPhase( );
+	void updatePhaseEnemy( );
+	void updatePhaseBattle( );
+	void updatePhaseNormal( );
 protected:
 	Vector _pos;
-	CAMERA_VIEW_PHASE _camera_view_phase;
 	Vector _target;
 };
 

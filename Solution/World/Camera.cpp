@@ -3,15 +3,16 @@
 #include "Ground.h"
 #include "Drawer.h"
 #include "Application.h"
+#include "Field.h"
 
-const Vector START_CAMERA_POS = Vector( 150, 15, 30 );
+const Vector START_CAMERA_POS = Vector( 100, 15, 4 );
 const Vector START_TARGET_POS = Vector( 0, 15, 0 );
 
 const Vector BATTRL_CAMERA_POS = Vector( 230, 30, 20 );
 const Vector BATTRL_TARGET_POS = Vector( 0, 30, 0 );
 
-const Vector ENEMY_ENTRY_CAMERA_POS = Vector(  );
-const Vector ENEMY_ENTRY_TARGET_POS = Vector(  );
+const Vector ENEMY_ENTRY_CAMERA_POS = Vector( 20, 15, 43 );
+const Vector ENEMY_ENTRY_TARGET_POS = Vector( 5, 15, 0 );
 const double SCREEN_LENGTH = 800.0;
 
 const int MAX_LENGTH = 40;
@@ -37,12 +38,17 @@ void Camera::initialize( ) {
 }
 
 void Camera::update( ) {
-	switch ( _camera_view_phase ) {
+	switch ( checkPhase( ) ) {
 	case CAMERA_VIEW_PHASE_TITLE:
 		break;
+	case CAMERA_VIEW_PHASE_NORMAL:
+		updatePhaseNormal( );
+		break;
 	case CAMERA_VIEW_PHASE_ENEMY:
+		updatePhaseEnemy( );
 		break;
 	case CAMERA_VIEW_PHASE_BATTLE:
+		//updatePhaseBattle( );
 		break;
 	default:
 		break;
@@ -88,4 +94,29 @@ Vector Camera::getConvertDeviceVec( const Vector& vec ) {
 	//·Šp•ª‰ñ“]‚³‚¹‚é
 	Vector move_dir = mat.multiply( camera_dir );
 	return move_dir.normalize( );
+}
+
+Camera::CAMERA_VIEW_PHASE Camera::checkPhase( ) {
+	AppPtr app = App::getTask( );
+	FieldPtr field = app->getField( );
+
+	if ( field->isExistenceEnemy( ) ) {
+		return CAMERA_VIEW_PHASE_ENEMY;
+	}
+	return CAMERA_VIEW_PHASE_NORMAL;
+}
+
+
+void Camera::updatePhaseEnemy( ) {
+	_pos = ENEMY_ENTRY_CAMERA_POS;
+	_target = ENEMY_ENTRY_TARGET_POS;
+}
+
+void Camera::updatePhaseBattle( ) {
+	AppPtr app = App::getTask( );
+}
+
+void Camera::updatePhaseNormal( ) {
+	_pos = START_CAMERA_POS;
+	_target = START_TARGET_POS;
 }

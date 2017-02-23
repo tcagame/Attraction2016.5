@@ -1,6 +1,7 @@
 #include "Field.h"
 #include "Ground.h"
 #include "App.h"
+#include "Enemy.h"
 #include <assert.h>
 
 Field::Field( ) {
@@ -44,6 +45,20 @@ ObjectPtr Field::getTarget( int idx ) {
 	return _target_board[ idx ].lock( );
 }
 
+bool Field::isExistenceEnemy( ) {
+	bool result = false;
+	for ( int i = 0; i < MAX_MAP_CHIP_NUM; i++ ) {
+		ObjectPtr obj = _target_board[ i ].lock( );
+		if ( obj ) {
+			EnemyPtr enemy = std::dynamic_pointer_cast< Enemy >( obj );
+			if ( enemy ) {
+				result = true;
+				break;
+			}
+		}
+	}
+	return result;
+}
 
 int Field::getIndexTargetBoard( int x, int y ) {
 	int ret = 0;
